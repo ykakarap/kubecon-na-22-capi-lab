@@ -1,0 +1,377 @@
+# Prerequisites
+
+<!-- table of contens generated via: https://github.com/thlorenz/doctoc -->
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Prerequisites](#prerequisites)
+  - [Linux](#linux)
+    - [Install Docker, kubectl, kind and clusterctl](#install-docker-kubectl-kind-and-clusterctl)
+    - [Clone the tutorial repository](#clone-the-tutorial-repository)
+    - [Pre-download container images](#pre-download-container-images)
+    - [Verification](#verification)
+  - [macOS](#macos)
+    - [Install Docker, kubectl, kind and clusterctl](#install-docker-kubectl-kind-and-clusterctl-1)
+    - [Clone the tutorial repository](#clone-the-tutorial-repository-1)
+    - [Pre-download container images](#pre-download-container-images-1)
+    - [Verification](#verification-1)
+  - [Windows (TODO/WIP)](#windows-todowip)
+    - [Install Docker, kubectl, kind and clusterctl](#install-docker-kubectl-kind-and-clusterctl-2)
+    - [Clone the tutorial repository](#clone-the-tutorial-repository-2)
+    - [Pre-download container images](#pre-download-container-images-2)
+    - [Verification](#verification-2)
+- [Avoid GitHub rate-limiting when running the tutorial without the local clusterctl repository](#avoid-github-rate-limiting-when-running-the-tutorial-without-the-local-clusterctl-repository)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## Prerequisites
+
+Please ensure you have at least: 4 CPU, 16 GB RAM and 32 GB free disk space.
+
+**Note**: Windows instructions are provided on a best effort basis (we assume Powershell is used).
+
+### Linux
+
+#### Install Docker, kubectl, kind and clusterctl
+
+Install Docker as documented on the Docker website. You can choose between:
+* [Docker Engine (e.g. Ubuntu)](https://docs.docker.com/engine/install/ubuntu/) (preferred)
+* [Docker Desktop](https://docs.docker.com/desktop/install/linux-install/)
+
+Verify the Docker installation via:
+```bash
+docker version
+docker ps
+```
+
+**Note**: If you are using Docker Desktop please ensure the Docker VM has at least 4 CPU, 10 GB RAM and 32 GB disk.
+
+Install kubectl as documented in [Install and Set Up kubectl on Linux](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/).
+
+Verify kubectl via:
+```bash
+kubectl version -o yaml
+```
+
+Install kind v0.16.0 by downloading it from the [kind release page](https://github.com/kubernetes-sigs/kind/releases/tag/v0.16.0) and adding it to the path.
+
+```bash
+curl -L https://github.com/kubernetes-sigs/kind/releases/download/v0.16.0/kind-linux-amd64 -o /tmp/kind
+sudo install -o root -g root -m 0755 /tmp/kind /usr/local/bin/kind
+
+# Verify via:
+kind version
+```
+
+Install clusterctl v1.2.3 by downloading it from the [ClusterAPI release page](https://github.com/kubernetes-sigs/cluster-api/releases/tag/v1.2.2) and adding it to the path.
+
+```bash
+curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/v1.2.2/clusterctl-linux-amd64 -o /tmp/clusterctl
+sudo install -o root -g root -m 0755 /tmp/clusterctl /usr/local/bin/clusterctl
+
+# Verify via:
+clusterctl version
+```
+
+#### Clone the tutorial repository
+
+```bash
+git clone https://github.com/ykakarap/kubecon-na-22-capi-lab
+cd kubecon-na-22-capi-lab
+
+# Export the CLUSTERCTL_REPOSITORY_PATH environment variable
+# it will be required later to run the tutorial offline
+export CLUSTERCTL_REPOSITORY_PATH=$(pwd)/clusterctl/repository
+```
+
+**Note**: You can also download the repository via this link if you don't have `git` installed: [main.zip](https://github.com/ykakarap/kubecon-na-22-capi-lab/archive/refs/heads/main.zip).
+
+#### Pre-download container images
+
+As we don't want to rely on the conference WiFi please pre-pull the container images used in the tutorial via:
+
+```bash
+sh ./scripts/prepull-images.sh
+```
+
+#### Verification
+
+This section describes steps to verify everything has been installed correctly.
+
+Create the kind cluster: (including pre-loading images)
+```bash
+sh ./scripts/create-kind-cluster.sh
+```
+
+Should return:
+```bash
+Creating cluster "kind" ...
+ ✓ Ensuring node image (kindest/node:v1.25.2) 🖼
+ ✓ Preparing nodes 📦
+ ✓ Writing configuration 📜
+ ✓ Starting control-plane 🕹️
+ ✓ Installing CNI 🔌
+ ✓ Installing StorageClass 💾
+Set kubectl context to "kind-kind"
+You can now use your cluster with:
+
+kubectl cluster-info --context kind-kind
+
+Not sure what to do next? 😅  Check out https://kind.sigs.k8s.io/docs/user/quick-start/
+```
+
+Test kubectl:
+```bash
+kubectl get node
+```
+
+Should return:
+```bash
+NAME                 STATUS   ROLES           AGE   VERSION
+kind-control-plane   Ready    control-plane   33s   v1.25.2
+```
+
+Delete the kind cluster:
+```bash
+kind delete cluster
+```
+
+### macOS
+
+#### Install Docker, kubectl, kind and clusterctl
+
+Install Docker Desktop as documented in [Install Docker Desktop on Mac](https://docs.docker.com/desktop/install/mac-install/). 
+
+Verify the Docker installation via:
+```bash
+docker version
+docker ps
+```
+
+**Note**: Please ensure the Docker VM has at least 4 CPU, 10 GB RAM and 32 GB disk.
+
+Install kubectl as documented in [Install and Set Up kubectl on macOS](https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/).
+
+Verify kubectl via:
+```bash
+kubectl version -o yaml
+```
+
+Install kind v0.16.0 by downloading it from the [kind release page](https://github.com/kubernetes-sigs/kind/releases/tag/v0.16.0) and adding it to the path.
+
+```bash
+# amd64
+curl -L https://github.com/kubernetes-sigs/kind/releases/download/v0.16.0/kind-darwin-amd64 -o /tmp/kind
+# arm (if your Mac has an M1 CPU (”Apple Silicon”))
+curl -L https://github.com/kubernetes-sigs/kind/releases/download/v0.16.0/kind-darwin-arm64 -o /tmp/kind
+chmod +x /tmp/kind
+sudo mv /tmp/kind /usr/local/bin/kind
+sudo chown root: /usr/local/bin/kind
+
+# Verify via:
+kind version
+```
+
+Install clusterctl v1.2.3 by downloading it from the [ClusterAPI release page](https://github.com/kubernetes-sigs/cluster-api/releases/tag/v1.2.2) and adding it to the path.
+
+```bash
+# amd64
+curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/v1.2.2/clusterctl-darwin-amd64 -o /tmp/clusterctl
+# arm (if your Mac has an M1 CPU (”Apple Silicon”))
+curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/v1.2.2/clusterctl-darwin-arm64 -o /tmp/clusterctl
+chmod +x /tmp/clusterctl
+sudo mv /tmp/clusterctl /usr/local/bin/clusterctl
+sudo chown root: /usr/local/bin/clusterctl
+
+# Verify via:
+clusterctl version
+```
+
+#### Clone the tutorial repository
+
+```bash
+git clone https://github.com/ykakarap/kubecon-na-22-capi-lab
+cd kubecon-na-22-capi-lab
+
+# Export the CLUSTERCTL_REPOSITORY_PATH environment variable
+# it will be required later to run the tutorial offline
+export CLUSTERCTL_REPOSITORY_PATH=$(pwd)/clusterctl/repository
+```
+
+**Note**: You can also download the repository via this link if you don't have `git` installed: [main.zip](https://github.com/ykakarap/kubecon-na-22-capi-lab/archive/refs/heads/main.zip).
+
+#### Pre-download container images
+
+As we don't want to rely on the conference WiFi please pre-pull the container images used in the tutorial via:
+
+```bash
+sh ./scripts/prepull-images.sh
+```
+
+#### Verification
+
+This section describes steps to verify everything has been installed correctly.
+
+Create the kind cluster: (including pre-loading images)
+```bash
+sh ./scripts/create-kind-cluster.sh
+```
+
+Should return:
+```bash
+Creating cluster "kind" ...
+ ✓ Ensuring node image (kindest/node:v1.25.2) 🖼
+ ✓ Preparing nodes 📦
+ ✓ Writing configuration 📜
+ ✓ Starting control-plane 🕹️
+ ✓ Installing CNI 🔌
+ ✓ Installing StorageClass 💾
+Set kubectl context to "kind-kind"
+You can now use your cluster with:
+
+kubectl cluster-info --context kind-kind
+
+Not sure what to do next? 😅  Check out https://kind.sigs.k8s.io/docs/user/quick-start/
+```
+
+Test kubectl:
+```bash
+kubectl get node
+```
+
+Should return:
+```bash
+NAME                 STATUS   ROLES           AGE   VERSION
+kind-control-plane   Ready    control-plane   33s   v1.25.2
+```
+
+Delete the kind cluster:
+```bash
+kind delete cluster
+```
+
+### Windows (TODO/WIP)
+
+#### Install Docker, kubectl, kind and clusterctl
+
+Install Docker Desktop as documented in [Install Docker Desktop on Windows](https://docs.docker.com/desktop/install/windows-install/).
+
+Verify the Docker installation via:
+```bash
+docker version
+docker ps
+```
+
+**Note**: Please ensure the Docker VM has at least 4 CPU, 10 GB RAM and 32 GB disk.
+
+Install kubectl as documented in [Install and Set Up kubectl on Windows](https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/).
+
+Verify kubectl via:
+```bash
+kubectl version -o yaml
+```
+
+Install kind v0.16.0 by downloading it from the [kind release page](https://github.com/kubernetes-sigs/kind/releases/tag/v0.16.0) and adding it to the path.
+
+```bash
+curl.exe -L https://github.com/kubernetes-sigs/kind/releases/download/v0.16.0/kind-windows-amd64 -o kind.exe
+# Append or prepend the path of that directory to the PATH environment variable.
+
+# Verify via:
+kind.exe version
+```
+
+Install clusterctl v1.2.3 by downloading it from the [ClusterAPI release page](https://github.com/kubernetes-sigs/cluster-api/releases/tag/v1.2.2) and adding it to the path.
+
+```bash
+curl.exe -L https://github.com/kubernetes-sigs/cluster-api/releases/download/v1.2.2/clusterctl-windows-amd64.exe -o clusterctl.exe
+# Append or prepend the path of that directory to the PATH environment variable.
+
+# Verify via:
+clusterctl.exe version
+```
+
+#### Clone the tutorial repository
+
+```bash
+git clone https://github.com/ykakarap/kubecon-na-22-capi-lab
+cd kubecon-na-22-capi-lab
+
+# Export the CLUSTERCTL_REPOSITORY_PATH environment variable
+# it will be required later to run the tutorial offline
+export CLUSTERCTL_REPOSITORY_PATH=$(pwd)/clusterctl/repository
+```
+
+**Note**: You can also download the repository via this link if you don't have `git` installed: [main.zip](https://github.com/ykakarap/kubecon-na-22-capi-lab/archive/refs/heads/main.zip).
+
+#### Pre-download container images
+
+As we don't want to rely on the conference WiFi please pre-pull the container images used in the tutorial via:
+
+```bash
+sh ./scripts/prepull-images.sh
+```
+
+#### Verification
+
+This section describes steps to verify everything has been installed correctly.
+
+Create the kind cluster: (including pre-loading images)
+```bash
+kind.exe create cluster --config ./yamls/bootstrap/kind.yaml (TODO)
+```
+
+Should return:
+```bash
+Creating cluster "kind" ...
+ ✓ Ensuring node image (kindest/node:v1.25.2) 🖼
+ ✓ Preparing nodes 📦
+ ✓ Writing configuration 📜
+ ✓ Starting control-plane 🕹️
+ ✓ Installing CNI 🔌
+ ✓ Installing StorageClass 💾
+Set kubectl context to "kind-kind"
+You can now use your cluster with:
+
+kubectl cluster-info --context kind-kind
+
+Not sure what to do next? 😅  Check out https://kind.sigs.k8s.io/docs/user/quick-start/
+```
+
+Test kubectl:
+```bash
+kubectl get node
+```
+
+Should return:
+```bash
+NAME                 STATUS   ROLES           AGE   VERSION
+kind-control-plane   Ready    control-plane   33s   v1.25.2
+```
+
+Delete the kind cluster:
+```bash
+kind.exe delete cluster
+```
+
+## Avoid GitHub rate-limiting when running the tutorial without the local clusterctl repository
+
+**Note**: The tutorial uses a local clusterctl repository, so these steps are not required to run the tutorial,
+they are just documented in case folks want to run the tutorial without the local repository.
+
+clusterctl accesses GitHub to install Cluster API, to avoid rate-limiting please set up a GitHub token.
+
+First, create a token as documented on the [GitHub website](https://docs.github.com/en/enterprise-server@3.4/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) (no permissions needed)
+
+Export the `GITHUB_TOKEN` in your environment
+
+Linux and macOS:
+```bash
+export GITHUB_TOKEN=<GITHUB_TOKEN>
+```
+
+Windows:
+```bash
+SET GITHUB_TOKEN=<GITHUB_TOKEN>
+```
