@@ -1,0 +1,16 @@
+providers:
+- name: "cluster-api"
+  type: "CoreProvider"
+  url: "${CLUSTERCTL_REPOSITORY_PATH}/cluster-api/v1.2.2/core-components.yaml"
+- name: "kubeadm"
+  type: "BootstrapProvider"
+  url: "${CLUSTERCTL_REPOSITORY_PATH}/bootstrap-kubeadm/v1.2.2/bootstrap-components.yaml"
+- name: "kubeadm"
+  type: "ControlPlaneProvider"
+  url: "${CLUSTERCTL_REPOSITORY_PATH}/control-plane-kubeadm/v1.2.2/control-plane-components.yaml"
+- name: "docker"
+  type: "InfrastructureProvider"
+  url: "${CLUSTERCTL_REPOSITORY_PATH}/infrastructure-docker/v1.2.2/infrastructure-components.yaml"
+cert-manager:
+  url: "${CLUSTERCTL_REPOSITORY_PATH}/cert-manager/v1.9.1/cert-manager.yaml"
+overridesFolder: "${CLUSTERCTL_REPOSITORY_PATH}/overrides"
