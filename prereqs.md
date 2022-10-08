@@ -16,7 +16,7 @@
     - [Clone the tutorial repository](#clone-the-tutorial-repository-1)
     - [Pre-download container images](#pre-download-container-images-1)
     - [Verification](#verification-1)
-  - [Windows (TODO/WIP)](#windows-todowip)
+  - [Windows](#windows)
     - [Install Docker, kubectl, kind and clusterctl](#install-docker-kubectl-kind-and-clusterctl-2)
     - [Clone the tutorial repository](#clone-the-tutorial-repository-2)
     - [Pre-download container images](#pre-download-container-images-2)
@@ -29,7 +29,7 @@
 
 Please ensure you have at least: 4 CPU, 16 GB RAM and 32 GB free disk space.
 
-**Note**: Windows instructions are provided on a best effort basis (we assume Powershell is used).
+**Note**: Windows instructions are provided on a best effort basis and have been tested and verified on Windows 11 with Powershell and Docker Desktop which was using WSL 2.
 
 ### Linux
 
@@ -51,7 +51,7 @@ Install kubectl as documented in [Install and Set Up kubectl on Linux](https://k
 
 Verify kubectl via:
 ```bash
-kubectl version -o yaml
+kubectl version --client -o yaml
 ```
 
 Install kind v0.16.0 by downloading it from the [kind release page](https://github.com/kubernetes-sigs/kind/releases/tag/v0.16.0) and adding it to the path.
@@ -155,7 +155,7 @@ Install kubectl as documented in [Install and Set Up kubectl on macOS](https://k
 
 Verify kubectl via:
 ```bash
-kubectl version -o yaml
+kubectl version --client -o yaml
 ```
 
 Install kind v0.16.0 by downloading it from the [kind release page](https://github.com/kubernetes-sigs/kind/releases/tag/v0.16.0) and adding it to the path.
@@ -251,7 +251,7 @@ Delete the kind cluster:
 kind delete cluster
 ```
 
-### Windows (TODO/WIP)
+### Windows
 
 #### Install Docker, kubectl, kind and clusterctl
 
@@ -269,27 +269,31 @@ Install kubectl as documented in [Install and Set Up kubectl on Windows](https:/
 
 Verify kubectl via:
 ```bash
-kubectl version -o yaml
+kubectl version --client -o yaml
 ```
 
 Install kind v0.16.0 by downloading it from the [kind release page](https://github.com/kubernetes-sigs/kind/releases/tag/v0.16.0) and adding it to the path.
 
 ```bash
 curl.exe -L https://github.com/kubernetes-sigs/kind/releases/download/v0.16.0/kind-windows-amd64 -o kind.exe
+# Note: If you don't have curl installed, just download the binary manually and rename it to kind.exe.
+
 # Append or prepend the path of that directory to the PATH environment variable.
 
 # Verify via:
-kind.exe version
+kind version
 ```
 
 Install clusterctl v1.2.3 by downloading it from the [ClusterAPI release page](https://github.com/kubernetes-sigs/cluster-api/releases/tag/v1.2.2) and adding it to the path.
 
 ```bash
 curl.exe -L https://github.com/kubernetes-sigs/cluster-api/releases/download/v1.2.2/clusterctl-windows-amd64.exe -o clusterctl.exe
+# Note: If you don't have curl installed, just download the binary manually and rename it to clusterctl.exe.
+
 # Append or prepend the path of that directory to the PATH environment variable.
 
 # Verify via:
-clusterctl.exe version
+clusterctl version
 ```
 
 #### Clone the tutorial repository
@@ -300,7 +304,7 @@ cd kubecon-na-22-capi-lab
 
 # Export the CLUSTERCTL_REPOSITORY_PATH environment variable
 # it will be required later to run the tutorial offline
-export CLUSTERCTL_REPOSITORY_PATH=$(pwd)/clusterctl/repository
+$env:CLUSTERCTL_REPOSITORY_PATH = ([System.Uri](Get-Item .).FullName).AbsoluteUri + "/clusterctl/repository"
 ```
 
 **Note**: You can also download the repository via this link if you don't have `git` installed: [main.zip](https://github.com/ykakarap/kubecon-na-22-capi-lab/archive/refs/heads/main.zip).
@@ -310,8 +314,10 @@ export CLUSTERCTL_REPOSITORY_PATH=$(pwd)/clusterctl/repository
 As we don't want to rely on the conference WiFi please pre-pull the container images used in the tutorial via:
 
 ```bash
-sh ./scripts/prepull-images.sh
+.\scripts\prepull-images.ps1
 ```
+
+**Note** You might have to enable running scripts by executing `Set-ExecutionPolicy Unrestricted` in a PowerShell run as Administrator.
 
 #### Verification
 
@@ -319,7 +325,7 @@ This section describes steps to verify everything has been installed correctly.
 
 Create the kind cluster: (including pre-loading images)
 ```bash
-kind.exe create cluster --config ./yamls/bootstrap/kind.yaml (TODO)
+.\scripts\create-kind-cluster.ps1
 ```
 
 Should return:
@@ -352,7 +358,7 @@ kind-control-plane   Ready    control-plane   33s   v1.25.2
 
 Delete the kind cluster:
 ```bash
-kind.exe delete cluster
+kind delete cluster
 ```
 
 ## Avoid GitHub rate-limiting when running the tutorial without the local clusterctl repository
@@ -373,5 +379,5 @@ export GITHUB_TOKEN=<GITHUB_TOKEN>
 
 Windows:
 ```bash
-SET GITHUB_TOKEN=<GITHUB_TOKEN>
+$env:GITHUB_TOKEN = "<GITHUB_TOKEN>"
 ```
