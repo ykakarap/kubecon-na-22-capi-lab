@@ -1,15 +1,19 @@
-This guide covers setting up and using Cluster API using Docker infrastructure, - which is the same way CAPI runs its end-to-end tests. To set up a Cluster using AWS, Azure GCP and many more see the [CAPI quick-start guide](https://cluster-api.sigs.k8s.io/user/quick-start.html)
+# Creating your first cluster with Cluster API
 
-- [Linux](#Linux)
-    - [The management cluster](#the-management-cluster)
-    - [Your first workload cluster](#your-first-workload-cluster)
-- [macOS](#MacOS)
-    - [The management cluster](#the-management-cluster-1)
-    - [Your first workload cluster](#your-first-workload-cluster-1)
-- [Windows](#Windows)
-    - [The management cluster](#the-management-cluster-2)
-    - [Your first workload cluster](#your-first-workload-cluster-2)
+This guide covers setting up and using Cluster API using Docker infrastructure, which is the same way CAPI runs its end-to-end tests. To set up a Cluster using AWS, Azure GCP and many more see the [CAPI quick-start guide](https://cluster-api.sigs.k8s.io/user/quick-start.html)
 
+<!-- TOC -->
+* [Creating your first cluster with Cluster API](#creating-your-first-cluster-with-cluster-api)
+* [Linux](#linux)
+  * [The Management Cluster](#the-management-cluster)
+  * [Your first workload cluster](#your-first-workload-cluster)
+* [MacOS](#macos)
+  * [The Management Cluster](#the-management-cluster)
+  * [Your first workload cluster](#your-first-workload-cluster)
+* [Windows](#windows)
+  * [The Management Cluster](#the-management-cluster)
+  * [Your first workload cluster](#your-first-workload-cluster)
+<!-- TOC -->
 
 # Linux 
 
@@ -20,6 +24,7 @@ A Cluster API Management Cluster is a Kubernetes Cluster where the components th
 The first step in creating a management cluster is to create a Kubernetes cluster to host the CAPI components.
 
 ```bash
+sh sh ./scripts/prepull-images.sh
 sh ./scripts/create-kind-cluster.sh
 ```
 
@@ -29,14 +34,15 @@ Once the cluster has completed provisioning you should be able to check it's hea
 kubectl get nodes
 ```
 
-In this case we're using the Docker infrastructure provider - so we need a the Docker provider (CAPD), the Core Cluster API provider (CAPI), the Kubeadm Bootstrap provider (CAPBK) and the Kubeadm Control Plane provider to be installed on the cluster. In addition we need Cert Manager to be installed on the system.
+In this case we're using the Docker infrastructure provider - so we need a the Docker provider (CAPD), the Core Cluster API provider (CAPI), the Kubeadm Bootstrap provider (CAPBK) and the Kubeadm Control Plane provider (KCP) to be installed on the cluster. In addition we need Cert Manager to be installed on the system.
 
 
 Cluster API's CLI - `clusterctl` is used to install the CAPI Management Cluster components - luckily it's able to handle installing all of the above as well as the Custom Resource Definitions used by the Cluster API controllers.
 
 ```bash
+# Set the CLUSTER_TOPOLOGY variable to true. This is a feature flag used to enable ClusterClass.
 export CLUSTER_TOPOLOGY=true
-clusterctl init --infrastructure docker:v1.2.2
+clusterctl init --infrastructure docker:v1.2.2  --config ./clusterctl/repository/config.yaml
 ```
 
 Each of the provider controllers is installed as a pod on the Kind cluster. Once they're up and running you have your very own management Cluster!
@@ -76,23 +82,23 @@ kubectl apply -f yamls/clusterclasses/clusterclass-quick-start.yaml
 
 Next we can create the Cluster itself, but first let's take a look at the Cluster object:
 
-```bash=
+```yaml
 apiVersion: cluster.x-k8s.io/v1beta1
 kind: Cluster
 metadata:
   name: "docker-cluster-one"             # The name of the Cluster.
-  namespace: "default"                   # The is the namespace the Cluster will be created in.
+  namespace: "default"                   # The namespace the Cluster will be created in.
 spec:
   clusterNetwork:
-    services:                            # The IP range of services in the Cluster.
-      cidrBlocks: ["10.128.0.0/12"]
-    pods:                                # The IP range of pods in the Cluster.
-      cidrBlocks: ["192.168.0.0/16"]
+    services:                            
+      cidrBlocks: ["10.128.0.0/12"]      # The IP range of services in the Cluster.
+    pods:                                
+      cidrBlocks: ["192.168.0.0/16"]     # The IP range of pods in the Cluster.
     serviceDomain: "cluster.local"
   topology:
     class: quick-start                   # The name of the ClusterClass the Cluster is templated from.
     controlPlane:
-      replicas: 1                        # The number of nodes in the Cluster control plane.
+      replicas: 1                        # The number of control plane nodes in the Cluster.
     version: v1.25.0                     # The version of the Kubernetes Cluster.
     workers:
       machineDeployments:                # A group of worker nodes that all have the same spec.
@@ -111,11 +117,11 @@ kubectl apply -f yamls/clusters/docker-cluster-one.yaml
 ```
 
 Now that the Cluster has been created we can watch it come into being with:
-```bash=
+```bash
 watch clusterctl describe cluster docker-cluster-one
 ```
 The output should resemble:
-```bash=
+```bash
 NAME                                                              READY  SEVERITY  REASON                           SINCE  MESSAGE
 
 Cluster/docker-cluster-one                                        False  Warning   ScalingUp                        84s    Scaling up control plane to 1 replicas (actual
@@ -140,19 +146,19 @@ kind get clusters
 ```
 
 To operate on the cluster we need to retrieve its kubeconfig.
-```bash=
+```bash
 kind get kubeconfig --name docker-cluster-one > cluster-one.kubeconfig
 ```
 
 We can see the nodes in the cluster.
 
-```bash=
+```bash
 kubectl --kubeconfig cluster-one.kubeconfig  get nodes
 ```
 
 The output shows that our nodes aren't in a `Ready` state - this is because we haven't installed a CNI yet.
 
-```bash=
+```bash
 NAME                                              STATUS     ROLES           AGE     VERSION
 docker-cluster-one-md-0-g6cf5-659f45c999-zlvb2   NotReady   <none>          3m4s    v1.25.0
 docker-cluster-one-sl7l7-nw9qb                   NotReady   control-plane   3m17s   v1.25.0
@@ -186,6 +192,7 @@ A Cluster API Management Cluster is a Kubernetes Cluster where the components th
 The first step in creating a management cluster is to create a Kubernetes cluster to host the CAPI components.
 
 ```bash
+sh ./scripts/prepull-images.sh
 sh ./scripts/create-kind-cluster.sh
 ```
 
@@ -195,14 +202,15 @@ Once the cluster has completed provisioning you should be able to check it's hea
 kubectl get nodes
 ```
 
-In this case we're using the Docker infrastructure provider - so we need a the Docker provider (CAPD), the Core Cluster API provider (CAPI), the Kubeadm Bootstrap provider (CAPBK) and the Kubeadm Control Plane provider to be installed on the cluster. In addition we need Cert Manager to be installed on the system.
+In this case we're using the Docker infrastructure provider - so we need a the Docker provider (CAPD), the Core Cluster API provider (CAPI), the Kubeadm Bootstrap provider (CAPBK) and the Kubeadm Control Plane provider (KCP) to be installed on the cluster. In addition we need Cert Manager to be installed on the system.
 
 
 Cluster API's CLI - `clusterctl` is used to install the CAPI Management Cluster components - luckily it's able to handle installing all of the above as well as the Custom Resource Definitions used by the Cluster API controllers.
 
 ```bash
+# Set the CLUSTER_TOPOLOGY variable to true. This is a feature flag used to enable ClusterClass.
 export CLUSTER_TOPOLOGY=true
-clusterctl init --infrastructure docker:v1.2.2
+clusterctl init --infrastructure docker:v1.2.2  --config ./clusterctl/repository/config.yaml
 ```
 
 Each of the provider controllers is installed as a pod on the Kind cluster. Once they're up and running you have your very own management Cluster!
@@ -242,23 +250,23 @@ kubectl apply -f yamls/clusterclasses/clusterclass-quick-start.yaml
 
 Next we can create the Cluster itself, but first let's take a look at the Cluster object:
 
-```bash=
+```yaml
 apiVersion: cluster.x-k8s.io/v1beta1
 kind: Cluster
 metadata:
   name: "docker-cluster-one"             # The name of the Cluster.
-  namespace: "default"                   # The is the namespace the Cluster will be created in.
+  namespace: "default"                   # The namespace the Cluster will be created in.
 spec:
   clusterNetwork:
-    services:                            # The IP range of services in the Cluster.
-      cidrBlocks: ["10.128.0.0/12"]
-    pods:                                # The IP range of pods in the Cluster.
-      cidrBlocks: ["192.168.0.0/16"]
+    services:                            
+      cidrBlocks: ["10.128.0.0/12"]      # The IP range of services in the Cluster.
+    pods:                                
+      cidrBlocks: ["192.168.0.0/16"]     # The IP range of pods in the Cluster.
     serviceDomain: "cluster.local"
   topology:
     class: quick-start                   # The name of the ClusterClass the Cluster is templated from.
     controlPlane:
-      replicas: 1                        # The number of nodes in the Cluster control plane.
+      replicas: 1                        # The number of control plane nodes in the Cluster.
     version: v1.25.0                     # The version of the Kubernetes Cluster.
     workers:
       machineDeployments:                # A group of worker nodes that all have the same spec.
@@ -277,11 +285,11 @@ kubectl apply -f yamls/clusters/docker-cluster-one.yaml
 ```
 
 Now that the Cluster has been created we can watch it come into being with:
-```bash=
+```bash
 watch clusterctl describe cluster docker-cluster-one
 ```
 The output should resemble:
-```bash=
+```bash
 NAME                                                              READY  SEVERITY  REASON                           SINCE  MESSAGE
 
 Cluster/docker-cluster-one                                        False  Warning   ScalingUp                        84s    Scaling up control plane to 1 replicas (actual
@@ -306,19 +314,19 @@ kind get clusters
 ```
 
 To operate on the cluster we need to retrieve its kubeconfig.
-```bash=
+```bash
 kind get kubeconfig --name docker-cluster-one > cluster-one.kubeconfig
 ```
 
 We can see the nodes in the cluster.
 
-```bash=
+```bash
 kubectl --kubeconfig cluster-one.kubeconfig  get nodes
 ```
 
 The output shows that our nodes aren't in a `Ready` state - this is because we haven't installed a CNI yet.
 
-```bash=
+```bash
 NAME                                              STATUS     ROLES           AGE     VERSION
 docker-cluster-one-md-0-g6cf5-659f45c999-zlvb2   NotReady   <none>          3m4s    v1.25.0
 docker-cluster-one-sl7l7-nw9qb                   NotReady   control-plane   3m17s   v1.25.0
@@ -344,8 +352,8 @@ clusterctl describe cluster docker-cluster-one
 ```
 
 # Windows
-**NOTE** This guide assumes users are using Powershell in a Windows environment. For other environments, e.g. WSL2, the (Linux)[#Linux] guide might be a better starting place.
 
+**NOTE** This guide assumes users are using Powershell in a Windows environment. For other environments, e.g. WSL2, the (Linux)[#Linux] guide might be a better starting place.
 ## The Management Cluster
 
 A Cluster API Management Cluster is a Kubernetes Cluster where the components that make up the CAPI control plane are installed. These components include the Custom Resources used to create and manage a cluster and the controllers that operate on them.
@@ -353,6 +361,7 @@ A Cluster API Management Cluster is a Kubernetes Cluster where the components th
 The first step in creating a management cluster is to create a Kubernetes cluster to host the CAPI components.
 
 ```bash
+.\scripts\prepull-images.ps1
 .\scripts\create-kind-cluster.ps1
 ```
 
@@ -362,14 +371,15 @@ Once the cluster has completed provisioning you should be able to check it's hea
 kubectl get nodes
 ```
 
-In this case we're using the Docker infrastructure provider - so we need a the Docker provider (CAPD), the Core Cluster API provider (CAPI), the Kubeadm Bootstrap provider (CAPBK) and the Kubeadm Control Plane provider to be installed on the cluster. In addition we need Cert Manager to be installed on the system.
+In this case we're using the Docker infrastructure provider - so we need a the Docker provider (CAPD), the Core Cluster API provider (CAPI), the Kubeadm Bootstrap provider (CAPBK) and the Kubeadm Control Plane provider (KCP) to be installed on the cluster. In addition we need Cert Manager to be installed on the system.
 
 
 Cluster API's CLI - `clusterctl` is used to install the CAPI Management Cluster components - luckily it's able to handle installing all of the above as well as the Custom Resource Definitions used by the Cluster API controllers.
 
 ```bash
+# Set the CLUSTER_TOPOLOGY variable to true. This is a feature flag used to enable ClusterClass.
 $env:CLUSTER_TOPOLOGY = 'true' 
-clusterctl init --infrastructure docker:v1.2.2
+clusterctl init --infrastructure docker:v1.2.2  --config ./clusterctl/repository/config.yaml
 ```
 
 Each of the provider controllers is installed as a pod on the Kind cluster. Once they're up and running you have your very own management Cluster!
@@ -409,23 +419,23 @@ kubectl apply -f yamls/clusterclasses/clusterclass-quick-start.yaml
 
 Next we can create the Cluster itself, but first let's take a look at the Cluster object:
 
-```bash=
+```yaml
 apiVersion: cluster.x-k8s.io/v1beta1
 kind: Cluster
 metadata:
   name: "docker-cluster-one"             # The name of the Cluster.
-  namespace: "default"                   # The is the namespace the Cluster will be created in.
+  namespace: "default"                   # The namespace the Cluster will be created in.
 spec:
   clusterNetwork:
-    services:                            # The IP range of services in the Cluster.
-      cidrBlocks: ["10.128.0.0/12"]
-    pods:                                # The IP range of pods in the Cluster.
-      cidrBlocks: ["192.168.0.0/16"]
+    services:                            
+      cidrBlocks: ["10.128.0.0/12"]      # The IP range of services in the Cluster.
+    pods:                                
+      cidrBlocks: ["192.168.0.0/16"]     # The IP range of pods in the Cluster.
     serviceDomain: "cluster.local"
   topology:
     class: quick-start                   # The name of the ClusterClass the Cluster is templated from.
     controlPlane:
-      replicas: 1                        # The number of nodes in the Cluster control plane.
+      replicas: 1                        # The number of control plane nodes in the Cluster.
     version: v1.25.0                     # The version of the Kubernetes Cluster.
     workers:
       machineDeployments:                # A group of worker nodes that all have the same spec.
@@ -444,11 +454,11 @@ kubectl apply -f yamls/clusters/docker-cluster-one.yaml
 ```
 
 Now that the Cluster has been created we can watch it come into being with:
-```bash=
-clusterctl describe cluster docker-cluster-one
+```bash
+$env:NO_COLOR = 'true'; clusterctl describe cluster docker-cluster-one
 ```
 The output should resemble:
-```bash=
+```bash
 NAME                                                              READY  SEVERITY  REASON                           SINCE  MESSAGE
 
 Cluster/docker-cluster-one                                        False  Warning   ScalingUp                        84s    Scaling up control plane to 1 replicas (actual
@@ -473,19 +483,19 @@ kind get clusters
 ```
 
 To operate on the cluster we need to retrieve its kubeconfig.
-```bash=
+```bash
 kind get kubeconfig --name docker-cluster-one > cluster-one.kubeconfig
 ```
 
 We can see the nodes in the cluster.
 
-```bash=
+```bash
 kubectl --kubeconfig cluster-one.kubeconfig  get nodes
 ```
 
 The output shows that our nodes aren't in a `Ready` state - this is because we haven't installed a CNI yet.
 
-```bash=
+```bash
 NAME                                              STATUS     ROLES           AGE     VERSION
 docker-cluster-one-md-0-g6cf5-659f45c999-zlvb2   NotReady   <none>          3m4s    v1.25.0
 docker-cluster-one-sl7l7-nw9qb                   NotReady   control-plane   3m17s   v1.25.0
@@ -507,6 +517,6 @@ The nodes in our cluster are now in a `Ready` state, and `clusterctl` will show 
 ```
 kubectl --kubeconfig cluster-one.kubeconfig  get nodes
 
-clusterctl describe cluster docker-cluster-one
+$env:NO_COLOR = 'true'; clusterctl describe cluster docker-cluster-one
 ```
 
