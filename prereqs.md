@@ -61,10 +61,10 @@ sudo install -o root -g root -m 0755 /tmp/kind /usr/local/bin/kind
 kind version
 ```
 
-Install clusterctl v1.2.3 by downloading it from the [ClusterAPI release page](https://github.com/kubernetes-sigs/cluster-api/releases/tag/v1.2.2) and adding it to the path.
+Install clusterctl v1.2.3 by downloading it from the [ClusterAPI release page](https://github.com/kubernetes-sigs/cluster-api/releases/tag/v1.2.3) and adding it to the path.
 
 ```bash
-curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/v1.2.2/clusterctl-linux-amd64 -o /tmp/clusterctl
+curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/v1.2.3/clusterctl-linux-amd64 -o /tmp/clusterctl
 sudo install -o root -g root -m 0755 /tmp/clusterctl /usr/local/bin/clusterctl
 
 # Verify via:
@@ -170,13 +170,13 @@ sudo chown root: /usr/local/bin/kind
 kind version
 ```
 
-Install clusterctl v1.2.3 by downloading it from the [ClusterAPI release page](https://github.com/kubernetes-sigs/cluster-api/releases/tag/v1.2.2) and adding it to the path.
+Install clusterctl v1.2.3 by downloading it from the [ClusterAPI release page](https://github.com/kubernetes-sigs/cluster-api/releases/tag/v1.2.3) and adding it to the path.
 
 ```bash
 # amd64
-curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/v1.2.2/clusterctl-darwin-amd64 -o /tmp/clusterctl
+curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/v1.2.3/clusterctl-darwin-amd64 -o /tmp/clusterctl
 # arm (if your Mac has an M1 CPU (”Apple Silicon”))
-curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/v1.2.2/clusterctl-darwin-arm64 -o /tmp/clusterctl
+curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/v1.2.3/clusterctl-darwin-arm64 -o /tmp/clusterctl
 chmod +x /tmp/clusterctl
 sudo mv /tmp/clusterctl /usr/local/bin/clusterctl
 sudo chown root: /usr/local/bin/clusterctl
@@ -281,10 +281,10 @@ curl.exe -L https://github.com/kubernetes-sigs/kind/releases/download/v0.16.0/ki
 kind version
 ```
 
-Install clusterctl v1.2.3 by downloading it from the [ClusterAPI release page](https://github.com/kubernetes-sigs/cluster-api/releases/tag/v1.2.2) and adding it to the path.
+Install clusterctl v1.2.3 by downloading it from the [ClusterAPI release page](https://github.com/kubernetes-sigs/cluster-api/releases/tag/v1.2.3) and adding it to the path.
 
 ```bash
-curl.exe -L https://github.com/kubernetes-sigs/cluster-api/releases/download/v1.2.2/clusterctl-windows-amd64.exe -o clusterctl.exe
+curl.exe -L https://github.com/kubernetes-sigs/cluster-api/releases/download/v1.2.3/clusterctl-windows-amd64.exe -o clusterctl.exe
 # Note: If you don't have curl installed, just download the binary manually and rename it to clusterctl.exe.
 
 # Append or prepend the path of that directory to the PATH environment variable.

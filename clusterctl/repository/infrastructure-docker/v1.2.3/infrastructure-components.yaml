@@ -1900,7 +1900,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.uid
-        image: gcr.io/k8s-staging-cluster-api/capd-manager:v1.2.2
+        image: gcr.io/k8s-staging-cluster-api/capd-manager:v1.2.3
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
