@@ -46,7 +46,7 @@ Cluster API's CLI - `clusterctl` is used to install the CAPI Management Cluster 
 ```bash
 # Set the CLUSTER_TOPOLOGY variable to true. This is a feature flag used to enable ClusterClass.
 export CLUSTER_TOPOLOGY=true
-clusterctl init --infrastructure docker:v1.2.2 --config ./clusterctl/repository/config.yaml
+clusterctl init --infrastructure docker --config ./clusterctl/repository/config.yaml
 ```
 
 Each of the provider controllers is installed as a pod on the Kind cluster. Once they're up and running you have your very own management Cluster!
@@ -214,7 +214,7 @@ Cluster API's CLI - `clusterctl` is used to install the CAPI Management Cluster 
 ```bash
 # Set the CLUSTER_TOPOLOGY variable to true. This is a feature flag used to enable ClusterClass.
 export CLUSTER_TOPOLOGY=true
-clusterctl init --infrastructure docker:v1.2.2 --config ./clusterctl/repository/config.yaml
+clusterctl init --infrastructure docker --config ./clusterctl/repository/config.yaml
 ```
 
 Each of the provider controllers is installed as a pod on the Kind cluster. Once they're up and running you have your very own management Cluster!
@@ -384,7 +384,7 @@ Cluster API's CLI - `clusterctl` is used to install the CAPI Management Cluster 
 ```bash
 # Set the CLUSTER_TOPOLOGY variable to true. This is a feature flag used to enable ClusterClass.
 $env:CLUSTER_TOPOLOGY = 'true' 
-clusterctl init --infrastructure docker:v1.2.2 --config ./clusterctl/repository/config.yaml
+clusterctl init --infrastructure docker --config ./clusterctl/repository/config.yaml
 ```
 
 Each of the provider controllers is installed as a pod on the Kind cluster. Once they're up and running you have your very own management Cluster!
