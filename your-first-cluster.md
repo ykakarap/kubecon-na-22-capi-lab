@@ -28,6 +28,8 @@ A Cluster API Management Cluster is a Kubernetes Cluster where the components th
 The first step in creating a management cluster is to create a Kubernetes cluster to host the CAPI components.
 
 ```bash
+cd kubecon-na-22-capi-lab
+
 sh ./scripts/prepull-images.sh
 sh ./scripts/create-kind-cluster.sh
 ```
@@ -44,6 +46,9 @@ In this case we're using the Docker infrastructure provider - so we need a the D
 Cluster API's CLI - `clusterctl` is used to install the CAPI Management Cluster components - luckily it's able to handle installing all of the above as well as the Custom Resource Definitions used by the Cluster API controllers.
 
 ```bash
+# Please ensure CLUSTERCTL_REPOSITORY_PATH is set and points to the clusterctl repository. 
+export CLUSTERCTL_REPOSITORY_PATH=$(pwd)/clusterctl/repository
+
 # Set the CLUSTER_TOPOLOGY variable to true. This is a feature flag used to enable ClusterClass.
 export CLUSTER_TOPOLOGY=true
 clusterctl init --infrastructure docker --config ./clusterctl/repository/config.yaml
@@ -101,9 +106,9 @@ spec:
     serviceDomain: "cluster.local"
   topology:
     class: quick-start                   # The name of the ClusterClass the Cluster is templated from.
+    version: v1.24.6                     # The version of the Kubernetes Cluster.
     controlPlane:
       replicas: 1                        # The number of control plane nodes in the Cluster.
-    version: v1.25.0                     # The version of the Kubernetes Cluster.
     workers:
       machineDeployments:                # A group of worker nodes that all have the same spec.
         - class: default-worker          # The name of the Class the MachineDeployment is templated from.
@@ -196,6 +201,8 @@ A Cluster API Management Cluster is a Kubernetes Cluster where the components th
 The first step in creating a management cluster is to create a Kubernetes cluster to host the CAPI components.
 
 ```bash
+cd kubecon-na-22-capi-lab
+
 sh ./scripts/prepull-images.sh
 sh ./scripts/create-kind-cluster.sh
 ```
@@ -212,6 +219,9 @@ In this case we're using the Docker infrastructure provider - so we need a the D
 Cluster API's CLI - `clusterctl` is used to install the CAPI Management Cluster components - luckily it's able to handle installing all of the above as well as the Custom Resource Definitions used by the Cluster API controllers.
 
 ```bash
+# Please ensure CLUSTERCTL_REPOSITORY_PATH is set and points to the clusterctl repository. 
+export CLUSTERCTL_REPOSITORY_PATH=$(pwd)/clusterctl/repository
+
 # Set the CLUSTER_TOPOLOGY variable to true. This is a feature flag used to enable ClusterClass.
 export CLUSTER_TOPOLOGY=true
 clusterctl init --infrastructure docker --config ./clusterctl/repository/config.yaml
@@ -269,9 +279,9 @@ spec:
     serviceDomain: "cluster.local"
   topology:
     class: quick-start                   # The name of the ClusterClass the Cluster is templated from.
+    version: v1.24.6                     # The version of the Kubernetes Cluster.
     controlPlane:
       replicas: 1                        # The number of control plane nodes in the Cluster.
-    version: v1.25.0                     # The version of the Kubernetes Cluster.
     workers:
       machineDeployments:                # A group of worker nodes that all have the same spec.
         - class: default-worker          # The name of the Class the MachineDeployment is templated from.
@@ -366,6 +376,8 @@ A Cluster API Management Cluster is a Kubernetes Cluster where the components th
 The first step in creating a management cluster is to create a Kubernetes cluster to host the CAPI components.
 
 ```bash
+cd kubecon-na-22-capi-lab
+
 .\scripts\prepull-images.ps1
 .\scripts\create-kind-cluster.ps1
 ```
@@ -382,6 +394,9 @@ In this case we're using the Docker infrastructure provider - so we need a the D
 Cluster API's CLI - `clusterctl` is used to install the CAPI Management Cluster components - luckily it's able to handle installing all of the above as well as the Custom Resource Definitions used by the Cluster API controllers.
 
 ```bash
+# Please ensure CLUSTERCTL_REPOSITORY_PATH is set and points to the clusterctl repository. 
+$env:CLUSTERCTL_REPOSITORY_PATH = ([System.Uri](Get-Item .).FullName).AbsoluteUri + "/clusterctl/repository"
+
 # Set the CLUSTER_TOPOLOGY variable to true. This is a feature flag used to enable ClusterClass.
 $env:CLUSTER_TOPOLOGY = 'true' 
 clusterctl init --infrastructure docker --config ./clusterctl/repository/config.yaml
@@ -439,9 +454,9 @@ spec:
     serviceDomain: "cluster.local"
   topology:
     class: quick-start                   # The name of the ClusterClass the Cluster is templated from.
+    version: v1.24.6                     # The version of the Kubernetes Cluster.
     controlPlane:
       replicas: 1                        # The number of control plane nodes in the Cluster.
-    version: v1.25.0                     # The version of the Kubernetes Cluster.
     workers:
       machineDeployments:                # A group of worker nodes that all have the same spec.
         - class: default-worker          # The name of the Class the MachineDeployment is templated from.

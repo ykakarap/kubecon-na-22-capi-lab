@@ -10,17 +10,17 @@ Please ensure you have at least: 4 CPU, 16 GB RAM and 32 GB free disk space.
 **Table of Contents**
 
 - [Linux](#linux)
-  - [Install Docker, kubectl, kind and clusterctl](#install-docker-kubectl-kind-and-clusterctl)
+  - [Install Docker, kubectl, kind, clusterctl and helm](#install-docker-kubectl-kind-clusterctl-and-helm)
   - [Clone the tutorial repository](#clone-the-tutorial-repository)
   - [Pre-download container images](#pre-download-container-images)
   - [Verification](#verification)
 - [macOS](#macos)
-  - [Install Docker, kubectl, kind and clusterctl](#install-docker-kubectl-kind-and-clusterctl-1)
+  - [Install Docker, kubectl, kind, clusterctl and helm](#install-docker-kubectl-kind-clusterctl-and-helm-1)
   - [Clone the tutorial repository](#clone-the-tutorial-repository-1)
     - [Pre-download container images](#pre-download-container-images-1)
   - [Verification](#verification-1)
 - [Windows](#windows)
-  - [Install Docker, kubectl, kind and clusterctl](#install-docker-kubectl-kind-and-clusterctl-2)
+  - [Install Docker, kubectl, kind, clusterctl and helm](#install-docker-kubectl-kind-clusterctl-and-helm-2)
   - [Clone the tutorial repository](#clone-the-tutorial-repository-2)
   - [Pre-download container images](#pre-download-container-images-2)
   - [Verification](#verification-2)
@@ -30,7 +30,7 @@ Please ensure you have at least: 4 CPU, 16 GB RAM and 32 GB free disk space.
 
 ## Linux
 
-### Install Docker, kubectl, kind and clusterctl
+### Install Docker, kubectl, kind, clusterctl and helm
 
 Install Docker as documented on the Docker website. You can choose between:
 * [Docker Engine (e.g. Ubuntu)](https://docs.docker.com/engine/install/ubuntu/) (preferred)
@@ -69,6 +69,17 @@ sudo install -o root -g root -m 0755 /tmp/clusterctl /usr/local/bin/clusterctl
 
 # Verify via:
 clusterctl version
+```
+
+Install helm v3.10.0 by downloading it from the [Helm release page](https://github.com/helm/helm/releases/tag/v3.10.0) and adding it to the path.
+
+```bash
+curl -L https://get.helm.sh/helm-v3.10.0-linux-amd64.tar.gz -o /tmp/helm.tar.gz
+tar -zxvf /tmp/helm.tar.gz -C /tmp
+sudo install -o root -g root -m 0755 /tmp/linux-amd64/helm /usr/local/bin/helm
+
+# Verify via:
+helm version
 ```
 
 ### Clone the tutorial repository
@@ -136,7 +147,7 @@ kind delete cluster
 
 ## macOS
 
-### Install Docker, kubectl, kind and clusterctl
+### Install Docker, kubectl, kind, clusterctl and helm
 
 Install Docker Desktop as documented in [Install Docker Desktop on Mac](https://docs.docker.com/desktop/install/mac-install/). 
 
@@ -183,6 +194,27 @@ sudo chown root: /usr/local/bin/clusterctl
 
 # Verify via:
 clusterctl version
+```
+
+Install helm v3.10.0 by downloading it from the [Helm release page](https://github.com/helm/helm/releases/tag/v3.10.0) and adding it to the path.
+
+```bash
+# amd64
+curl -L https://get.helm.sh/helm-v3.10.0-darwin-amd64.tar.gz -o /tmp/helm.tar.gz
+tar -zxvf /tmp/helm.tar.gz -C /tmp
+chmod +x /tmp/darwin-amd64/helm
+sudo mv /tmp/darwin-amd64/helm /usr/local/bin/helm
+sudo chown root: /usr/local/bin/helm
+
+# arm (if your Mac has an M1 CPU (”Apple Silicon”))
+curl -L https://get.helm.sh/helm-v3.10.0-darwin-arm64.tar.gz -o /tmp/helm.tar.gz
+tar -zxvf /tmp/helm.tar.gz -C /tmp
+chmod +x /tmp/darwin-arm64/helm
+sudo mv /tmp/darwin-arm64/helm /usr/local/bin/helm
+sudo chown root: /usr/local/bin/helm
+
+# Verify via:
+helm version
 ```
 
 ### Clone the tutorial repository
@@ -250,7 +282,7 @@ kind delete cluster
 
 ## Windows
 
-### Install Docker, kubectl, kind and clusterctl
+### Install Docker, kubectl, kind, clusterctl and helm
 
 Install Docker Desktop as documented in [Install Docker Desktop on Windows](https://docs.docker.com/desktop/install/windows-install/).
 
@@ -291,6 +323,19 @@ curl.exe -L https://github.com/kubernetes-sigs/cluster-api/releases/download/v1.
 
 # Verify via:
 clusterctl version
+```
+
+Install helm v3.10.0 by downloading it from the [Helm release page](https://github.com/helm/helm/releases/tag/v3.10.0) and adding it to the path.
+
+```bash
+# amd64
+curl.exe -L https://get.helm.sh/helm-v3.10.0-windows-amd64.zip -o ./helm.zip
+Unzip ./helm.zip ./helm
+
+# Append or prepend the path of that directory to the PATH environment variable.
+
+# Verify via:
+helm version
 ```
 
 ### Clone the tutorial repository
