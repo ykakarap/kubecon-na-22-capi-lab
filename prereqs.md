@@ -1,39 +1,36 @@
 # Prerequisites
 
-<!-- table of contens generated via: https://github.com/thlorenz/doctoc -->
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
-
-- [Prerequisites](#prerequisites)
-  - [Linux](#linux)
-    - [Install Docker, kubectl, kind and clusterctl](#install-docker-kubectl-kind-and-clusterctl)
-    - [Clone the tutorial repository](#clone-the-tutorial-repository)
-    - [Pre-download container images](#pre-download-container-images)
-    - [Verification](#verification)
-  - [macOS](#macos)
-    - [Install Docker, kubectl, kind and clusterctl](#install-docker-kubectl-kind-and-clusterctl-1)
-    - [Clone the tutorial repository](#clone-the-tutorial-repository-1)
-    - [Pre-download container images](#pre-download-container-images-1)
-    - [Verification](#verification-1)
-  - [Windows](#windows)
-    - [Install Docker, kubectl, kind and clusterctl](#install-docker-kubectl-kind-and-clusterctl-2)
-    - [Clone the tutorial repository](#clone-the-tutorial-repository-2)
-    - [Pre-download container images](#pre-download-container-images-2)
-    - [Verification](#verification-2)
-- [Avoid GitHub rate-limiting when running the tutorial without the local clusterctl repository](#avoid-github-rate-limiting-when-running-the-tutorial-without-the-local-clusterctl-repository)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-## Prerequisites
-
 Please ensure you have at least: 4 CPU, 16 GB RAM and 32 GB free disk space.
 
 **Note**: Windows instructions are provided on a best effort basis and have been tested and verified on Windows 11 with Powershell and Docker Desktop which was using WSL 2.
 
-### Linux
+<!-- table of contens generated via: https://github.com/thlorenz/doctoc -->
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
 
-#### Install Docker, kubectl, kind and clusterctl
+- [Linux](#linux)
+  - [Install Docker, kubectl, kind and clusterctl](#install-docker-kubectl-kind-and-clusterctl)
+  - [Clone the tutorial repository](#clone-the-tutorial-repository)
+  - [Pre-download container images](#pre-download-container-images)
+  - [Verification](#verification)
+- [macOS](#macos)
+  - [Install Docker, kubectl, kind and clusterctl](#install-docker-kubectl-kind-and-clusterctl-1)
+  - [Clone the tutorial repository](#clone-the-tutorial-repository-1)
+    - [Pre-download container images](#pre-download-container-images-1)
+  - [Verification](#verification-1)
+- [Windows](#windows)
+  - [Install Docker, kubectl, kind and clusterctl](#install-docker-kubectl-kind-and-clusterctl-2)
+  - [Clone the tutorial repository](#clone-the-tutorial-repository-2)
+  - [Pre-download container images](#pre-download-container-images-2)
+  - [Verification](#verification-2)
+- [Avoid GitHub rate-limiting when running the tutorial without the local clusterctl repository](#avoid-github-rate-limiting-when-running-the-tutorial-without-the-local-clusterctl-repository)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## Linux
+
+### Install Docker, kubectl, kind and clusterctl
 
 Install Docker as documented on the Docker website. You can choose between:
 * [Docker Engine (e.g. Ubuntu)](https://docs.docker.com/engine/install/ubuntu/) (preferred)
@@ -74,7 +71,7 @@ sudo install -o root -g root -m 0755 /tmp/clusterctl /usr/local/bin/clusterctl
 clusterctl version
 ```
 
-#### Clone the tutorial repository
+### Clone the tutorial repository
 
 ```bash
 git clone https://github.com/ykakarap/kubecon-na-22-capi-lab
@@ -87,7 +84,7 @@ export CLUSTERCTL_REPOSITORY_PATH=$(pwd)/clusterctl/repository
 
 **Note**: You can also download the repository via this link if you don't have `git` installed: [main.zip](https://github.com/ykakarap/kubecon-na-22-capi-lab/archive/refs/heads/main.zip).
 
-#### Pre-download container images
+### Pre-download container images
 
 As we don't want to rely on the conference WiFi please pre-pull the container images used in the tutorial via:
 
@@ -95,7 +92,7 @@ As we don't want to rely on the conference WiFi please pre-pull the container im
 sh ./scripts/prepull-images.sh
 ```
 
-#### Verification
+### Verification
 
 This section describes steps to verify everything has been installed correctly.
 
@@ -137,9 +134,9 @@ Delete the kind cluster:
 kind delete cluster
 ```
 
-### macOS
+## macOS
 
-#### Install Docker, kubectl, kind and clusterctl
+### Install Docker, kubectl, kind and clusterctl
 
 Install Docker Desktop as documented in [Install Docker Desktop on Mac](https://docs.docker.com/desktop/install/mac-install/). 
 
@@ -188,7 +185,7 @@ sudo chown root: /usr/local/bin/clusterctl
 clusterctl version
 ```
 
-#### Clone the tutorial repository
+### Clone the tutorial repository
 
 ```bash
 git clone https://github.com/ykakarap/kubecon-na-22-capi-lab
@@ -209,7 +206,7 @@ As we don't want to rely on the conference WiFi please pre-pull the container im
 sh ./scripts/prepull-images.sh
 ```
 
-#### Verification
+### Verification
 
 This section describes steps to verify everything has been installed correctly.
 
@@ -251,9 +248,9 @@ Delete the kind cluster:
 kind delete cluster
 ```
 
-### Windows
+## Windows
 
-#### Install Docker, kubectl, kind and clusterctl
+### Install Docker, kubectl, kind and clusterctl
 
 Install Docker Desktop as documented in [Install Docker Desktop on Windows](https://docs.docker.com/desktop/install/windows-install/).
 
@@ -296,7 +293,7 @@ curl.exe -L https://github.com/kubernetes-sigs/cluster-api/releases/download/v1.
 clusterctl version
 ```
 
-#### Clone the tutorial repository
+### Clone the tutorial repository
 
 ```bash
 git clone https://github.com/ykakarap/kubecon-na-22-capi-lab
@@ -309,7 +306,7 @@ $env:CLUSTERCTL_REPOSITORY_PATH = ([System.Uri](Get-Item .).FullName).AbsoluteUr
 
 **Note**: You can also download the repository via this link if you don't have `git` installed: [main.zip](https://github.com/ykakarap/kubecon-na-22-capi-lab/archive/refs/heads/main.zip).
 
-#### Pre-download container images
+### Pre-download container images
 
 As we don't want to rely on the conference WiFi please pre-pull the container images used in the tutorial via:
 
@@ -319,7 +316,7 @@ As we don't want to rely on the conference WiFi please pre-pull the container im
 
 **Note** You might have to enable running scripts by executing `Set-ExecutionPolicy Unrestricted` in a PowerShell run as Administrator.
 
-#### Verification
+### Verification
 
 This section describes steps to verify everything has been installed correctly.
 
