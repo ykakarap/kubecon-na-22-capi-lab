@@ -280,6 +280,11 @@ spec:
       extraMounts:
       - containerPath: "/var/run/docker.sock"
         hostPath: "/var/run/docker.sock"
+      preLoadImages:
+      - k8s.gcr.io/pause:3.7
+      - docker.io/calico/cni:v3.24.1
+      - docker.io/calico/kube-controllers:v3.24.1
+      - docker.io/calico/node:v3.24.1
 ---
 apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
 kind: DockerMachineTemplate
@@ -291,6 +296,11 @@ spec:
       extraMounts:
       - containerPath: "/var/run/docker.sock"
         hostPath: "/var/run/docker.sock"
+      preLoadImages:
+      - k8s.gcr.io/pause:3.7
+      - docker.io/calico/cni:v3.24.1
+      - docker.io/calico/kube-controllers:v3.24.1
+      - docker.io/calico/node:v3.24.1
 ---
 apiVersion: bootstrap.cluster.x-k8s.io/v1beta1
 kind: KubeadmConfigTemplate
