@@ -51,6 +51,8 @@ Verify kubectl via:
 kubectl version --client -o yaml
 ```
 
+At the time of this writing the above link will guide you to download a version 1.25 of the kubectl binary. [Based on the offical Kubernetes version skew policy](https://kubernetes.io/releases/version-skew-policy/#kubectl) you will be able to use either 1.24, 1.25, or 1.26 of kubectl to follow the tutorial, which will have you create and upgrade Kubernetes clusters running versions 1.24 and 1.25.
+
 Install kind v0.16.0 by downloading it from the [kind release page](https://github.com/kubernetes-sigs/kind/releases/tag/v0.16.0) and adding it to the path.
 
 ```bash
@@ -149,7 +151,7 @@ kind delete cluster
 
 ### Install Docker, kubectl, kind, clusterctl and helm
 
-Install Docker Desktop as documented in [Install Docker Desktop on Mac](https://docs.docker.com/desktop/install/mac-install/). 
+Install Docker Desktop as documented in [Install Docker Desktop on Mac](https://docs.docker.com/desktop/install/mac-install/).
 
 Verify the Docker installation via:
 ```bash
@@ -165,6 +167,8 @@ Verify kubectl via:
 ```bash
 kubectl version --client -o yaml
 ```
+
+At the time of this writing the above link will guide you to download a version 1.25 of the kubectl binary. [Based on the offical Kubernetes version skew policy](https://kubernetes.io/releases/version-skew-policy/#kubectl) you will be able to use either 1.24, 1.25, or 1.26 of kubectl to follow the tutorial, which will have you create and upgrade Kubernetes clusters running versions 1.24 and 1.25.
 
 Install kind v0.16.0 by downloading it from the [kind release page](https://github.com/kubernetes-sigs/kind/releases/tag/v0.16.0) and adding it to the path.
 
@@ -300,6 +304,8 @@ Verify kubectl via:
 ```bash
 kubectl version --client -o yaml
 ```
+
+At the time of this writing the above link will guide you to download a version 1.25 of the kubectl binary. [Based on the offical Kubernetes version skew policy](https://kubernetes.io/releases/version-skew-policy/#kubectl) you will be able to use either 1.24, 1.25, or 1.26 of kubectl to follow the tutorial, which will have you create and upgrade Kubernetes clusters running versions 1.24 and 1.25.
 
 Install kind v0.16.0 by downloading it from the [kind release page](https://github.com/kubernetes-sigs/kind/releases/tag/v0.16.0) and adding it to the path.
 
