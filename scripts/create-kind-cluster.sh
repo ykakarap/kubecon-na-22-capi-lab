@@ -9,3 +9,6 @@ kind load docker-image gcr.io/k8s-staging-cluster-api/capd-manager:v1.2.3 k8s.gc
 
 # Load cert-manager
 kind load docker-image quay.io/jetstack/cert-manager-cainjector:v1.9.1 quay.io/jetstack/cert-manager-controller:v1.9.1 quay.io/jetstack/cert-manager-webhook:v1.9.1
+
+# Load Cluster API visualizer
+kind load docker-image ghcr.io/jont828/cluster-api-visualizer:v1.0.0

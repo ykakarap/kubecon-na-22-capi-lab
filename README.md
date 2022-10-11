@@ -5,5 +5,9 @@ TODO: insert some introduction text
 Sections:
 * [Prerequisites](./prereqs.md)
 * [Creating your first cluster with Cluster API](./your-first-cluster.md)
-* TODO: add links to the other sections
-
+* [Deploying the Cluster API visualizer](./visualizer.md)
+* TODO: Changing the Cluster Topology
+* TODO: Upgrade to another Kubernetes version
+* TODO: MachineHealthChecks and Machine remediation
+* TODO: Cluster lifecycle hooks
+* TODO: Self hosted management cluster

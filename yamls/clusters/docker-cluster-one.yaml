@@ -14,7 +14,6 @@ spec:
     class: quick-start
     version: v1.24.6
     controlPlane:
-      metadata: {}
       replicas: 1
     variables:
       - name: imageRepository

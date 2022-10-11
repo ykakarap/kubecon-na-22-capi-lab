@@ -20,3 +20,6 @@ docker pull k8s.gcr.io/pause:3.7
 docker pull docker.io/calico/cni:v3.24.1
 docker pull docker.io/calico/kube-controllers:v3.24.1
 docker pull docker.io/calico/node:v3.24.1
+
+# Cluster API visualizer
+docker pull ghcr.io/jont828/cluster-api-visualizer:v1.0.0
