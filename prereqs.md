@@ -116,19 +116,28 @@ sh ./scripts/create-kind-cluster.sh
 
 Should return:
 ```bash
-Creating cluster "kind" ...
+Creating cluster "kubecon-na-22-capi-lab" ...
  ✓ Ensuring node image (kindest/node:v1.25.2) 🖼
  ✓ Preparing nodes 📦
  ✓ Writing configuration 📜
  ✓ Starting control-plane 🕹️
  ✓ Installing CNI 🔌
  ✓ Installing StorageClass 💾
-Set kubectl context to "kind-kind"
+Set kubectl context to "kind-kubecon-na-22-capi-lab"
 You can now use your cluster with:
 
-kubectl cluster-info --context kind-kind
+kubectl cluster-info --context kind-kubecon-na-22-capi-lab
 
-Not sure what to do next? 😅  Check out https://kind.sigs.k8s.io/docs/user/quick-start/
+Thanks for using kind! 😊
+Load pre-downloaded images into kind cluster
+Image: "gcr.io/k8s-staging-cluster-api/capd-manager:v1.2.3" with ID "sha256:91e30b59e238584a1d7bcbd0860b23f32ad64507d66b69e59689fe6dd4eb1991" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
+Image: "k8s.gcr.io/cluster-api/cluster-api-controller:v1.2.3" with ID "sha256:7ab6ae2e4796d71112707fe334375f929e32ec6c392a9dcebbc8749300d9a06d" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
+Image: "k8s.gcr.io/cluster-api/kubeadm-bootstrap-controller:v1.2.3" with ID "sha256:92e4fcf96b7499ae2e4f076798e4ce123c6e6f8e5bd07ab55e459e5675ad680c" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
+Image: "k8s.gcr.io/cluster-api/kubeadm-control-plane-controller:v1.2.3" with ID "sha256:a01a02cfc2582e2f3b757899be789e7ba1db86016050946a703e3175edbcfc99" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
+Image: "quay.io/jetstack/cert-manager-cainjector:v1.9.1" with ID "sha256:11778d29f8cc283a72a84fbd68601a631fc7705fe2f12a70ea5df7ca3262dfe9" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
+Image: "quay.io/jetstack/cert-manager-controller:v1.9.1" with ID "sha256:8eaca4249b016e1e355957d357a39a0a8a837e1837054e8762fe7d1cd13051af" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
+Image: "quay.io/jetstack/cert-manager-webhook:v1.9.1" with ID "sha256:d3348bcdc1e7e39e655c3b17106fe2e2038cfd70d080a3ac89a9eaf3bd26fc3d" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
+Image: "ghcr.io/jont828/cluster-api-visualizer:v1.0.0" with ID "sha256:2954ce6706933119b6301a97a029f69df17fa0b0401962078d5a91d99c935f0d" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
 ```
 
 Test kubectl:
@@ -138,8 +147,8 @@ kubectl get node
 
 Should return:
 ```bash
-NAME                 STATUS   ROLES           AGE   VERSION
-kind-control-plane   Ready    control-plane   33s   v1.25.2
+NAME                                   STATUS   ROLES           AGE    VERSION
+kubecon-na-22-capi-lab-control-plane   Ready    control-plane   3m5s   v1.25.2
 ```
 
 Delete the kind cluster:
@@ -253,19 +262,28 @@ sh ./scripts/create-kind-cluster.sh
 
 Should return:
 ```bash
-Creating cluster "kind" ...
+Creating cluster "kubecon-na-22-capi-lab" ...
  ✓ Ensuring node image (kindest/node:v1.25.2) 🖼
  ✓ Preparing nodes 📦
  ✓ Writing configuration 📜
  ✓ Starting control-plane 🕹️
  ✓ Installing CNI 🔌
  ✓ Installing StorageClass 💾
-Set kubectl context to "kind-kind"
+Set kubectl context to "kind-kubecon-na-22-capi-lab"
 You can now use your cluster with:
 
-kubectl cluster-info --context kind-kind
+kubectl cluster-info --context kind-kubecon-na-22-capi-lab
 
-Not sure what to do next? 😅  Check out https://kind.sigs.k8s.io/docs/user/quick-start/
+Thanks for using kind! 😊
+Load pre-downloaded images into kind cluster
+Image: "gcr.io/k8s-staging-cluster-api/capd-manager:v1.2.3" with ID "sha256:91e30b59e238584a1d7bcbd0860b23f32ad64507d66b69e59689fe6dd4eb1991" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
+Image: "k8s.gcr.io/cluster-api/cluster-api-controller:v1.2.3" with ID "sha256:7ab6ae2e4796d71112707fe334375f929e32ec6c392a9dcebbc8749300d9a06d" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
+Image: "k8s.gcr.io/cluster-api/kubeadm-bootstrap-controller:v1.2.3" with ID "sha256:92e4fcf96b7499ae2e4f076798e4ce123c6e6f8e5bd07ab55e459e5675ad680c" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
+Image: "k8s.gcr.io/cluster-api/kubeadm-control-plane-controller:v1.2.3" with ID "sha256:a01a02cfc2582e2f3b757899be789e7ba1db86016050946a703e3175edbcfc99" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
+Image: "quay.io/jetstack/cert-manager-cainjector:v1.9.1" with ID "sha256:11778d29f8cc283a72a84fbd68601a631fc7705fe2f12a70ea5df7ca3262dfe9" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
+Image: "quay.io/jetstack/cert-manager-controller:v1.9.1" with ID "sha256:8eaca4249b016e1e355957d357a39a0a8a837e1837054e8762fe7d1cd13051af" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
+Image: "quay.io/jetstack/cert-manager-webhook:v1.9.1" with ID "sha256:d3348bcdc1e7e39e655c3b17106fe2e2038cfd70d080a3ac89a9eaf3bd26fc3d" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
+Image: "ghcr.io/jont828/cluster-api-visualizer:v1.0.0" with ID "sha256:2954ce6706933119b6301a97a029f69df17fa0b0401962078d5a91d99c935f0d" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
 ```
 
 Test kubectl:
@@ -275,8 +293,8 @@ kubectl get node
 
 Should return:
 ```bash
-NAME                 STATUS   ROLES           AGE   VERSION
-kind-control-plane   Ready    control-plane   33s   v1.25.2
+NAME                                   STATUS   ROLES           AGE    VERSION
+kubecon-na-22-capi-lab-control-plane   Ready    control-plane   3m5s   v1.25.2
 ```
 
 Delete the kind cluster:
@@ -378,19 +396,28 @@ Create the kind cluster: (including pre-loading images)
 
 Should return:
 ```bash
-Creating cluster "kind" ...
+Creating cluster "kubecon-na-22-capi-lab" ...
  ✓ Ensuring node image (kindest/node:v1.25.2) 🖼
  ✓ Preparing nodes 📦
  ✓ Writing configuration 📜
  ✓ Starting control-plane 🕹️
  ✓ Installing CNI 🔌
  ✓ Installing StorageClass 💾
-Set kubectl context to "kind-kind"
+Set kubectl context to "kind-kubecon-na-22-capi-lab"
 You can now use your cluster with:
 
-kubectl cluster-info --context kind-kind
+kubectl cluster-info --context kind-kubecon-na-22-capi-lab
 
-Not sure what to do next? 😅  Check out https://kind.sigs.k8s.io/docs/user/quick-start/
+Thanks for using kind! 😊
+Load pre-downloaded images into kind cluster
+Image: "gcr.io/k8s-staging-cluster-api/capd-manager:v1.2.3" with ID "sha256:91e30b59e238584a1d7bcbd0860b23f32ad64507d66b69e59689fe6dd4eb1991" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
+Image: "k8s.gcr.io/cluster-api/cluster-api-controller:v1.2.3" with ID "sha256:7ab6ae2e4796d71112707fe334375f929e32ec6c392a9dcebbc8749300d9a06d" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
+Image: "k8s.gcr.io/cluster-api/kubeadm-bootstrap-controller:v1.2.3" with ID "sha256:92e4fcf96b7499ae2e4f076798e4ce123c6e6f8e5bd07ab55e459e5675ad680c" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
+Image: "k8s.gcr.io/cluster-api/kubeadm-control-plane-controller:v1.2.3" with ID "sha256:a01a02cfc2582e2f3b757899be789e7ba1db86016050946a703e3175edbcfc99" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
+Image: "quay.io/jetstack/cert-manager-cainjector:v1.9.1" with ID "sha256:11778d29f8cc283a72a84fbd68601a631fc7705fe2f12a70ea5df7ca3262dfe9" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
+Image: "quay.io/jetstack/cert-manager-controller:v1.9.1" with ID "sha256:8eaca4249b016e1e355957d357a39a0a8a837e1837054e8762fe7d1cd13051af" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
+Image: "quay.io/jetstack/cert-manager-webhook:v1.9.1" with ID "sha256:d3348bcdc1e7e39e655c3b17106fe2e2038cfd70d080a3ac89a9eaf3bd26fc3d" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
+Image: "ghcr.io/jont828/cluster-api-visualizer:v1.0.0" with ID "sha256:2954ce6706933119b6301a97a029f69df17fa0b0401962078d5a91d99c935f0d" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
 ```
 
 Test kubectl:
@@ -400,8 +427,8 @@ kubectl get node
 
 Should return:
 ```bash
-NAME                 STATUS   ROLES           AGE   VERSION
-kind-control-plane   Ready    control-plane   33s   v1.25.2
+NAME                                   STATUS   ROLES           AGE    VERSION
+kubecon-na-22-capi-lab-control-plane   Ready    control-plane   3m5s   v1.25.2
 ```
 
 Delete the kind cluster:
