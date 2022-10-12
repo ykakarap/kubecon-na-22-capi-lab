@@ -175,6 +175,10 @@ Install kind v0.16.0 by downloading it from the [kind release page](https://gith
 ```bash
 # amd64
 curl -L https://github.com/kubernetes-sigs/kind/releases/download/v0.16.0/kind-darwin-amd64 -o /tmp/kind
+chmod +x /tmp/kind
+sudo mv /tmp/kind /usr/local/bin/kind
+sudo chown root: /usr/local/bin/kind
+
 # arm (if your Mac has an M1 CPU (”Apple Silicon”))
 curl -L https://github.com/kubernetes-sigs/kind/releases/download/v0.16.0/kind-darwin-arm64 -o /tmp/kind
 chmod +x /tmp/kind
@@ -190,6 +194,10 @@ Install clusterctl v1.2.3 by downloading it from the [ClusterAPI release page](h
 ```bash
 # amd64
 curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/v1.2.3/clusterctl-darwin-amd64 -o /tmp/clusterctl
+chmod +x /tmp/clusterctl
+sudo mv /tmp/clusterctl /usr/local/bin/clusterctl
+sudo chown root: /usr/local/bin/clusterctl
+
 # arm (if your Mac has an M1 CPU (”Apple Silicon”))
 curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/v1.2.3/clusterctl-darwin-arm64 -o /tmp/clusterctl
 chmod +x /tmp/clusterctl
