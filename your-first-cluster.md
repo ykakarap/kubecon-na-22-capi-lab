@@ -19,7 +19,7 @@ This guide covers setting up and using Cluster API using Docker infrastructure, 
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Linux 
+## Linux
 
 ### The Management Cluster
 
@@ -40,13 +40,13 @@ Once the cluster has completed provisioning you should be able to check it's hea
 kubectl get nodes
 ```
 
-In this case we're using the Docker infrastructure provider - so we need a the Docker provider (CAPD), the Core Cluster API provider (CAPI), the Kubeadm Bootstrap provider (CAPBK) and the Kubeadm Control Plane provider (KCP) to be installed on the cluster. In addition we need Cert Manager to be installed on the system.
+In this case we're using the Docker infrastructure provider - so we need the Docker provider (CAPD), the Core Cluster API provider (CAPI), the Kubeadm Bootstrap provider (CAPBK) and the Kubeadm Control Plane provider (KCP) to be installed on the cluster. In addition we need Cert Manager to be installed on the system.
 
 
 Cluster API's CLI - `clusterctl` is used to install the CAPI Management Cluster components - luckily it's able to handle installing all of the above as well as the Custom Resource Definitions used by the Cluster API controllers.
 
 ```bash
-# Please ensure CLUSTERCTL_REPOSITORY_PATH is set and points to the clusterctl repository. 
+# Please ensure CLUSTERCTL_REPOSITORY_PATH is set and points to the clusterctl repository.
 export CLUSTERCTL_REPOSITORY_PATH=$(pwd)/clusterctl/repository
 
 # Set the CLUSTER_TOPOLOGY variable to true. This is a feature flag used to enable ClusterClass.
@@ -83,13 +83,13 @@ local-path-storage                  local-path-provisioner-9cd9bd544-sglzs      
 
 ### Your first workload cluster
 
-So what can you do with a functioning management cluster? Create more Clusters! The first step in doing this is to create a `ClusterClass` - this is a template that defines the shape of your cluster.
+So what can you do with a functioning management cluster? Create more Clusters! The first step in doing this is to create a `ClusterClass` - this is a template that defines the shape of one or more clusters.
 
 ```bash
 kubectl apply -f yamls/clusterclasses/clusterclass-quick-start.yaml
 ```
 
-Next we can create the Cluster itself, but first let's take a look at the Cluster object:
+Next we can create an actual Cluster, but first let's take a look at the Cluster object specification we've prepared (in this repo at [`yamls/clusters/docker-cluster-one.yaml`](yamls/clusters/docker-cluster-one.yaml)):
 
 ```yaml
 apiVersion: cluster.x-k8s.io/v1beta1
@@ -99,9 +99,9 @@ metadata:
   namespace: "default"                   # The namespace the Cluster will be created in.
 spec:
   clusterNetwork:
-    services:                            
+    services:
       cidrBlocks: ["10.128.0.0/12"]      # The IP range of services in the Cluster.
-    pods:                                
+    pods:
       cidrBlocks: ["192.168.0.0/16"]     # The IP range of pods in the Cluster.
     serviceDomain: "cluster.local"
   topology:
@@ -116,10 +116,9 @@ spec:
           replicas: 1                    # The number of worker nodes in this MachineDeployment
 ```
 
-The Cluster definition above defines some of the fundamental characteristics of our Cluster - it's name, the version of Kubernetes to install, the number of nodes in the control plane, the number and type of worker nodes, as well as some details about networking.
+The Cluster specification above defines some of the fundamental characteristics of our Cluster - its name, the version of Kubernetes to install, the number of nodes in the control plane, the number and type of worker nodes, as well as some details about networking.
 
-
-Time to create the Cluster! It's as simple as:
+Time to create the Cluster! It's as simple as using the yaml spec we've prepared:
 
 ```bash
 kubectl apply -f yamls/clusters/docker-cluster-one.yaml
@@ -173,7 +172,7 @@ docker-cluster-one-md-0-g6cf5-659f45c999-zlvb2   NotReady   <none>          3m4s
 docker-cluster-one-sl7l7-nw9qb                   NotReady   control-plane   3m17s   v1.25.0
 ```
 
-To install Calico on the Cluster use:
+To install Calico on the Cluster using our prepared yaml spec:
 
 ```
 kubectl --kubeconfig cluster-one.kubeconfig apply -f yamls/cni/calico.yaml
@@ -184,7 +183,7 @@ With the deployment created, watch for the pods to come up.
 watch kubectl --kubeconfig cluster-one.kubeconfig get pods -A
 ```
 
-The nodes in our cluster are now in a `Ready` state, and `clusterctl` will show the Cluster is healthy.
+Once all pods are in a `Running` state, the cluster nodes will move to the `Ready` state, and `clusterctl` will show the Cluster is healthy.
 
 ```
 kubectl --kubeconfig cluster-one.kubeconfig get nodes
@@ -213,13 +212,13 @@ Once the cluster has completed provisioning you should be able to check it's hea
 kubectl get nodes
 ```
 
-In this case we're using the Docker infrastructure provider - so we need a the Docker provider (CAPD), the Core Cluster API provider (CAPI), the Kubeadm Bootstrap provider (CAPBK) and the Kubeadm Control Plane provider (KCP) to be installed on the cluster. In addition we need Cert Manager to be installed on the system.
+In this case we're using the Docker infrastructure provider - so we need the Docker provider (CAPD), the Core Cluster API provider (CAPI), the Kubeadm Bootstrap provider (CAPBK) and the Kubeadm Control Plane provider (KCP) to be installed on the cluster. In addition we need Cert Manager to be installed on the system.
 
 
 Cluster API's CLI - `clusterctl` is used to install the CAPI Management Cluster components - luckily it's able to handle installing all of the above as well as the Custom Resource Definitions used by the Cluster API controllers.
 
 ```bash
-# Please ensure CLUSTERCTL_REPOSITORY_PATH is set and points to the clusterctl repository. 
+# Please ensure CLUSTERCTL_REPOSITORY_PATH is set and points to the clusterctl repository.
 export CLUSTERCTL_REPOSITORY_PATH=$(pwd)/clusterctl/repository
 
 # Set the CLUSTER_TOPOLOGY variable to true. This is a feature flag used to enable ClusterClass.
@@ -256,13 +255,13 @@ local-path-storage                  local-path-provisioner-9cd9bd544-sglzs      
 
 ### Your first workload cluster
 
-So what can you do with a functioning management cluster? Create more Clusters! The first step in doing this is to create a `ClusterClass` - this is a template that defines the shape of your cluster.
+So what can you do with a functioning management cluster? Create more Clusters! The first step in doing this is to create a `ClusterClass` - this is a template that defines the shape of one or more clusters.
 
 ```bash
 kubectl apply -f yamls/clusterclasses/clusterclass-quick-start.yaml
 ```
 
-Next we can create the Cluster itself, but first let's take a look at the Cluster object:
+Next we can create an actual Cluster, but first let's take a look at the Cluster object specification we've prepared (in this repo at [`yamls/clusters/docker-cluster-one.yaml`](yamls/clusters/docker-cluster-one.yaml)):
 
 ```yaml
 apiVersion: cluster.x-k8s.io/v1beta1
@@ -272,9 +271,9 @@ metadata:
   namespace: "default"                   # The namespace the Cluster will be created in.
 spec:
   clusterNetwork:
-    services:                            
+    services:
       cidrBlocks: ["10.128.0.0/12"]      # The IP range of services in the Cluster.
-    pods:                                
+    pods:
       cidrBlocks: ["192.168.0.0/16"]     # The IP range of pods in the Cluster.
     serviceDomain: "cluster.local"
   topology:
@@ -289,36 +288,28 @@ spec:
           replicas: 1                    # The number of worker nodes in this MachineDeployment
 ```
 
-The Cluster definition above defines some of the fundamental characteristics of our Cluster - it's name, the version of Kubernetes to install, the number of nodes in the control plane, the number and type of worker nodes, as well as some details about networking.
+The Cluster specification above defines some of the fundamental characteristics of our Cluster - its name, the version of Kubernetes to install, the number of nodes in the control plane, the number and type of worker nodes, as well as some details about networking.
 
-
-Time to create the Cluster! It's as simple as:
+Time to create the Cluster! It's as simple as using the yaml spec we've prepared:
 
 ```bash
 kubectl apply -f yamls/clusters/docker-cluster-one.yaml
 ```
 
-Now that the Cluster has been created we can watch it come into being with:
+Now that the Cluster has been created we can use `clusterctl` to describe its components:
 ```bash
-watch clusterctl describe cluster docker-cluster-one
+clusterctl describe cluster docker-cluster-one
 ```
 The output should resemble:
 ```bash
 NAME                                                              READY  SEVERITY  REASON                           SINCE  MESSAGE
-
-Cluster/docker-cluster-one                                        False  Warning   ScalingUp                        84s    Scaling up control plane to 1 replicas (actual
- 0)
-├─ClusterInfrastructure - DockerCluster/docker-cluster-one-4tqct  True                                              84s
-
-├─ControlPlane - KubeadmControlPlane/docker-cluster-one-bts9k     False  Warning   ScalingUp                        84s    Scaling up control plane to 1 replicas (actual
- 0)
-│ └─Machine/docker-cluster-one-bts9k-wjkcd                        False  Info	   Bootstrapping                    81s    1 of 2 completed
-
+Cluster/docker-cluster-one                                        False  Warning   ScalingUp                        4s     Scaling up control plane to 1 replicas (actual 0)
+├─ClusterInfrastructure - DockerCluster/docker-cluster-one-dkfbw  True                                              3s
+├─ControlPlane - KubeadmControlPlane/docker-cluster-one-xbqb2     False  Warning   ScalingUp                        4s     Scaling up control plane to 1 replicas (actual 0)
+│ └─Machine/docker-cluster-one-xbqb2-gwr52                        False  Info      WaitingForBootstrapData          2s     1 of 2 completed
 └─Workers
-
-  └─MachineDeployment/docker-cluster-one-md-0-sfjx8               False  Warning   WaitingForAvailableMachines      84s    Minimum availability requires 1 replicas, curr
-ent 0 available
-    └─Machine/docker-cluster-one-md-0-sfjx8-7dd6cfdbcd-5f6nm	  False  Info	   WaitingForControlPlaneAvailable  84s    0 of 2 completed
+  └─MachineDeployment/docker-cluster-one-md-0-nrh7k               False  Warning   WaitingForAvailableMachines      4s     Minimum availability requires 1 replicas, current 0 available
+    └─Machine/docker-cluster-one-md-0-nrh7k-75ddc4778f-vlph9      False  Info      WaitingForControlPlaneAvailable  3s     0 of 2 completed
 ```
 
 Our cluster will also be visible to kind, and we can see it using
@@ -346,7 +337,7 @@ docker-cluster-one-md-0-g6cf5-659f45c999-zlvb2   NotReady   <none>          3m4s
 docker-cluster-one-sl7l7-nw9qb                   NotReady   control-plane   3m17s   v1.25.0
 ```
 
-To install Calico on the Cluster use:
+To install Calico on the Cluster using our prepared yaml spec:
 
 ```
 kubectl --kubeconfig cluster-one.kubeconfig apply -f yamls/cni/calico.yaml
@@ -354,10 +345,10 @@ kubectl --kubeconfig cluster-one.kubeconfig apply -f yamls/cni/calico.yaml
 
 With the deployment created, watch for the pods to come up.
 ```
-watch kubectl --kubeconfig cluster-one.kubeconfig get pods -A
+kubectl --kubeconfig cluster-one.kubeconfig get pods -A -w
 ```
 
-The nodes in our cluster are now in a `Ready` state, and `clusterctl` will show the Cluster is healthy.
+Once all pods are in a `Running` state, the cluster nodes will move to the `Ready` state, and `clusterctl` will show the Cluster is healthy.
 
 ```
 kubectl --kubeconfig cluster-one.kubeconfig get nodes
@@ -388,17 +379,17 @@ Once the cluster has completed provisioning you should be able to check it's hea
 kubectl get nodes
 ```
 
-In this case we're using the Docker infrastructure provider - so we need a the Docker provider (CAPD), the Core Cluster API provider (CAPI), the Kubeadm Bootstrap provider (CAPBK) and the Kubeadm Control Plane provider (KCP) to be installed on the cluster. In addition we need Cert Manager to be installed on the system.
+In this case we're using the Docker infrastructure provider - so we need the Docker provider (CAPD), the Core Cluster API provider (CAPI), the Kubeadm Bootstrap provider (CAPBK) and the Kubeadm Control Plane provider (KCP) to be installed on the cluster. In addition we need Cert Manager to be installed on the system.
 
 
 Cluster API's CLI - `clusterctl` is used to install the CAPI Management Cluster components - luckily it's able to handle installing all of the above as well as the Custom Resource Definitions used by the Cluster API controllers.
 
 ```bash
-# Please ensure CLUSTERCTL_REPOSITORY_PATH is set and points to the clusterctl repository. 
+# Please ensure CLUSTERCTL_REPOSITORY_PATH is set and points to the clusterctl repository.
 $env:CLUSTERCTL_REPOSITORY_PATH = ([System.Uri](Get-Item .).FullName).AbsoluteUri + "/clusterctl/repository"
 
 # Set the CLUSTER_TOPOLOGY variable to true. This is a feature flag used to enable ClusterClass.
-$env:CLUSTER_TOPOLOGY = 'true' 
+$env:CLUSTER_TOPOLOGY = 'true'
 clusterctl init --infrastructure docker --config ./clusterctl/repository/config.yaml
 ```
 
@@ -431,13 +422,13 @@ local-path-storage                  local-path-provisioner-9cd9bd544-sglzs      
 
 ### Your first workload cluster
 
-So what can you do with a functioning management cluster? Create more Clusters! The first step in doing this is to create a `ClusterClass` - this is a template that defines the shape of your cluster.
+So what can you do with a functioning management cluster? Create more Clusters! The first step in doing this is to create a `ClusterClass` - this is a template that defines the shape of one or more clusters.
 
 ```bash
 kubectl apply -f yamls/clusterclasses/clusterclass-quick-start.yaml
 ```
 
-Next we can create the Cluster itself, but first let's take a look at the Cluster object:
+Next we can create an actual Cluster, but first let's take a look at the Cluster object specification we've prepared (in this repo at [`yamls/clusters/docker-cluster-one.yaml`](yamls/clusters/docker-cluster-one.yaml)):
 
 ```yaml
 apiVersion: cluster.x-k8s.io/v1beta1
@@ -447,9 +438,9 @@ metadata:
   namespace: "default"                   # The namespace the Cluster will be created in.
 spec:
   clusterNetwork:
-    services:                            
+    services:
       cidrBlocks: ["10.128.0.0/12"]      # The IP range of services in the Cluster.
-    pods:                                
+    pods:
       cidrBlocks: ["192.168.0.0/16"]     # The IP range of pods in the Cluster.
     serviceDomain: "cluster.local"
   topology:
@@ -464,10 +455,9 @@ spec:
           replicas: 1                    # The number of worker nodes in this MachineDeployment
 ```
 
-The Cluster definition above defines some of the fundamental characteristics of our Cluster - it's name, the version of Kubernetes to install, the number of nodes in the control plane, the number and type of worker nodes, as well as some details about networking.
+The Cluster specification above defines some of the fundamental characteristics of our Cluster - its name, the version of Kubernetes to install, the number of nodes in the control plane, the number and type of worker nodes, as well as some details about networking.
 
-
-Time to create the Cluster! It's as simple as:
+Time to create the Cluster! It's as simple as using the yaml spec we've prepared:
 
 ```bash
 kubectl apply -f yamls/clusters/docker-cluster-one.yaml
@@ -521,7 +511,7 @@ docker-cluster-one-md-0-g6cf5-659f45c999-zlvb2   NotReady   <none>          3m4s
 docker-cluster-one-sl7l7-nw9qb                   NotReady   control-plane   3m17s   v1.25.0
 ```
 
-To install Calico on the Cluster use:
+To install Calico on the Cluster using our prepared yaml spec:
 
 ```
 kubectl --kubeconfig cluster-one.kubeconfig apply -f yamls/cni/calico.yaml
@@ -532,11 +522,10 @@ With the deployment created, watch for the pods to come up.
 kubectl --kubeconfig cluster-one.kubeconfig get pods -A
 ```
 
-The nodes in our cluster are now in a `Ready` state, and `clusterctl` will show the Cluster is healthy.
+Once all pods are in a `Running` state, the cluster nodes will move to the `Ready` state, and `clusterctl` will show the Cluster is healthy.
 
 ```
 kubectl --kubeconfig cluster-one.kubeconfig get nodes
 
 $env:NO_COLOR = 'true'; clusterctl describe cluster docker-cluster-one
 ```
-
