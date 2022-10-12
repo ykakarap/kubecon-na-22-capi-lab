@@ -53,6 +53,7 @@ export CLUSTERCTL_REPOSITORY_PATH=$(pwd)/clusterctl/repository
 export CLUSTER_TOPOLOGY=true
 clusterctl init --infrastructure docker --config ./clusterctl/repository/config.yaml
 ```
+**Note:** The `--config` flag helps clusterctl work in offline mode. When connected to the internet you can do `clusterctl init --infrastructure docker` to install CAPI Management Cluster components.
 
 Each of the provider controllers is installed as a pod on the Kind cluster. Once they're up and running you have your very own management Cluster!
 
@@ -225,6 +226,7 @@ export CLUSTERCTL_REPOSITORY_PATH=$(pwd)/clusterctl/repository
 export CLUSTER_TOPOLOGY=true
 clusterctl init --infrastructure docker --config ./clusterctl/repository/config.yaml
 ```
+**Note:** The `--config` flag helps clusterctl work in offline mode. When connected to the internet you can do `clusterctl init --infrastructure docker` to install CAPI Management Cluster components.
 
 Each of the provider controllers is installed as a pod on the Kind cluster. Once they're up and running you have your very own management Cluster!
 
@@ -392,6 +394,7 @@ $env:CLUSTERCTL_REPOSITORY_PATH = ([System.Uri](Get-Item .).FullName).AbsoluteUr
 $env:CLUSTER_TOPOLOGY = 'true'
 clusterctl init --infrastructure docker --config ./clusterctl/repository/config.yaml
 ```
+**Note:** The `--config` flag helps clusterctl work in offline mode. When connected to the internet you can do `clusterctl init --infrastructure docker` to install CAPI Management Cluster components.
 
 Each of the provider controllers is installed as a pod on the Kind cluster. Once they're up and running you have your very own management Cluster!
 
