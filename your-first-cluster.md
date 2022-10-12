@@ -118,7 +118,7 @@ spec:
 
 The Cluster specification above defines some of the fundamental characteristics of our Cluster - its name, the version of Kubernetes to install, the number of nodes in the control plane, the number and type of worker nodes, as well as some details about networking.
 
-Time to create the Cluster! It's as simple as using the yaml spec we've prepared::
+Time to create the Cluster! It's as simple as using the yaml spec we've prepared:
 
 ```bash
 kubectl apply -f yamls/clusters/docker-cluster-one.yaml
@@ -290,7 +290,7 @@ spec:
 
 The Cluster specification above defines some of the fundamental characteristics of our Cluster - its name, the version of Kubernetes to install, the number of nodes in the control plane, the number and type of worker nodes, as well as some details about networking.
 
-Time to create the Cluster! It's as simple as using the yaml spec we've prepared::
+Time to create the Cluster! It's as simple as using the yaml spec we've prepared:
 
 ```bash
 kubectl apply -f yamls/clusters/docker-cluster-one.yaml
@@ -457,7 +457,7 @@ spec:
 
 The Cluster specification above defines some of the fundamental characteristics of our Cluster - its name, the version of Kubernetes to install, the number of nodes in the control plane, the number and type of worker nodes, as well as some details about networking.
 
-Time to create the Cluster! It's as simple as using the yaml spec we've prepared::
+Time to create the Cluster! It's as simple as using the yaml spec we've prepared:
 
 ```bash
 kubectl apply -f yamls/clusters/docker-cluster-one.yaml
