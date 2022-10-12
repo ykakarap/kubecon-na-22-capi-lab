@@ -175,7 +175,6 @@ Install kind v0.16.0 by downloading it from the [kind release page](https://gith
 ```bash
 # amd64
 curl -L https://github.com/kubernetes-sigs/kind/releases/download/v0.16.0/kind-darwin-amd64 -o /tmp/kind
--o /tmp/kind
 chmod +x /tmp/kind
 sudo mv /tmp/kind /usr/local/bin/kind
 sudo chown root: /usr/local/bin/kind
