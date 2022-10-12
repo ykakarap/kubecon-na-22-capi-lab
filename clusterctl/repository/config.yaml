@@ -14,3 +14,5 @@ providers:
 cert-manager:
   url: "${CLUSTERCTL_REPOSITORY_PATH}/cert-manager/v1.9.1/cert-manager.yaml"
 overridesFolder: "${CLUSTERCTL_REPOSITORY_PATH}/overrides"
+CLUSTER_TOPOLOGY: TRUE
+EXP_RUNTIME_SDK: TRUE
