@@ -1,0 +1,12 @@
+apiVersion: runtime.cluster.x-k8s.io/v1alpha1
+kind: ExtensionConfig
+metadata:
+  name: printer-extension
+  namespace: default
+  annotations:
+    runtime.cluster.x-k8s.io/inject-ca-from-secret: test-extension-system/test-extension-webhook-service-cert
+spec:
+  clientConfig:
+    service:
+      name: test-extension-webhook-service
+      namespace: test-extension-system
