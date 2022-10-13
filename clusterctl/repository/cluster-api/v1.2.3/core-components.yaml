@@ -7439,7 +7439,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.uid
-        image: k8s.gcr.io/cluster-api/cluster-api-controller:v1.2.3
+        image: docker.io/sbueringer/cluster-api-controller:v1.2.4-preview
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
