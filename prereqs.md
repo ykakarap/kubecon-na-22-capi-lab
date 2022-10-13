@@ -59,7 +59,6 @@ Install kind v0.16.0 by downloading it from the [kind release page](https://gith
 curl -L https://github.com/kubernetes-sigs/kind/releases/download/v0.16.0/kind-linux-amd64 -o /tmp/kind
 sudo install -o root -g root -m 0755 /tmp/kind /usr/local/bin/kind
 
-# Verify via:
 kind version
 ```
 
@@ -69,7 +68,6 @@ Install clusterctl v1.2.3 by downloading it from the [ClusterAPI release page](h
 curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/v1.2.3/clusterctl-linux-amd64 -o /tmp/clusterctl
 sudo install -o root -g root -m 0755 /tmp/clusterctl /usr/local/bin/clusterctl
 
-# Verify via:
 clusterctl version
 ```
 
@@ -80,7 +78,6 @@ curl -L https://get.helm.sh/helm-v3.10.0-linux-amd64.tar.gz -o /tmp/helm.tar.gz
 tar -zxvf /tmp/helm.tar.gz -C /tmp
 sudo install -o root -g root -m 0755 /tmp/linux-amd64/helm /usr/local/bin/helm
 
-# Verify via:
 helm version
 ```
 
@@ -90,12 +87,12 @@ helm version
 git clone https://github.com/ykakarap/kubecon-na-22-capi-lab
 cd kubecon-na-22-capi-lab
 
-# Export the CLUSTERCTL_REPOSITORY_PATH environment variable
-# it will be required later to run the tutorial offline
 export CLUSTERCTL_REPOSITORY_PATH=$(pwd)/clusterctl/repository
 ```
 
-**Note**: You can also download the repository via this link if you don't have `git` installed: [main.zip](https://github.com/ykakarap/kubecon-na-22-capi-lab/archive/refs/heads/main.zip).
+**Notes**:
+* The `CLUSTERCTL_REPOSITORY_PATH` environment variable is required later so we're able to run the tutorial offline.
+* You can also download the repository via this link if you don't have `git` installed: [main.zip](https://github.com/ykakarap/kubecon-na-22-capi-lab/archive/refs/heads/main.zip).
 
 ### Pre-download container images
 
@@ -181,60 +178,69 @@ At the time of this writing the above link will guide you to download a version 
 
 Install kind v0.16.0 by downloading it from the [kind release page](https://github.com/kubernetes-sigs/kind/releases/tag/v0.16.0) and adding it to the path.
 
+For amd64:
 ```bash
-# amd64
 curl -L https://github.com/kubernetes-sigs/kind/releases/download/v0.16.0/kind-darwin-amd64 -o /tmp/kind
 chmod +x /tmp/kind
 sudo mv /tmp/kind /usr/local/bin/kind
 sudo chown root: /usr/local/bin/kind
 
-# arm (if your Mac has an M1 CPU (”Apple Silicon”))
+kind version
+```
+
+For arm64: (if your Mac has an M1 CPU (”Apple Silicon”))
+```bash
 curl -L https://github.com/kubernetes-sigs/kind/releases/download/v0.16.0/kind-darwin-arm64 -o /tmp/kind
 chmod +x /tmp/kind
 sudo mv /tmp/kind /usr/local/bin/kind
 sudo chown root: /usr/local/bin/kind
 
-# Verify via:
 kind version
 ```
 
 Install clusterctl v1.2.3 by downloading it from the [ClusterAPI release page](https://github.com/kubernetes-sigs/cluster-api/releases/tag/v1.2.3) and adding it to the path.
 
+For amd64:
 ```bash
-# amd64
 curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/v1.2.3/clusterctl-darwin-amd64 -o /tmp/clusterctl
 chmod +x /tmp/clusterctl
 sudo mv /tmp/clusterctl /usr/local/bin/clusterctl
 sudo chown root: /usr/local/bin/clusterctl
 
-# arm (if your Mac has an M1 CPU (”Apple Silicon”))
+clusterctl version
+```
+
+For arm64: (if your Mac has an M1 CPU (”Apple Silicon”))
+```bash
 curl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/v1.2.3/clusterctl-darwin-arm64 -o /tmp/clusterctl
 chmod +x /tmp/clusterctl
 sudo mv /tmp/clusterctl /usr/local/bin/clusterctl
 sudo chown root: /usr/local/bin/clusterctl
 
-# Verify via:
 clusterctl version
 ```
 
 Install helm v3.10.0 by downloading it from the [Helm release page](https://github.com/helm/helm/releases/tag/v3.10.0) and adding it to the path.
 
+For amd64:
 ```bash
-# amd64
 curl -L https://get.helm.sh/helm-v3.10.0-darwin-amd64.tar.gz -o /tmp/helm.tar.gz
 tar -zxvf /tmp/helm.tar.gz -C /tmp
 chmod +x /tmp/darwin-amd64/helm
 sudo mv /tmp/darwin-amd64/helm /usr/local/bin/helm
 sudo chown root: /usr/local/bin/helm
 
-# arm (if your Mac has an M1 CPU (”Apple Silicon”))
+helm version
+```
+
+For arm64: (if your Mac has an M1 CPU (”Apple Silicon”))
+```bash
 curl -L https://get.helm.sh/helm-v3.10.0-darwin-arm64.tar.gz -o /tmp/helm.tar.gz
 tar -zxvf /tmp/helm.tar.gz -C /tmp
 chmod +x /tmp/darwin-arm64/helm
 sudo mv /tmp/darwin-arm64/helm /usr/local/bin/helm
 sudo chown root: /usr/local/bin/helm
 
-# Verify via:
 helm version
 ```
 
@@ -244,12 +250,12 @@ helm version
 git clone https://github.com/ykakarap/kubecon-na-22-capi-lab
 cd kubecon-na-22-capi-lab
 
-# Export the CLUSTERCTL_REPOSITORY_PATH environment variable
-# it will be required later to run the tutorial offline
 export CLUSTERCTL_REPOSITORY_PATH=$(pwd)/clusterctl/repository
 ```
 
-**Note**: You can also download the repository via this link if you don't have `git` installed: [main.zip](https://github.com/ykakarap/kubecon-na-22-capi-lab/archive/refs/heads/main.zip).
+**Notes**:
+* The `CLUSTERCTL_REPOSITORY_PATH` environment variable is required later so we're able to run the tutorial offline.
+* You can also download the repository via this link if you don't have `git` installed: [main.zip](https://github.com/ykakarap/kubecon-na-22-capi-lab/archive/refs/heads/main.zip).
 
 #### Pre-download container images
 
@@ -341,7 +347,6 @@ curl.exe -L https://github.com/kubernetes-sigs/kind/releases/download/v0.16.0/ki
 
 # Append or prepend the path of that directory to the PATH environment variable.
 
-# Verify via:
 kind version
 ```
 
@@ -353,7 +358,6 @@ curl.exe -L https://github.com/kubernetes-sigs/cluster-api/releases/download/v1.
 
 # Append or prepend the path of that directory to the PATH environment variable.
 
-# Verify via:
 clusterctl version
 ```
 
@@ -366,7 +370,6 @@ Unzip ./helm.zip ./helm
 
 # Append or prepend the path of that directory to the PATH environment variable.
 
-# Verify via:
 helm version
 ```
 
@@ -376,12 +379,12 @@ helm version
 git clone https://github.com/ykakarap/kubecon-na-22-capi-lab
 cd kubecon-na-22-capi-lab
 
-# Export the CLUSTERCTL_REPOSITORY_PATH environment variable
-# it will be required later to run the tutorial offline
 $env:CLUSTERCTL_REPOSITORY_PATH = ([System.Uri](Get-Item .).FullName).AbsoluteUri + "/clusterctl/repository"
 ```
 
-**Note**: You can also download the repository via this link if you don't have `git` installed: [main.zip](https://github.com/ykakarap/kubecon-na-22-capi-lab/archive/refs/heads/main.zip).
+**Notes**:
+* The `CLUSTERCTL_REPOSITORY_PATH` environment variable is required later so we're able to run the tutorial offline.
+* You can also download the repository via this link if you don't have `git` installed: [main.zip](https://github.com/ykakarap/kubecon-na-22-capi-lab/archive/refs/heads/main.zip).
 
 ### Pre-download container images
 

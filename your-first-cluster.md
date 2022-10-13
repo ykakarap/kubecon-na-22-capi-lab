@@ -46,15 +46,15 @@ In this case we're using the Docker infrastructure provider - so we need the Doc
 Cluster API's CLI - `clusterctl` is used to install the CAPI Management Cluster components - luckily it's able to handle installing all of the above as well as the Custom Resource Definitions used by the Cluster API controllers.
 
 ```bash
-# Please ensure CLUSTERCTL_REPOSITORY_PATH is set and points to the clusterctl repository.
 export CLUSTERCTL_REPOSITORY_PATH=$(pwd)/clusterctl/repository
-
-# Set CLUSTER_TOPOLOGY and EXP_RUNTIME_SDK variables to true. Those are feature flags used to enable ClusterClass and RuntimeSDK.
 export CLUSTER_TOPOLOGY=true
 export EXP_RUNTIME_SDK=true
 clusterctl init --infrastructure docker --config ./clusterctl/repository/config.yaml
 ```
-**Note:** The `--config` flag helps clusterctl work in offline mode. When connected to the internet you can do `clusterctl init --infrastructure docker` to install CAPI Management Cluster components.
+**Notes:**
+* The `--config` flag helps clusterctl work in offline mode. When connected to the internet you can do `clusterctl init --infrastructure docker` to install CAPI Management Cluster components.
+* Please ensure `CLUSTERCTL_REPOSITORY_PATH` is set and points to the clusterctl repository.
+* `CLUSTER_TOPOLOGY` and `EXP_RUNTIME_SDK` are feature flags used to enable ClusterClass and RuntimeSDK.
 
 Each of the provider controllers is installed as a pod on the Kind cluster. Once they're up and running you have your very own management Cluster!
 
@@ -213,15 +213,15 @@ In this case we're using the Docker infrastructure provider - so we need the Doc
 Cluster API's CLI - `clusterctl` is used to install the CAPI Management Cluster components - luckily it's able to handle installing all of the above as well as the Custom Resource Definitions used by the Cluster API controllers.
 
 ```bash
-# Please ensure CLUSTERCTL_REPOSITORY_PATH is set and points to the clusterctl repository.
 export CLUSTERCTL_REPOSITORY_PATH=$(pwd)/clusterctl/repository
-
-# Set CLUSTER_TOPOLOGY and EXP_RUNTIME_SDK variables to true. Those are feature flags used to enable ClusterClass and RuntimeSDK.
 export CLUSTER_TOPOLOGY=true
 export EXP_RUNTIME_SDK=true
 clusterctl init --infrastructure docker --config ./clusterctl/repository/config.yaml
 ```
-**Note:** The `--config` flag helps clusterctl work in offline mode. When connected to the internet you can do `clusterctl init --infrastructure docker` to install CAPI Management Cluster components.
+**Notes:**
+* The `--config` flag helps clusterctl work in offline mode. When connected to the internet you can do `clusterctl init --infrastructure docker` to install CAPI Management Cluster components.
+* Please ensure `CLUSTERCTL_REPOSITORY_PATH` is set and points to the clusterctl repository.
+* `CLUSTER_TOPOLOGY` and `EXP_RUNTIME_SDK` are feature flags used to enable ClusterClass and RuntimeSDK.
 
 Each of the provider controllers is installed as a pod on the Kind cluster. Once they're up and running you have your very own management Cluster!
 
@@ -382,15 +382,15 @@ In this case we're using the Docker infrastructure provider - so we need the Doc
 Cluster API's CLI - `clusterctl` is used to install the CAPI Management Cluster components - luckily it's able to handle installing all of the above as well as the Custom Resource Definitions used by the Cluster API controllers.
 
 ```bash
-# Please ensure CLUSTERCTL_REPOSITORY_PATH is set and points to the clusterctl repository.
 $env:CLUSTERCTL_REPOSITORY_PATH = ([System.Uri](Get-Item .).FullName).AbsoluteUri + "/clusterctl/repository"
-
-# Set CLUSTER_TOPOLOGY and EXP_RUNTIME_SDK variables to true. Those are feature flags used to enable ClusterClass and RuntimeSDK.
 $env:CLUSTER_TOPOLOGY = 'true'
 $env:EXP_RUNTIME_SDK = 'true'
 clusterctl init --infrastructure docker --config ./clusterctl/repository/config.yaml
 ```
-**Note:** The `--config` flag helps clusterctl work in offline mode. When connected to the internet you can do `clusterctl init --infrastructure docker` to install CAPI Management Cluster components.
+**Notes:**
+* The `--config` flag helps clusterctl work in offline mode. When connected to the internet you can do `clusterctl init --infrastructure docker` to install CAPI Management Cluster components.
+* Please ensure `CLUSTERCTL_REPOSITORY_PATH` is set and points to the clusterctl repository.
+* `CLUSTER_TOPOLOGY` and `EXP_RUNTIME_SDK` are feature flags used to enable ClusterClass and RuntimeSDK.
 
 Each of the provider controllers is installed as a pod on the Kind cluster. Once they're up and running you have your very own management Cluster!
 
