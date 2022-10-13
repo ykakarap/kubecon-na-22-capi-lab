@@ -6,7 +6,7 @@ Sections:
 * [Prerequisites](./prereqs.md)
 * [Creating your first cluster with Cluster API](./your-first-cluster.md)
 * [Deploying the Cluster API visualizer](./visualizer.md)
-* TODO: Changing the Cluster Topology
+* [Changing the Cluster Topology](./cluster-topology.md)
 * TODO: MachineHealthChecks and Machine remediation
 * TODO: Upgrading to another Kubernetes version
 * TODO: Cluster lifecycle hooks

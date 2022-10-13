@@ -19,3 +19,7 @@ Access the UI via your browser under [http://localhost:18081](http://localhost:1
 Explore your workload cluster(s)!
 
 ![visualizer](visualizer.png)
+
+## Changing Cluster Topology
+
+Now we're ready to explore more of the power of Cluster API, [let's first explore cluster topology](cluster-topology.md)!

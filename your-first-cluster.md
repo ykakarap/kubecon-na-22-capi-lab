@@ -16,6 +16,7 @@ This guide covers setting up and using Cluster API using Docker infrastructure, 
 - [Windows](#windows)
   - [The Management Cluster](#the-management-cluster-2)
   - [Your first workload cluster](#your-first-workload-cluster-2)
+- Next: [Cluster API Visualizer](#cluster-api-visualizer)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -521,3 +522,7 @@ kubectl --kubeconfig cluster-one.kubeconfig get nodes
 
 $env:NO_COLOR = 'true'; clusterctl describe cluster docker-cluster-one
 ```
+
+## Cluster API Visualizer
+
+Now you've built your first cluster, [let's install the Visualizer to better see how Cluster API will enable you to manage it](visualizer.md)!
