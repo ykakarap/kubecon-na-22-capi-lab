@@ -8,7 +8,8 @@ docker pull kindest/haproxy:v20210715-a6da3463
 # Mgmt cluster:
 ## Cluster API
 docker pull gcr.io/k8s-staging-cluster-api/capd-manager:v1.2.3
-docker pull k8s.gcr.io/cluster-api/cluster-api-controller:v1.2.3
+# FIXME(sbueringer): docker pull k8s.gcr.io/cluster-api/cluster-api-controller:v1.2.3
+docker pull docker.io/sbueringer/cluster-api-controller:v1.2.4-preview
 docker pull k8s.gcr.io/cluster-api/kubeadm-bootstrap-controller:v1.2.3
 docker pull k8s.gcr.io/cluster-api/kubeadm-control-plane-controller:v1.2.3
 ## cert-manager
