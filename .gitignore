@@ -1,3 +1,2 @@
 .idea
-capi-quickstart.yaml
-capi-quickstart.kubeconfig
+*.kubeconfig
