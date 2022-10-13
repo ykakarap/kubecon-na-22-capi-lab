@@ -49,8 +49,9 @@ Cluster API's CLI - `clusterctl` is used to install the CAPI Management Cluster 
 # Please ensure CLUSTERCTL_REPOSITORY_PATH is set and points to the clusterctl repository.
 export CLUSTERCTL_REPOSITORY_PATH=$(pwd)/clusterctl/repository
 
-# Set the CLUSTER_TOPOLOGY variable to true. This is a feature flag used to enable ClusterClass.
+# Set CLUSTER_TOPOLOGY and EXP_RUNTIME_SDK variables to true. Those are feature flags used to enable ClusterClass and RuntimeSDK.
 export CLUSTER_TOPOLOGY=true
+export EXP_RUNTIME_SDK=true
 clusterctl init --infrastructure docker --config ./clusterctl/repository/config.yaml
 ```
 **Note:** The `--config` flag helps clusterctl work in offline mode. When connected to the internet you can do `clusterctl init --infrastructure docker` to install CAPI Management Cluster components.
@@ -132,25 +133,18 @@ watch clusterctl describe cluster docker-cluster-one
 The output should resemble:
 ```bash
 NAME                                                              READY  SEVERITY  REASON                           SINCE  MESSAGE
-
-Cluster/docker-cluster-one                                        False  Warning   ScalingUp                        84s    Scaling up control plane to 1 replicas (actual
- 0)
-├─ClusterInfrastructure - DockerCluster/docker-cluster-one-4tqct  True                                              84s
-
-├─ControlPlane - KubeadmControlPlane/docker-cluster-one-bts9k     False  Warning   ScalingUp                        84s    Scaling up control plane to 1 replicas (actual
- 0)
-│ └─Machine/docker-cluster-one-bts9k-wjkcd                        False  Info	   Bootstrapping                    81s    1 of 2 completed
-
+Cluster/docker-cluster-one                                        False  Warning   ScalingUp                        4s     Scaling up control plane to 1 replicas (actual 0)
+├─ClusterInfrastructure - DockerCluster/docker-cluster-one-dkfbw  True                                              3s
+├─ControlPlane - KubeadmControlPlane/docker-cluster-one-xbqb2     False  Warning   ScalingUp                        4s     Scaling up control plane to 1 replicas (actual 0)
+│ └─Machine/docker-cluster-one-xbqb2-gwr52                        False  Info      WaitingForBootstrapData          2s     1 of 2 completed
 └─Workers
-
-  └─MachineDeployment/docker-cluster-one-md-0-sfjx8               False  Warning   WaitingForAvailableMachines      84s    Minimum availability requires 1 replicas, curr
-ent 0 available
-    └─Machine/docker-cluster-one-md-0-sfjx8-7dd6cfdbcd-5f6nm	  False  Info	   WaitingForControlPlaneAvailable  84s    0 of 2 completed
+  └─MachineDeployment/docker-cluster-one-md-0-nrh7k               False  Warning   WaitingForAvailableMachines      4s     Minimum availability requires 1 replicas, current 0 available
+    └─Machine/docker-cluster-one-md-0-nrh7k-75ddc4778f-vlph9      False  Info      WaitingForControlPlaneAvailable  3s     0 of 2 completed
 ```
 
 Our cluster will also be visible to kind, and we can see it using
 
-```
+```bash
 kind get clusters
 ```
 
@@ -175,18 +169,18 @@ docker-cluster-one-sl7l7-nw9qb                   NotReady   control-plane   3m17
 
 To install Calico on the Cluster using our prepared yaml spec:
 
-```
+```bash
 kubectl --kubeconfig cluster-one.kubeconfig apply -f yamls/cni/calico.yaml
 ```
 
 With the deployment created, watch for the pods to come up.
-```
+```bash
 watch kubectl --kubeconfig cluster-one.kubeconfig get pods -A
 ```
 
 Once all pods are in a `Running` state, the cluster nodes will move to the `Ready` state, and `clusterctl` will show the Cluster is healthy.
 
-```
+```bash
 kubectl --kubeconfig cluster-one.kubeconfig get nodes
 
 clusterctl describe cluster docker-cluster-one
@@ -222,8 +216,9 @@ Cluster API's CLI - `clusterctl` is used to install the CAPI Management Cluster 
 # Please ensure CLUSTERCTL_REPOSITORY_PATH is set and points to the clusterctl repository.
 export CLUSTERCTL_REPOSITORY_PATH=$(pwd)/clusterctl/repository
 
-# Set the CLUSTER_TOPOLOGY variable to true. This is a feature flag used to enable ClusterClass.
+# Set CLUSTER_TOPOLOGY and EXP_RUNTIME_SDK variables to true. Those are feature flags used to enable ClusterClass and RuntimeSDK.
 export CLUSTER_TOPOLOGY=true
+export EXP_RUNTIME_SDK=true
 clusterctl init --infrastructure docker --config ./clusterctl/repository/config.yaml
 ```
 **Note:** The `--config` flag helps clusterctl work in offline mode. When connected to the internet you can do `clusterctl init --infrastructure docker` to install CAPI Management Cluster components.
@@ -316,7 +311,7 @@ Cluster/docker-cluster-one                                        False  Warning
 
 Our cluster will also be visible to kind, and we can see it using
 
-```
+```bash
 kind get clusters
 ```
 
@@ -341,18 +336,18 @@ docker-cluster-one-sl7l7-nw9qb                   NotReady   control-plane   3m17
 
 To install Calico on the Cluster using our prepared yaml spec:
 
-```
+```bash
 kubectl --kubeconfig cluster-one.kubeconfig apply -f yamls/cni/calico.yaml
 ```
 
 With the deployment created, watch for the pods to come up.
-```
+```bash
 kubectl --kubeconfig cluster-one.kubeconfig get pods -A -w
 ```
 
 Once all pods are in a `Running` state, the cluster nodes will move to the `Ready` state, and `clusterctl` will show the Cluster is healthy.
 
-```
+```bash
 kubectl --kubeconfig cluster-one.kubeconfig get nodes
 
 clusterctl describe cluster docker-cluster-one
@@ -390,8 +385,9 @@ Cluster API's CLI - `clusterctl` is used to install the CAPI Management Cluster 
 # Please ensure CLUSTERCTL_REPOSITORY_PATH is set and points to the clusterctl repository.
 $env:CLUSTERCTL_REPOSITORY_PATH = ([System.Uri](Get-Item .).FullName).AbsoluteUri + "/clusterctl/repository"
 
-# Set the CLUSTER_TOPOLOGY variable to true. This is a feature flag used to enable ClusterClass.
+# Set CLUSTER_TOPOLOGY and EXP_RUNTIME_SDK variables to true. Those are feature flags used to enable ClusterClass and RuntimeSDK.
 $env:CLUSTER_TOPOLOGY = 'true'
+$env:EXP_RUNTIME_SDK = 'true'
 clusterctl init --infrastructure docker --config ./clusterctl/repository/config.yaml
 ```
 **Note:** The `--config` flag helps clusterctl work in offline mode. When connected to the internet you can do `clusterctl init --infrastructure docker` to install CAPI Management Cluster components.
@@ -466,27 +462,20 @@ Time to create the Cluster! It's as simple as using the yaml spec we've prepared
 kubectl apply -f yamls/clusters/docker-cluster-one.yaml
 ```
 
-Now that the Cluster has been created we can watch it come into being with:
+Now that the Cluster has been created we can use `clusterctl` to describe its components:
 ```bash
 $env:NO_COLOR = 'true'; clusterctl describe cluster docker-cluster-one
 ```
 The output should resemble:
 ```bash
 NAME                                                              READY  SEVERITY  REASON                           SINCE  MESSAGE
-
-Cluster/docker-cluster-one                                        False  Warning   ScalingUp                        84s    Scaling up control plane to 1 replicas (actual
- 0)
-├─ClusterInfrastructure - DockerCluster/docker-cluster-one-4tqct  True                                              84s
-
-├─ControlPlane - KubeadmControlPlane/docker-cluster-one-bts9k     False  Warning   ScalingUp                        84s    Scaling up control plane to 1 replicas (actual
- 0)
-│ └─Machine/docker-cluster-one-bts9k-wjkcd                        False  Info	   Bootstrapping                    81s    1 of 2 completed
-
+Cluster/docker-cluster-one                                        False  Warning   ScalingUp                        4s     Scaling up control plane to 1 replicas (actual 0)
+├─ClusterInfrastructure - DockerCluster/docker-cluster-one-dkfbw  True                                              3s
+├─ControlPlane - KubeadmControlPlane/docker-cluster-one-xbqb2     False  Warning   ScalingUp                        4s     Scaling up control plane to 1 replicas (actual 0)
+│ └─Machine/docker-cluster-one-xbqb2-gwr52                        False  Info      WaitingForBootstrapData          2s     1 of 2 completed
 └─Workers
-
-  └─MachineDeployment/docker-cluster-one-md-0-sfjx8               False  Warning   WaitingForAvailableMachines      84s    Minimum availability requires 1 replicas, curr
-ent 0 available
-    └─Machine/docker-cluster-one-md-0-sfjx8-7dd6cfdbcd-5f6nm	  False  Info	   WaitingForControlPlaneAvailable  84s    0 of 2 completed
+  └─MachineDeployment/docker-cluster-one-md-0-nrh7k               False  Warning   WaitingForAvailableMachines      4s     Minimum availability requires 1 replicas, current 0 available
+    └─Machine/docker-cluster-one-md-0-nrh7k-75ddc4778f-vlph9      False  Info      WaitingForControlPlaneAvailable  3s     0 of 2 completed
 ```
 
 Our cluster will also be visible to kind, and we can see it using
@@ -516,18 +505,18 @@ docker-cluster-one-sl7l7-nw9qb                   NotReady   control-plane   3m17
 
 To install Calico on the Cluster using our prepared yaml spec:
 
-```
+```bash
 kubectl --kubeconfig cluster-one.kubeconfig apply -f yamls/cni/calico.yaml
 ```
 
 With the deployment created, watch for the pods to come up.
-```
-kubectl --kubeconfig cluster-one.kubeconfig get pods -A
+```bash
+kubectl --kubeconfig cluster-one.kubeconfig get pods -A -w
 ```
 
 Once all pods are in a `Running` state, the cluster nodes will move to the `Ready` state, and `clusterctl` will show the Cluster is healthy.
 
-```
+```bash
 kubectl --kubeconfig cluster-one.kubeconfig get nodes
 
 $env:NO_COLOR = 'true'; clusterctl describe cluster docker-cluster-one
