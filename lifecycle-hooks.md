@@ -15,6 +15,7 @@ In this section we will create a simple `test-extension` that receives key lifec
     - [Create a new workload Cluster](#create-a-new-workload-cluster)
     - [Delete the Cluster](#delete-the-cluster)
     - [(Optional) Block Cluster deletion using Extension Server](#optional-block-cluster-deletion-using-extension-server)
+  - [Clean up](#clean-up)
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Running the Extension
@@ -171,3 +172,17 @@ kubectl patch configmap docker-cluster-lifecycle-hooks-test-extension-hookrespon
 ```
 
 Now the cluster deletion operation should go through and the `docker-cluster-lifecycle-hooks` cluster will eventually be deleted.
+
+## Clean up
+
+Delete the ExtensionConfig that registers the extension server with the management cluster.
+
+```bash
+kubectl delete extensionconfig printer-extension
+```
+
+Delete the extension server that is running on the management cluster.
+
+```bash
+kubectl delete -f yamls/extension/test-extension-deployment.yaml
+```
