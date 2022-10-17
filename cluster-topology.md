@@ -25,13 +25,13 @@ Because we are leveraging the Kubernetes declarative model, we can simply refer 
 
 Assuming that your "`docker-cluster-one`" Cluster still has its original configuration, you should have one control plane node:
 
-```sh
+```bash
 kubectl --kubeconfig cluster-one.kubeconfig get nodes
 ```
 
 Output:
 
-```
+```bash
 NAME                                             STATUS   ROLES           AGE   VERSION
 docker-cluster-one-md-0-nrh7k-75ddc4778f-vlph9   Ready    <none>          24m   v1.24.6
 docker-cluster-one-xbqb2-tlmpb                   Ready    control-plane   24m   v1.24.6
@@ -41,13 +41,13 @@ Let's use the idempotent model to submit a modified configuration of our "`docke
 
 If you're on masOS or Linux you can diff this modified spec from the original spec used to create the "`docker-cluster-one`" Cluster:
 
-```sh
+```bash
 diff yamls/clusters/docker-cluster-one.yaml yamls/clusters/docker-cluster-one-3-control-plane-replicas.yaml
 ```
 
 Output:
 
-```
+```bash
 17c17
 <       replicas: 1
 ---
@@ -56,32 +56,31 @@ Output:
 
 The above shows that the `yaml` specs are almost identical, with the only change being the `replicas` value on L17. By applying that modified spec to our kind management cluster we can achieve a control plane node scale out operation:
 
-```sh
-kind get kubeconfig --name kubecon-na-22-capi-lab > kubecon-na-22-capi-lab.kubeconfig
-kubectl --kubeconfig kubecon-na-22-capi-lab.kubeconfig apply -f yamls/clusters/docker-cluster-one-3-control-plane-replicas.yaml
+```bash
+kubectl apply -f yamls/clusters/docker-cluster-one-3-control-plane-replicas.yaml
 ```
 
 Output:
 
-```
+```bash
 cluster.cluster.x-k8s.io/docker-cluster-one configured
 ```
 
 Now we can watch the new control plane nodes come online:
 
-```sh
+```bash
 kubectl --kubeconfig cluster-one.kubeconfig get nodes -w
 ```
 
 An interesting note! As your cluster transitions from 1 to 2 control plane nodes, it will temporarily lose etcd quorum and the apiserver running on your cluster will briefly go offline. So your `kubectl -w` command will be interrupted. Re-run the same command again to resume watching your cluster nodes:
 
-```sh
+```bash
 kubectl --kubeconfig cluster-one.kubeconfig get nodes -w
 ```
 
 Output:
 
-```
+```bash
 NAME                                             STATUS     ROLES           AGE   VERSION
 docker-cluster-one-md-0-nrh7k-75ddc4778f-vlph9   Ready      <none>          86m   v1.24.6
 docker-cluster-one-xbqb2-8wcbj                   NotReady   <none>          21s   v1.24.6
@@ -115,27 +114,27 @@ docker-cluster-one-xbqb2-sjlwm                   Ready      <none>          12s 
 
 For such a simple cluster topology change against a single configuration, it's also possible to update our Cluster resource in-place. Let's use `kubectl edit` to do that.
 
-```sh
-kubectl --kubeconfig kubecon-na-22-capi-lab.kubeconfig edit cluster/docker-cluster-one
+```bash
+kubectl edit cluster/docker-cluster-one
 ```
 
 The above command will engage your locally configured editor (for example, most macOS and Linux environments will be configured to launch `vim`). You'll want to look for the yaml configuration at the path `spec.topology.controlPlane.replicas`. Based on our prior scale out the value should be `3`. Go ahead and change that back to `1`, and then save the changes in your editor:
 
 Output after editing, saving, and exiting your editor:
 
-```
+```bash
 cluster.cluster.x-k8s.io/docker-cluster-one edited
 ```
 
 After a few minutes we should now see the cluster back to reporting 1 control plane node (note that we're pointing `kubectl` to our workload cluster below using the previously saved `cluster-one.kubeconfig` kubeconfig file):
 
-```sh
+```bash
 kubectl --kubeconfig cluster-one.kubeconfig get nodes
 ```
 
 Output:
 
-```
+```bash
 NAME                                             STATUS   ROLES           AGE    VERSION
 docker-cluster-one-md-0-nrh7k-75ddc4778f-vlph9   Ready    <none>          118m   v1.24.6
 docker-cluster-one-xbqb2-8wcbj                   Ready    control-plane   31m    v1.24.6
@@ -143,25 +142,25 @@ docker-cluster-one-xbqb2-8wcbj                   Ready    control-plane   31m   
 
 We can do the same gesture to scale worker nodes as well. This time we want to edit the configuration at path `spec.topology.workers.machineDeployments`. We should only have one item in that array; change its `replicas` value from `1` to any other, larger value:
 
-```sh
-kubectl --kubeconfig kubecon-na-22-capi-lab.kubeconfig edit cluster/docker-cluster-one
+```bash
+kubectl edit cluster/docker-cluster-one
 ```
 
 Output after editing, saving, and exiting your editor:
 
-```
+```bash
 cluster.cluster.x-k8s.io/docker-cluster-one edited
 ```
 
 If you updated from `1` to `3`, you would see those `3` nodes gradually come online after the change to our Cluster's `spec.topology.workers.machineDeployments` `replicas` value:
 
-```sh
+```bash
 kubectl --kubeconfig cluster-one.kubeconfig get nodes
 ```
 
 Output:
 
-```
+```bash
 NAME                                             STATUS   ROLES           AGE     VERSION
 docker-cluster-one-md-0-nrh7k-75ddc4778f-lzfr4   Ready    <none>          7m44s   v1.24.6
 docker-cluster-one-md-0-nrh7k-75ddc4778f-t28hd   Ready    <none>          7m40s   v1.24.6
@@ -173,8 +172,8 @@ NOTE!: Because we're executing the above topology changes using the Docker provi
 
 Feel free to continue experimenting with scaling. When you're done and ready to move forward, let's go back to our original topology configuration of 1 control plane node and 1 worker node. It's easy to do that by simply reapplying our original Cluster spec, which declares that configuration:
 
-```sh
-kubectl --kubeconfig kubecon-na-22-capi-lab.kubeconfig apply -f yamls/clusters/docker-cluster-one.yaml
+```bash
+kubectl apply -f yamls/clusters/docker-cluster-one.yaml
 ```
 
 ## Add a new pool of worker nodes
@@ -204,13 +203,13 @@ We'll reference the above "`default-worker`" class in [an updated Cluster config
 
 The difference between this spec and the original spec used to create the "`docker-cluster-one`" Cluster:
 
-```sh
+```bash
 diff yamls/clusters/docker-cluster-one.yaml yamls/clusters/docker-cluster-one-second-worker-pool.yaml
 ```
 
 Output:
 
-```
+```bash
 35a36,38
 >         - class: default-worker
 >           name: md-1
@@ -219,25 +218,25 @@ Output:
 
 The above shows that we've added a new `MachineDeployment` called `md-1` (Our existing `MachineDeployment` is named `md-0`) to our new spec. By applying this modified spec to our kind management cluster we will initiate the creation of a new node, from this new node pool:
 
-```sh
-kubectl --kubeconfig kubecon-na-22-capi-lab.kubeconfig apply -f yamls/clusters/docker-cluster-one-second-worker-pool.yaml
+```bash
+kubectl apply -f yamls/clusters/docker-cluster-one-second-worker-pool.yaml
 ```
 
 Output:
 
-```
+```bash
 cluster.cluster.x-k8s.io/docker-cluster-one configured
 ```
 
 Let's watch those new nodes come online:
 
-```sh
+```bash
 kubectl --kubeconfig cluster-one.kubeconfig get nodes -w
 ```
 
 Output:
 
-```
+```bash
 NAME                                             STATUS   ROLES           AGE   VERSION
 docker-cluster-one-md-0-nrh7k-75ddc4778f-wwpg9   Ready    <none>          25h   v1.24.6
 docker-cluster-one-xbqb2-bcjvj                   Ready    control-plane   26h   v1.24.6
@@ -251,19 +250,19 @@ docker-cluster-one-md-1-ksqwt-8489684d5b-fpgjs   Ready                      <non
 
 We can now demonstrate how easy it is to "roll back" such a change, as well as show how to remove an existing node pool from your Cluster configuration. In our case it's as easy as reapplying the original Cluster spec, which only declares one "`md-0`" node pool:
 
-```sh
-kubectl --kubeconfig kubecon-na-22-capi-lab.kubeconfig apply -f yamls/clusters/docker-cluster-one.yaml
+```bash
+kubectl apply -f yamls/clusters/docker-cluster-one.yaml
 ```
 
 Once again, we should observe only one running worker node, in the "`md-0`" pool:
 
-```sh
+```bash
 kubectl --kubeconfig cluster-one.kubeconfig get nodes
 ```
 
 Output:
 
-```
+```bash
 NAME                                            STATUS   ROLES           AGE    VERSION
 docker-cluster-one-md-0-lq4f8-b59497b9d-xchpm   Ready    <none>          99m    v1.24.6
 docker-cluster-one-mvthd-k7dwf                  Ready    control-plane   174m   v1.24.6
@@ -271,4 +270,4 @@ docker-cluster-one-mvthd-k7dwf                  Ready    control-plane   174m   
 
 ## MachineHealthChecks and Remediation
 
-You are now in control of your Cluster's topology configuration! [Let's next explore MachineHealthChecks and Remediation to configure operational self-healing](machine-health-checks-remediation.md)...
+You are now in control of your Cluster's topology configuration! [Let's next explore MachineHealthChecks and Remediation to configure operational self-healing](machine-health-checks-remediation.md).
