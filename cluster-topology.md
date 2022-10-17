@@ -270,4 +270,4 @@ docker-cluster-one-mvthd-k7dwf                  Ready    control-plane   174m   
 
 ## MachineHealthChecks and Remediation
 
-You are now in control of your Cluster's topology configuration! [Let's next explore MachineHealthChecks and Remediation to configure operational self-healing](machine-health-checks-remediation.md).
+You are now in control of your Cluster's topology configuration! [Let's next explore MachineHealthChecks and Remediation for operational self-healing](machine-health-checks.md).

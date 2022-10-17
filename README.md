@@ -7,7 +7,7 @@ Sections:
 * [Creating your first cluster with Cluster API](./your-first-cluster.md)
 * [Deploying the Cluster API visualizer](./visualizer.md)
 * [Changing the Cluster Topology](./cluster-topology.md)
-* TODO: MachineHealthChecks and Machine remediation
+* [MachineHealthChecks and Machine remediation](./machine-health-checks.md)
 * TODO: Upgrading to another Kubernetes version
 * TODO: Cluster lifecycle hooks
 * TODO: Self-hosted management cluster
