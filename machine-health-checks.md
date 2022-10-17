@@ -3,7 +3,7 @@
 Now let's take a look at MachineHealthChecks and Machine remediation. A MachineHealthCheck checks the health of
 Machines and triggers a replacement (i.e. remediation) of a Machine when it is unhealthy.
 
-The ClusterClass we are using already has MachineHealthChecks configured for worker nodes. For reference, this is the 
+The ClusterClass we are using already has MachineHealthChecks configured for worker Nodes. For reference, this is the 
 declarative block that defines the MachineHealthCheck for the "`default-worker`" MachineDeployment class in [the 
 ClusterClass spec we originally installed](./yamls/clusterclasses/clusterclass-quick-start.yaml):
 
@@ -43,7 +43,7 @@ Once a Machine is detected as unhealthy it will be drained, deleted and a new Ma
 
 In this example we are simulating an unhealthy Node via the `DemoNodeHealthy` condition. The MachineHealthCheck will monitor 
 the Nodes of the MachineDeployment. As soon as the `DemoNodeHealthy` condition is detected the MachineHealthCheck will mark 
-the Machine for remediation. Then the Machine will be drained, deleted and replaced by a new Machine.
+the Machine for remediation and the Machine will be drained, deleted and replaced by a new Machine.
 
 Now let's first take a look at our current Machines:
 
@@ -72,12 +72,10 @@ docker-cluster-one-md-0-np68x-6f47ffdffb-zqvv7   Ready    <none>          3m46s 
 docker-cluster-one-pkkxd-66wmm                   Ready    control-plane   24m     v1.24.6
 ```
 
-Then let's simulate a Node failure by setting the `DemoNodeHealthy` condition: 
-
-**Note**: You have to use the Node name of the `md-1` node as returned above.
+Then let's simulate a Node failure by setting the `DemoNodeHealthy` condition on the worker Node:
 
 ```bash
-kubectl --kubeconfig cluster-one.kubeconfig patch node docker-cluster-one-md-0-np68x-6f47ffdffb-zqvv7 --subresource=status --type=json -p='[{"op": "add", "path": "/status/conditions/-", "value": {"type": "DemoNodeHealthy", "status": "False", "message": "Node is unhealthy"}}]'
+kubectl --kubeconfig cluster-one.kubeconfig patch node $(kubectl --kubeconfig cluster-one.kubeconfig get nodes -l 'node-role.kubernetes.io/control-plane notin ()' -o jsonpath={'.items[*].metadata.name'}) --subresource=status --type=json -p='[{"op": "add", "path": "/status/conditions/-", "value": {"type": "DemoNodeHealthy", "status": "False", "message": "Node is unhealthy"}}]'
 ```
 
 When we now take another look at our Nodes, we should see that the Node is replaced:
@@ -114,7 +112,21 @@ docker-cluster-one-md-0-np68x-6f47ffdffb-hjrhp   Ready                      <non
 docker-cluster-one-md-0-np68x-6f47ffdffb-hjrhp   Ready                      <none>          14s   v1.24.6
 ```
 
-**Note**: Depending on performance of your local machine this can take a few minutes.
+**Note**: Depending on the performance of your local machine this can take a few seconds up to a few minutes.
+
+Now let's take another look at our Machines. You should be able to see that the worker Machine has been replaced by a new Machine.
+
+```bash
+kubectl get machine
+```
+
+Output:
+```bash
+kubectl get machine
+NAME                                             CLUSTER              NODENAME                                         PROVIDERID                                                  PHASE     AGE     VERSION
+docker-cluster-one-md-0-np68x-6f47ffdffb-hjrhp   docker-cluster-one   docker-cluster-one-md-0-np68x-6f47ffdffb-hjrhp   docker:////docker-cluster-one-md-0-np68x-6f47ffdffb-hjrhp   Running   1m      v1.24.6
+docker-cluster-one-pkkxd-66wmm                   docker-cluster-one   docker-cluster-one-pkkxd-66wmm                   docker:////docker-cluster-one-pkkxd-66wmm                   Running   24m     v1.24.6
+```
 
 ## Upgrading to another Kubernetes version
 
