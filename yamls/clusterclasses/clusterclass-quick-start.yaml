@@ -32,6 +32,11 @@ spec:
             apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
             kind: DockerMachineTemplate
             name: quick-start-default-worker-machinetemplate
+      machineHealthCheck:
+        unhealthyConditions:
+        - type: DemoNodeHealthy
+          status: "False"
+          timeout: 1s
   variables:
   - name: imageRepository
     required: true
