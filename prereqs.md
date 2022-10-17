@@ -25,6 +25,7 @@ Please ensure you have at least: 4 CPU, 16 GB RAM and 32 GB free disk space.
   - [Pre-download container images](#pre-download-container-images-2)
   - [Verification](#verification-2)
 - [Avoid GitHub rate-limiting when running the tutorial without the local clusterctl repository](#avoid-github-rate-limiting-when-running-the-tutorial-without-the-local-clusterctl-repository)
+- Next: [Creating Your First Cluster With Cluster API](#creating-your-first-cluster-with-cluster-api)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -467,3 +468,7 @@ Windows:
 ```bash
 $env:GITHUB_TOKEN = "<GITHUB_TOKEN>"
 ```
+
+## Creating Your First Cluster With Cluster API
+
+Now that you've prepared your local environment, [let's build our first Kubernetes cluster using Cluster API](your-first-cluster.md)!
