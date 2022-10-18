@@ -99,13 +99,13 @@ The output resembles:
 
 ```bash
 NAME                         PHASE         AGE   VERSION
-docker-cluster-one           Provisioned   3m    v1.24.6
-docker-cluster-self-hosted   Provisioned   3m    v1.24.6
+docker-cluster-one           Provisioned   3m    v1.25.2
+docker-cluster-self-hosted   Provisioned   3m    v1.25.2
 ```
 
 Notice that the `docker-cluster-self-hosted` is listed among the clusters that it is managing. We got a self-hosted cluster!
 
-Try scaling the MachineDeployments on the self-hosted cluster to observe how simple it is to manage a self-hosted cluster. 
+Try scaling the MachineDeployments on the self-hosted cluster to observe how simple it is to manage a self-hosted cluster.
 
 Do you remember how to scale the MachineDeployments? (Hint: look at [scale operation](./cluster-topology.md#more-scale-operations)).
 
