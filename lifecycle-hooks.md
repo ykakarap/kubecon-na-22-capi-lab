@@ -45,7 +45,7 @@ test-extension-manager   1/1     1            1           30s
 
 Now that we have a running extension server let's register it with Cluster API. This will inform Cluster API to call the extension server during key workload cluster lifecycle events.
 
-Let's first look at how the registration looks like:
+Let's first look at how the registration looks:
 
 ```yaml
 apiVersion: runtime.cluster.x-k8s.io/v1alpha1
@@ -80,28 +80,34 @@ The output should resemble:
 ```
 
 > **Optional**  
-> If you are curious, take a look at `.status.handlers` of the `printer-extension` resource by doing `kubectl get extensionconfig printer-extension -o jsonpath='{.status.handlers}'`. This lists down all the lifecycle events the extension server would like to receive.
+> If you are curious, take a look at `.status.handlers` of the `printer-extension` resource by doing `kubectl get extensionconfig printer-extension -o jsonpath='{.status.handlers}'`. This lists down all the lifecycle events the extension server supports.
 
 ## Extension in Action
 
-Now that we have the extension server running and registered with Cluster API let's see it in action. The extension server is configured to receive the following events (non-exhaustive list):
+Now that we have the extension server running and registered with Cluster API let's see it in action. The extension server is configured to receive the following events:
 
-- BeforeClusterCreate
-- AfterControlPlaneInitialized
-- BeforeClusterDelete
+- `BeforeClusterCreate` - Receives before the cluster topology is created.
+- `AfterControlPlaneInitialized` - Receives event after the control plane is reachable for the first time.
+- `BeforeClusterUpgrade` - Receives event before the cluster topology is upgraded.
+- `AfterControlPlaneUpgrade` - Receives event after the control plane is upgraded and before the upgrade is propagated to machine deployments.
+- `AfterClusterUpgrade` - Receives event after the cluster is fully upgraded.
+- `BeforeClusterDelete` - Receives event before cluster is deleted.
 
 ### Create a new workload Cluster
 
-In this section we will create a new workload cluster and see that the extension server receives these events and logs them.  
-In a new terminal tab let's start watching the logs of the extension server:
+In this section we will create a new workload cluster and see that the extension server receives these events and logs them.
 
-```bash
-kubectl logs -n test-extension-system deployments/test-extension-manager -f
-```
-
-Go back to the previous tab and create a new `docker-cluster-lifecycle-hooks` workload cluster.
+Create a new `docker-cluster-lifecycle-hooks` workload cluster.
 ```bash
 kubectl apply -f yamls/clusters/docker-cluster-lifecycle-hooks.yaml
+```
+
+Since we are creating a new workload cluster we should see the `BeforeClusterCreate` and the `AfterControlPlaneInitialized` events logged by the extension server.
+
+Let's take a look a the extension server logs to see the received events:
+
+```bash
+kubectl logs -n test-extension-system deployments/test-extension-manager
 ```
 
 In the extension server you should see logs similar to:
@@ -113,18 +119,24 @@ I1014 02:50:50.873831       1 handlers.go:165] "BeforeClusterCreate response is 
 I1014 02:51:38.782571       1 handlers.go:80] "AfterControlPlaneInitialized is called"
 ```
 
-Note that the workload cluster could take a few minutes to fully come up. Each of the log lines above would take a few minutes in between to show up.
+Note that the workload cluster could take a few minutes to fully come up and each of the log lines above could take a few minutes to appear. Re-fetch the logs again to see the updates or you could also follow the logs using `kubectl logs -n test-extension-system deployments/test-extension-manager -f`.
 
 ### Delete the Cluster
 
 In this section we will delete the `docker-cluster-lifecycle-hooks` cluster and observe that the extension server is receiving and logging the event.
 
-> If you are feeling a adventurous try the [(Optional) Block Cluster deletion using Extension Server](#optional-block-cluster-deletion-using-extension-server) to block the deleting of a cluster using extension.
+> If you are feeling a adventurous try the [(Optional) Block Cluster deletion using Extension Server](#optional-block-cluster-deletion-using-extension-server) to block the cluster deletion via the extension.
 
 To delete the cluster run:
 
 ```bash
-kubectl delete cluster docker-cluster-lifecycle-hooks
+kubectl delete -n ns-lifecycle-hooks cluster docker-cluster-lifecycle-hooks --wait=false
+```
+
+Get the extension server logs:
+
+```bash
+kubectl logs -n test-extension-system deployments/test-extension-manager
 ```
 
 In the extension server you should see logs similar to:
@@ -136,42 +148,59 @@ I1014 03:06:52.408447       1 handlers.go:165] "BeforeClusterDelete response is 
 
 ### (Optional) Block Cluster deletion using Extension Server
 
-Till now we used a simple extension server that only logs the lifecycle events. What if we wanted to do more with the lifecycle hooks? In this section we will see how lifecycle hooks can be used to do more than just log events. 
+So far we used a simple extension server that only logs the lifecycle events. What if we wanted to do more with the lifecycle hooks? In this section we will see how lifecycle hooks can be used to do more than just log events.
 
 Let's change our extension server's behavior to send a "blocking response" when it receives a `BeforeClusterDelete` event.
 
-The extension server is pre-configured to always send a "allow response". Let's change this so that the extension server now send a "blocking response" to the `BeforeClusterDelete` event.
+The extension server is pre-configured to always send a "allow response". Let's change this so that the extension server now sends a "blocking response" to the `BeforeClusterDelete` event.
 
 ```bash
-kubectl patch configmap docker-cluster-lifecycle-hooks-test-extension-hookresponses --patch-file yamls/extension/block-patch.yaml
+kubectl patch configmap -n ns-lifecycle-hooks docker-cluster-lifecycle-hooks-test-extension-hookresponses --patch-file yamls/extension/block-patch.yaml
 ```
 
-Now, lets delete the cluster.
+Now, let's delete the cluster.
 
 ```bash
-kubectl delete cluster docker-cluster-lifecycle-hooks
+kubectl delete -n ns-lifecycle-hooks cluster docker-cluster-lifecycle-hooks --wait=false
 ```
 
 You should observe that the delete operation is blocked and in the extension server logs you should observe the following logs:
 
+```bash
+kubectl logs -n test-extension-system deployments/test-extension-manager
 ```
+
+The logs should show:
+
+```bash
 ...... other log lines
 I1014 03:25:41.039429       1 handlers.go:131] "BeforeClusterDelete is called"
 I1014 03:25:41.046028       1 handlers.go:165] "BeforeClusterDelete response is Success. retry: 5"
 .....
 ```
 
-Observe the `retry: 5` in the logs. The extension server is effectively telling the cluster to block the delete operation and re-check after 5 seconds. The management cluster calls the extension server every ~5 seconds till the extension send back a `retry: 0`.
+Observe the `retry: 5` in the logs. The extension server is effectively telling the cluster to block the delete operation and re-check after 5 seconds. The management cluster calls the extension server every ~5 seconds till the extension sends back a `retry: 0`.
 
-**Note:** DO NOT kill the terminal that is blocked in the `kubectl delete cluster docker-cluster-lifecycle-hooks` run.
-
-In a new terminal lets update the extension server to now send an "allow response". 
+You could list the list of clusters to see that the cluster is not deleted.
 
 ```bash
-kubectl patch configmap docker-cluster-lifecycle-hooks-test-extension-hookresponses --patch-file yamls/extension/allow-patch.yaml
+kubectl get clusters -n ns-lifecycle-hooks
+```
+
+Let's update the extension server to now send an "allow response".
+
+```bash
+kubectl patch configmap -n ns-lifecycle-hooks docker-cluster-lifecycle-hooks-test-extension-hookresponses --patch-file yamls/extension/allow-patch.yaml
 ```
 
 Now the cluster deletion operation should go through and the `docker-cluster-lifecycle-hooks` cluster will eventually be deleted.
+
+Let's list the cluster to make sure that the cluster is deleted:
+```bash
+kubectl get clusters -n ns-lifecycle-hooks
+```
+
+You should observe that the cluster was delete and there are no more clusters.
 
 ## Clean up
 

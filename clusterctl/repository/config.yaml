@@ -1,5 +1,4 @@
 EXP_RUNTIME_SDK: "true"
-EXP_CLUSTER_RESOURCE_SET: "true"
 CLUSTER_TOPOLOGY: "true"
 providers:
 - name: "cluster-api"
