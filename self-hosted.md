@@ -2,7 +2,7 @@
 
 A self-hosted cluster is a cluster that acts as both the management cluster and the workload cluster. A self-hosted cluster manages its own lifecycle.
 
-In this this section we will create a workload cluster and make it self-hosted by converting it into its own management cluster.
+In this section we will create a workload cluster and make it self-hosted by converting it into its own management cluster.
 
 <!-- table of contens generated via: https://github.com/thlorenz/doctoc -->
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -19,43 +19,29 @@ In this this section we will create a workload cluster and make it self-hosted b
 
 Firstly, lets create a workload cluster called `docker-cluster-self-hosted`.
 
-These steps will similar to how we created `docker-cluster-one`.
+These steps will be similar to how we created `docker-cluster-one`.
 
-* Create the cluster
+Create the cluster
 
 ```bash
 kubectl apply -f yamls/clusters/docker-cluster-self-hosted.yaml
 ```
 
-* Retrieve the cluster's kubeconfig
+Retrieve the cluster's kubeconfig (you might have to retry the command after the cluster is provisioned)
 
 ```bash
 kind get kubeconfig --name docker-cluster-self-hosted > self-hosted.kubeconfig
 ```
 
-* Install Calico on the Cluster using our prepared yaml spec:
+Install Calico on the Cluster using our prepared yaml spec:
 
 ```bash
-    kubectl --kubeconfig self-hosted.kubeconfig apply -f yamls/cni/calico.yaml
+kubectl --kubeconfig self-hosted.kubeconfig apply -f yamls/cni/calico.yaml
 ```
 
 ## Convert Workload Cluster to Management Cluster
 
 Now that we have the `docker-cluster-self-hosted` workload cluster lets install Cluster API components on it to make it a management cluster.
-
-Firstly lets load the required images into the cluster:
-
-For Linux and mac:
-
-```bash
-sh ./scripts/load-images.sh
-```
-
-For windows:
-
-```bash
-.\scripts\load-images.ps1
-```
 
 Install Cluster API components:
 ```bash
@@ -115,6 +101,10 @@ docker-cluster-self-hosted   Provisioned   3m    v1.24.6
 ```
 
 Notice that the `docker-cluster-self-hosted` is listed among the clusters that it is managing. We got a self-hosted cluster!
+
+Try scaling the machine deployments on the self-hosted cluster to observe how simple it is to manage a self-hosted cluster. 
+
+Do you remember how to scale the machine deployments? (Hint: look at [scale operation](./cluster-topology.md#more-scale-operations)).
 
 ## Clean up
 
