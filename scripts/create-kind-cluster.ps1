@@ -11,3 +11,6 @@ kind -n kubecon-na-22-capi-lab load docker-image quay.io/jetstack/cert-manager-c
 
 # Load Cluster API visualizer
 kind -n kubecon-na-22-capi-lab load docker-image ghcr.io/jont828/cluster-api-visualizer:v1.0.0
+
+# Test Extension
+kind -n kubecon-na-22-capi-lab load docker-image gcr.io/kakaraparthy-devel/test-extension:v1.0.0

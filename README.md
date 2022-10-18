@@ -9,6 +9,6 @@ Sections:
 * [Changing the Cluster Topology](./cluster-topology.md)
 * [MachineHealthChecks and Machine remediation](./machine-health-checks.md)
 * TODO: Upgrading to another Kubernetes version
-* TODO: Cluster lifecycle hooks
+* [Cluster Lifecycle Hooks](./lifecycle-hooks.md)
 * TODO: Self-hosted management cluster
 * TODO: Deleting a cluster && cleaning up Cluster API

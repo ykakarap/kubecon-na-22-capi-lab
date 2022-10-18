@@ -1,3 +1,5 @@
+EXP_RUNTIME_SDK: "true"
+CLUSTER_TOPOLOGY: "true"
 providers:
 - name: "cluster-api"
   type: "CoreProvider"

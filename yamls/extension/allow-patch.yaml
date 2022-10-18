@@ -1,0 +1,2 @@
+data:
+  BeforeClusterDelete-preloadedResponse: '{"Status": "Success", "RetryAfterSeconds": 0}'
