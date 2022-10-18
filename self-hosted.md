@@ -21,13 +21,13 @@ Firstly, lets create a workload cluster called `docker-cluster-self-hosted`.
 
 These steps will be similar to how we created `docker-cluster-one`.
 
-Create the cluster
+Create the cluster:
 
 ```bash
 kubectl apply -f yamls/clusters/docker-cluster-self-hosted.yaml
 ```
 
-Retrieve the cluster's kubeconfig (you might have to retry the command after the cluster is provisioned)
+Retrieve the cluster's kubeconfig: (you might have to retry the command after the cluster is provisioned)
 
 ```bash
 kind get kubeconfig --name docker-cluster-self-hosted > self-hosted.kubeconfig
@@ -45,6 +45,9 @@ Now that we have the `docker-cluster-self-hosted` workload cluster lets install 
 
 Install Cluster API components:
 ```bash
+export CLUSTERCTL_REPOSITORY_PATH=$(pwd)/clusterctl/repository
+export CLUSTER_TOPOLOGY=true
+export EXP_RUNTIME_SDK=true
 clusterctl init --kubeconfig self-hosted.kubeconfig --infrastructure docker --config ./clusterctl/repository/config.yaml
 ```
 
@@ -86,13 +89,13 @@ Creating objects in the target cluster
 Deleting objects from the source cluster
 ```
 
-We have successfully make `docker-cluster-self-hosted` a self-hosted clusters. Lets take a look at how the self-hosted cluster looks like.
+We have successfully made `docker-cluster-self-hosted` a self-hosted cluster. Lets take a look at how the self-hosted cluster looks.
 
 ```bash
 kubectl --kubeconfig self-hosted.kubeconfig get clusters
 ```
 
-The output resembles
+The output resembles:
 
 ```bash
 NAME                         PHASE         AGE   VERSION
@@ -102,13 +105,13 @@ docker-cluster-self-hosted   Provisioned   3m    v1.24.6
 
 Notice that the `docker-cluster-self-hosted` is listed among the clusters that it is managing. We got a self-hosted cluster!
 
-Try scaling the machine deployments on the self-hosted cluster to observe how simple it is to manage a self-hosted cluster. 
+Try scaling the MachineDeployments on the self-hosted cluster to observe how simple it is to manage a self-hosted cluster. 
 
-Do you remember how to scale the machine deployments? (Hint: look at [scale operation](./cluster-topology.md#more-scale-operations)).
+Do you remember how to scale the MachineDeployments? (Hint: look at [scale operation](./cluster-topology.md#more-scale-operations)).
 
 ## Clean up
 
-Before moving to the next sections of the tutorial lets convert `kubecon-na-22-capi-lab` back into out management cluster.
+Before moving to the next sections of the tutorial lets convert `kubecon-na-22-capi-lab` back into our management cluster.
 
 ```bash
 kind get kubeconfig --name kubecon-na-22-capi-lab > kubecon-na-22-capi-lab.kubeconfig
@@ -118,7 +121,7 @@ kind get kubeconfig --name kubecon-na-22-capi-lab > kubecon-na-22-capi-lab.kubec
 clusterctl move --kubeconfig self-hosted.kubeconfig --to-kubeconfig kubecon-na-22-capi-lab.kubeconfig
 ```
 
-After successfully moving back lets delete `docker-cluster-self-hosted`
+After successfully moving back lets delete the `docker-cluster-self-hosted` cluster:
 
 ```bash
 kubectl delete cluster docker-cluster-self-hosted
