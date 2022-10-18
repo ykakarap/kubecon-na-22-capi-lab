@@ -51,14 +51,20 @@ Let's first look at how the registration looks:
 apiVersion: runtime.cluster.x-k8s.io/v1alpha1
 kind: ExtensionConfig
 metadata:
-  name: printer-extension                      // Unique Registration Name
+  name: printer-extension                      # Unique Registration Name
   annotations:
     runtime.cluster.x-k8s.io/inject-ca-from-secret: test-extension-system/test-extension-webhook-service-cert
 spec:
-  clientConfig:                                // Information to contact the extension server
-    service:                                   // Reference to a service running in the management cluster
+  clientConfig:                                # Information to contact the extension server
+    service:                                   # Reference to a service running in the management cluster
       name: test-extension-webhook-service
       namespace: test-extension-system
+  namespaceSelector:
+    matchExpressions:                          # Match only Cluster in Namespace ns-lifecycle-hooks
+    - key: "kubernetes.io/metadata.name"
+      operator: "In"
+      values:
+      - "ns-lifecycle-hooks"
 ```
 
 Let's register the extension using:
@@ -80,16 +86,16 @@ The output should resemble:
 ```
 
 > **Optional**  
-> If you are curious, take a look at `.status.handlers` of the `printer-extension` resource by doing `kubectl get extensionconfig printer-extension -o jsonpath='{.status.handlers}'`. This lists down all the lifecycle events the extension server supports.
+> If you are curious, take a look at `.status.handlers` of the `printer-extension` resource by running `kubectl get extensionconfig printer-extension -o jsonpath='{.status.handlers}'`. This lists down all the lifecycle events the extension server supports.
 
 ## Extension in Action
 
 Now that we have the extension server running and registered with Cluster API let's see it in action. The extension server is configured to receive the following events:
 
-- `BeforeClusterCreate` - Receives before the cluster topology is created.
+- `BeforeClusterCreate` - Receives event before the cluster topology is created.
 - `AfterControlPlaneInitialized` - Receives event after the control plane is reachable for the first time.
 - `BeforeClusterUpgrade` - Receives event before the cluster topology is upgraded.
-- `AfterControlPlaneUpgrade` - Receives event after the control plane is upgraded and before the upgrade is propagated to machine deployments.
+- `AfterControlPlaneUpgrade` - Receives event after the control plane is upgraded and before the upgrade is propagated to MachineDeployments.
 - `AfterClusterUpgrade` - Receives event after the cluster is fully upgraded.
 - `BeforeClusterDelete` - Receives event before cluster is deleted.
 
@@ -125,7 +131,7 @@ Note that the workload cluster could take a few minutes to fully come up and eac
 
 In this section we will delete the `docker-cluster-lifecycle-hooks` cluster and observe that the extension server is receiving and logging the event.
 
-> If you are feeling a adventurous try the [(Optional) Block Cluster deletion using Extension Server](#optional-block-cluster-deletion-using-extension-server) to block the cluster deletion via the extension.
+> If you are feeling adventurous try the [(Optional) Block Cluster deletion using Extension Server](#optional-block-cluster-deletion-using-extension-server) to block the cluster deletion via the extension.
 
 To delete the cluster run:
 
@@ -152,13 +158,13 @@ So far we used a simple extension server that only logs the lifecycle events. Wh
 
 Let's change our extension server's behavior to send a "blocking response" when it receives a `BeforeClusterDelete` event.
 
-The extension server is pre-configured to always send a "allow response". Let's change this so that the extension server now sends a "blocking response" to the `BeforeClusterDelete` event.
+The extension server is pre-configured to always send an "allow response". Let's change this so that the extension server now sends a "blocking response" to the `BeforeClusterDelete` event.
 
 ```bash
 kubectl patch configmap -n ns-lifecycle-hooks docker-cluster-lifecycle-hooks-test-extension-hookresponses --patch-file yamls/extension/block-patch.yaml
 ```
 
-Now, let's delete the cluster.
+Now, let's try to delete the cluster.
 
 ```bash
 kubectl delete -n ns-lifecycle-hooks cluster docker-cluster-lifecycle-hooks --wait=false
@@ -179,7 +185,7 @@ I1014 03:25:41.046028       1 handlers.go:165] "BeforeClusterDelete response is 
 .....
 ```
 
-Observe the `retry: 5` in the logs. The extension server is effectively telling the cluster to block the delete operation and re-check after 5 seconds. The management cluster calls the extension server every ~5 seconds till the extension sends back a `retry: 0`.
+Observe the `retry: 5` in the logs. The extension server is effectively telling the cluster to block the delete operation and re-check after 5 seconds. The management cluster calls the extension server every ~ 5 seconds till the extension sends back a `retry: 0`.
 
 You could list the list of clusters to see that the cluster is not deleted.
 
@@ -200,7 +206,7 @@ Let's list the cluster to make sure that the cluster is deleted:
 kubectl get clusters -n ns-lifecycle-hooks
 ```
 
-You should observe that the cluster was delete and there are no more clusters.
+You should observe that the cluster was deleted and there are no more clusters.
 
 ## Clean up
 
