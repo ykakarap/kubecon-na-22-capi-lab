@@ -11,4 +11,4 @@ Sections:
 * TODO: Upgrading to another Kubernetes version
 * [Cluster Lifecycle Hooks](./lifecycle-hooks.md)
 * [Self-hosted management cluster](./self-hosted.md)
-* TODO: Deleting a cluster && cleaning up Cluster API
+* [Deleting a cluster && cleaning up Cluster API](./deleting-clusters-and-cleaning-up.md)
