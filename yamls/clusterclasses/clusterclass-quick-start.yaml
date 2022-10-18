@@ -290,6 +290,13 @@ spec:
       - docker.io/calico/cni:v3.24.1
       - docker.io/calico/kube-controllers:v3.24.1
       - docker.io/calico/node:v3.24.1
+      - gcr.io/k8s-staging-cluster-api/capd-manager:v1.2.4
+      - k8s.gcr.io/cluster-api/cluster-api-controller:v1.2.4
+      - k8s.gcr.io/cluster-api/kubeadm-bootstrap-controller:v1.2.4
+      - k8s.gcr.io/cluster-api/kubeadm-control-plane-controller:v1.2.4
+      - quay.io/jetstack/cert-manager-cainjector:v1.9.1
+      - quay.io/jetstack/cert-manager-controller:v1.9.1
+      - quay.io/jetstack/cert-manager-webhook:v1.9.1
 ---
 apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
 kind: DockerMachineTemplate
@@ -306,6 +313,13 @@ spec:
       - docker.io/calico/cni:v3.24.1
       - docker.io/calico/kube-controllers:v3.24.1
       - docker.io/calico/node:v3.24.1
+      - gcr.io/k8s-staging-cluster-api/capd-manager:v1.2.4
+      - k8s.gcr.io/cluster-api/cluster-api-controller:v1.2.4
+      - k8s.gcr.io/cluster-api/kubeadm-bootstrap-controller:v1.2.4
+      - k8s.gcr.io/cluster-api/kubeadm-control-plane-controller:v1.2.4
+      - quay.io/jetstack/cert-manager-cainjector:v1.9.1
+      - quay.io/jetstack/cert-manager-controller:v1.9.1
+      - quay.io/jetstack/cert-manager-webhook:v1.9.1
 ---
 apiVersion: bootstrap.cluster.x-k8s.io/v1beta1
 kind: KubeadmConfigTemplate
