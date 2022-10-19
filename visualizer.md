@@ -5,7 +5,7 @@
 Deploy the Cluster API visualizer via:
 
 ```bash
-helm install capi-visualizer --repo https://jont828.github.io/cluster-api-visualizer/charts cluster-api-visualizer --version v1.0.0 -n observability --create-namespace --values ./yamls/visualizer/values.yaml
+helm install capi-visualizer --repo https://jont828.github.io/cluster-api-visualizer/charts cluster-api-visualizer --version v1.0.1 -n observability --create-namespace --values ./yamls/visualizer/values.yaml
 ```
 
 Open a port-forward to the UI:

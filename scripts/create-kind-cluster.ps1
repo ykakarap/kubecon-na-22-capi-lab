@@ -10,7 +10,7 @@ kind -n kubecon-na-22-capi-lab load docker-image gcr.io/k8s-staging-cluster-api/
 kind -n kubecon-na-22-capi-lab load docker-image quay.io/jetstack/cert-manager-cainjector:v1.9.1 quay.io/jetstack/cert-manager-controller:v1.9.1 quay.io/jetstack/cert-manager-webhook:v1.9.1
 
 # Load Cluster API visualizer
-kind -n kubecon-na-22-capi-lab load docker-image ghcr.io/jont828/cluster-api-visualizer:v1.0.0
+kind -n kubecon-na-22-capi-lab load docker-image ghcr.io/jont828/cluster-api-visualizer:v1.0.1
 
 # Test Extension
 kind -n kubecon-na-22-capi-lab load docker-image gcr.io/kakaraparthy-devel/test-extension:v1.0.0
