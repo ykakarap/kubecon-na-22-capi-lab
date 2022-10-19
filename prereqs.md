@@ -139,6 +139,8 @@ Image: "ghcr.io/jont828/cluster-api-visualizer:v1.0.1" with ID "sha256:cb04341e0
 Image: "gcr.io/kakaraparthy-devel/test-extension:v1.0.0" with ID "sha256:2bed00beb6d3d5cecf83628d5cc321179b3bc06838ee6500770d932916b65be7" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
 ```
 
+**Note** The following error can be ignored: `ERROR: failed to load image: command "docker exec --privileged ... already exists` as the image load works even if this error occurs.
+
 Test kubectl:
 ```bash
 kubectl get node
@@ -152,7 +154,7 @@ kubecon-na-22-capi-lab-control-plane   Ready    control-plane   3m5s   v1.25.2
 
 Delete the kind cluster:
 ```bash
-kind delete cluster
+kind delete cluster --name=kubecon-na-22-capi-lab
 ```
 
 ## macOS
@@ -303,6 +305,8 @@ Image: "ghcr.io/jont828/cluster-api-visualizer:v1.0.1" with ID "sha256:cb04341e0
 Image: "gcr.io/kakaraparthy-devel/test-extension:v1.0.0" with ID "sha256:2bed00beb6d3d5cecf83628d5cc321179b3bc06838ee6500770d932916b65be7" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
 ```
 
+**Note** The following error can be ignored: `ERROR: failed to load image: command "docker exec --privileged ... already exists` as the image load works even if this error occurs.
+
 Test kubectl:
 ```bash
 kubectl get node
@@ -316,7 +320,7 @@ kubecon-na-22-capi-lab-control-plane   Ready    control-plane   3m5s   v1.25.2
 
 Delete the kind cluster:
 ```bash
-kind delete cluster
+kind delete cluster --name=kubecon-na-22-capi-lab
 ```
 
 ## Windows
@@ -435,6 +439,8 @@ Image: "ghcr.io/jont828/cluster-api-visualizer:v1.0.1" with ID "sha256:cb04341e0
 Image: "gcr.io/kakaraparthy-devel/test-extension:v1.0.0" with ID "sha256:2bed00beb6d3d5cecf83628d5cc321179b3bc06838ee6500770d932916b65be7" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
 ```
 
+**Note** The following error can be ignored: `ERROR: failed to load image: command "docker exec --privileged ... already exists` as the image load works even if this error occurs.
+
 Test kubectl:
 ```bash
 kubectl get node
@@ -448,7 +454,7 @@ kubecon-na-22-capi-lab-control-plane   Ready    control-plane   3m5s   v1.25.2
 
 Delete the kind cluster:
 ```bash
-kind delete cluster
+kind delete cluster --name=kubecon-na-22-capi-lab
 ```
 
 ## Avoid GitHub rate-limiting when running the tutorial without the local clusterctl repository
