@@ -8,7 +8,7 @@ Sections:
 * [Deploying the Cluster API visualizer](./visualizer.md)
 * [Changing the Cluster Topology](./cluster-topology.md)
 * [MachineHealthChecks and Machine remediation](./machine-health-checks.md)
-* TODO: Upgrading to another Kubernetes version
+* [Upgrading to another Kubernetes version](./upgrade-kubernetes-version.md)
 * [Cluster Lifecycle Hooks](./lifecycle-hooks.md)
 * [Self-hosted management cluster](./self-hosted.md)
 * [Deleting a cluster && cleaning up Cluster API](./deleting-clusters-and-cleaning-up.md)
