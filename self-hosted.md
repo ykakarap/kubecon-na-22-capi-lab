@@ -100,7 +100,7 @@ The output resembles:
 ```bash
 NAME                         PHASE         AGE   VERSION
 docker-cluster-one           Provisioned   3m    v1.25.2
-docker-cluster-self-hosted   Provisioned   3m    v1.25.2
+docker-cluster-self-hosted   Provisioned   3m    v1.24.6
 ```
 
 Notice that the `docker-cluster-self-hosted` is listed among the clusters that it is managing. We got a self-hosted cluster!
