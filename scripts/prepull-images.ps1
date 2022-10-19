@@ -20,6 +20,11 @@ docker pull k8s.gcr.io/pause:3.7
 docker pull docker.io/calico/cni:v3.24.1
 docker pull docker.io/calico/kube-controllers:v3.24.1
 docker pull docker.io/calico/node:v3.24.1
+# For upgrade
+docker pull registry.k8s.io/pause:3.8
+docker pull k8s.gcr.io/kube-proxy:v1.24.6
+docker pull k8s.gcr.io/coredns/coredns:v1.8.6
+docker pull registry.k8s.io/coredns/coredns:v1.8.6
 
 # Cluster API visualizer
 docker pull ghcr.io/jont828/cluster-api-visualizer:v1.0.1

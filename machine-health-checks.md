@@ -39,6 +39,7 @@ machinehealthcheck.cluster.x-k8s.io/docker-cluster-one-md-0-np68x   docker-clust
 As mentioned above MachineHealthChecks can be used to detect unhealthy Machines. This can be done by:
 * checking for conditions on Nodes via `unhealthyConditions` or
 * checking that new nodes come up within a certain timespan via `nodeStartupTimeout`.
+
 Once a Machine is detected as unhealthy it will be drained, deleted and a new Machine is created as replacement.
 
 In this example we are simulating an unhealthy Node via the `DemoNodeHealthy` condition. The MachineHealthCheck will monitor 
@@ -53,7 +54,6 @@ kubectl get machine
 
 Output:
 ```bash
-kubectl get machine
 NAME                                             CLUSTER              NODENAME                                         PROVIDERID                                                  PHASE     AGE     VERSION
 docker-cluster-one-md-0-np68x-6f47ffdffb-zqvv7   docker-cluster-one   docker-cluster-one-md-0-np68x-6f47ffdffb-zqvv7   docker:////docker-cluster-one-md-0-np68x-6f47ffdffb-zqvv7   Running   3m40s   v1.24.6
 docker-cluster-one-pkkxd-66wmm                   docker-cluster-one   docker-cluster-one-pkkxd-66wmm                   docker:////docker-cluster-one-pkkxd-66wmm                   Running   24m     v1.24.6
@@ -112,7 +112,7 @@ docker-cluster-one-md-0-np68x-6f47ffdffb-hjrhp   Ready                      <non
 docker-cluster-one-md-0-np68x-6f47ffdffb-hjrhp   Ready                      <none>          14s   v1.24.6
 ```
 
-**Note**: Depending on the performance of your local machine this can take a few seconds up to a few minutes.
+**Note**: Depending on the performance of your local machine this can take from a few seconds up to a few minutes.
 
 Now let's take another look at our Machines. You should be able to see that the worker Machine has been replaced by a new Machine.
 

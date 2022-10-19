@@ -35,6 +35,8 @@ sh ./scripts/prepull-images.sh
 sh ./scripts/create-kind-cluster.sh
 ```
 
+**Note** The following error can be ignored: `ERROR: failed to load image: command "docker exec --privileged ... already exists` as the image load works even if this error occurs.
+
 Once the cluster has completed provisioning you should be able to check it's healthy using:
 
 ```bash
@@ -201,6 +203,8 @@ cd kubecon-na-22-capi-lab
 sh ./scripts/prepull-images.sh
 sh ./scripts/create-kind-cluster.sh
 ```
+
+**Note** The following error can be ignored: `ERROR: failed to load image: command "docker exec --privileged ... already exists` as the image load works even if this error occurs.
 
 Once the cluster has completed provisioning you should be able to check it's healthy using:
 
@@ -370,6 +374,8 @@ cd kubecon-na-22-capi-lab
 .\scripts\prepull-images.ps1
 .\scripts\create-kind-cluster.ps1
 ```
+
+**Note** The following error can be ignored: `ERROR: failed to load image: command "docker exec --privileged ... already exists` as the image load works even if this error occurs.
 
 Once the cluster has completed provisioning you should be able to check it's healthy using:
 
