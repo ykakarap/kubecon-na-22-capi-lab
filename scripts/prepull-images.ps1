@@ -22,7 +22,7 @@ docker pull docker.io/calico/kube-controllers:v3.24.1
 docker pull docker.io/calico/node:v3.24.1
 
 # Cluster API visualizer
-docker pull ghcr.io/jont828/cluster-api-visualizer:v1.0.0
+docker pull ghcr.io/jont828/cluster-api-visualizer:v1.0.1
 
 # Test Extension
 docker pull gcr.io/kakaraparthy-devel/test-extension:v1.0.0
