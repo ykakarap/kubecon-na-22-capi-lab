@@ -51,7 +51,7 @@ Output:
 17c17
 <       replicas: 1
 ---
->       replicas: 3
+>       replicas: 3 # Replicas changed from 1 to 3
 ```
 
 The above shows that the `yaml` specs are almost identical, with the only change being the `replicas` value on L17. By applying that modified spec to our kind management cluster we can achieve a control plane node scale out operation:
@@ -211,7 +211,7 @@ Output:
 
 ```bash
 35a36,38
->         - class: default-worker
+>         - class: default-worker # Adding a 2nd worker pool
 >           name: md-1
 >           replicas: 1
 ```
