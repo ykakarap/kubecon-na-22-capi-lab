@@ -35,7 +35,7 @@ Ouput:
 cluster.cluster.x-k8s.io/docker-cluster-one configured
 ```
 
-Let's wait a few minutes until we have three control plane nodes. When you do your workload cluster will look like this:
+Let's wait a few minutes until we have three control plane nodes. Then your workload cluster will look like this:
 
 ```sh
 kubectl --kubeconfig cluster-one.kubeconfig get nodes
