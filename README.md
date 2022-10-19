@@ -13,6 +13,8 @@ For more details on this talk see the [KubeCon schedule.](https://kccncna2022.sc
 
 **Note: Before attending the tutorial at KubeCon please run through the [prerequisites section](./0-prereqs.md) to ensure the best experience on the day.**
 
+**Note: If you run into problems during the tutorial please check the [troubleshooting guide](./troubleshooting.md)**
+
 Sections:
 * [Prerequisites](./0-prereqs.md)
 * [Creating your first cluster with Cluster API](./1-your-first-cluster.md)
@@ -23,3 +25,5 @@ Sections:
 * [Cluster Lifecycle Hooks](./6-lifecycle-hooks.md)
 * [Self-hosted management cluster](./7-self-hosted.md)
 * [Deleting a cluster && cleaning up Cluster API](./8-deleting-clusters-and-cleaning-up.md)
+
+

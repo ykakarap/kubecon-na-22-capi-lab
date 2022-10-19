@@ -32,7 +32,6 @@ Please ensure you have at least: 4 CPU, 16 GB RAM and 32 GB free disk space.
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Linux
-
 ### Install Docker, kubectl, kind, clusterctl and helm
 
 Install Docker as documented on the Docker website. You can choose between:
@@ -44,8 +43,9 @@ Verify the Docker installation via:
 docker version
 docker ps
 ```
-
+**Note:** Fedora users should ensure to [correctly configure Docker](./troubleshooting.md#fedora-cluster-never-provisions) before continuing.
 **Note**: If you are using Docker Desktop please ensure the Docker VM has at least 4 CPU, 10 GB RAM and 32 GB disk.
+**Note**: You should ensure that [some system settings are correct before continuing](./troubleshooting.md#too-many-open-files)
 
 Install kubectl as documented in [Install and Set Up kubectl on Linux](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/).
 

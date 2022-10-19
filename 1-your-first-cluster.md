@@ -89,6 +89,7 @@ kube-system                         kube-scheduler-kind-control-plane           
 local-path-storage                  local-path-provisioner-9cd9bd544-sglzs                           1/1     Running   0          5m27s
 
 ```
+Once all of the pods are `Running` - to update the status run the above command again - it's time to move on to the next section.
 
 ### Your first workload cluster
 
@@ -260,6 +261,8 @@ kube-system                         kube-scheduler-kind-control-plane           
 local-path-storage                  local-path-provisioner-9cd9bd544-sglzs                           1/1     Running   0          5m27s
 
 ```
+
+Once all of the pods are `Running` - to update the status run the above command again - it's time to move on to the next section.
 
 ### Your first workload cluster
 
@@ -434,6 +437,8 @@ kube-system                         kube-scheduler-kind-control-plane           
 local-path-storage                  local-path-provisioner-9cd9bd544-sglzs                           1/1     Running   0          5m27s
 
 ```
+
+Once all of the pods are `Running` - to update the status run the above command again - it's time to move on to the next section.
 
 ### Your first workload cluster
 
