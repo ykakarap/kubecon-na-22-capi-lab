@@ -20,6 +20,8 @@ Explore your workload cluster(s)!
 
 ![visualizer](visualizer.png)
 
+**Note**: The visualizer can be used during the next sections to get a better understanding of Cluster API and the changes we make to a Cluster.
+
 ## Changing Cluster Topology
 
 Now we're ready to explore more of the power of Cluster API, [let's first explore cluster topology](cluster-topology.md)!
