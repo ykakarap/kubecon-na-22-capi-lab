@@ -44,7 +44,16 @@ kubectl --kubeconfig self-hosted.kubeconfig apply -f yamls/cni/calico.yaml
 
 Now that we have the `docker-cluster-self-hosted` workload cluster lets install Cluster API components on it to make it a management cluster.
 
-Install Cluster API components:
+Install Cluster API components.
+
+For Windows users:
+```bash
+$env:CLUSTERCTL_REPOSITORY_PATH = ([System.Uri](Get-Item .).FullName).AbsoluteUri + "/clusterctl/repository"
+$env:CLUSTER_TOPOLOGY = 'true'
+$env:EXP_RUNTIME_SDK = 'true'
+clusterctl init --infrastructure docker --config ./clusterctl/repository/config.yaml
+```
+For MacOS and Linux users:
 ```bash
 export CLUSTERCTL_REPOSITORY_PATH=$(pwd)/clusterctl/repository
 export CLUSTER_TOPOLOGY=true
@@ -100,7 +109,6 @@ The output resembles:
 
 ```bash
 NAME                         PHASE         AGE   VERSION
-docker-cluster-one           Provisioned   3m    v1.25.2
 docker-cluster-self-hosted   Provisioned   3m    v1.24.6
 ```
 

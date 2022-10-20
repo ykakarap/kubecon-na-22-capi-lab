@@ -326,6 +326,27 @@ kind delete cluster --name=kubecon-na-22-capi-lab
 
 ## Windows
 
+### Clone the tutorial repository
+
+```bash
+git clone https://github.com/ykakarap/kubecon-na-22-capi-lab
+cd kubecon-na-22-capi-lab
+
+$env:CLUSTERCTL_REPOSITORY_PATH = ([System.Uri](Get-Item .).FullName).AbsoluteUri + "/clusterctl/repository"
+```
+
+**Notes**:
+* The `CLUSTERCTL_REPOSITORY_PATH` environment variable is required later so we're able to run the tutorial offline.
+* You can also download the repository via this link if you don't have `git` installed: [main.zip](https://github.com/ykakarap/kubecon-na-22-capi-lab/archive/refs/heads/main.zip).
+
+### Put the tutorial repo on the $PATH
+
+This tutorial uses the base of the tutorial repo to place and execute binaries. To add the current directory - which should be `kubecon-na-22-capi-lab` to the $PATH run:
+
+```bash
+$env:path += ';.'
+```
+
 ### Install Docker, kubectl, kind, clusterctl and helm
 
 Install Docker Desktop as documented in [Install Docker Desktop on Windows](https://docs.docker.com/desktop/install/windows-install/).
@@ -374,25 +395,12 @@ Install helm v3.10.0 by downloading it from the [Helm release page](https://gith
 ```bash
 # amd64
 curl.exe -L https://get.helm.sh/helm-v3.10.0-windows-amd64.zip -o ./helm.zip
-Unzip ./helm.zip ./helm
-
+Expand-Archive ./helm.zip ./helm
+mv .\helm\windows-amd64\helm.exe .
 # Append or prepend the path of that directory to the PATH environment variable.
 
 helm version
 ```
-
-### Clone the tutorial repository
-
-```bash
-git clone https://github.com/ykakarap/kubecon-na-22-capi-lab
-cd kubecon-na-22-capi-lab
-
-$env:CLUSTERCTL_REPOSITORY_PATH = ([System.Uri](Get-Item .).FullName).AbsoluteUri + "/clusterctl/repository"
-```
-
-**Notes**:
-* The `CLUSTERCTL_REPOSITORY_PATH` environment variable is required later so we're able to run the tutorial offline.
-* You can also download the repository via this link if you don't have `git` installed: [main.zip](https://github.com/ykakarap/kubecon-na-22-capi-lab/archive/refs/heads/main.zip).
 
 ### Pre-download container images
 

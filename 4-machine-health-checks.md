@@ -72,8 +72,13 @@ docker-cluster-one-md-0-np68x-6f47ffdffb-zqvv7   Ready    <none>          3m46s 
 docker-cluster-one-pkkxd-66wmm                   Ready    control-plane   24m     v1.24.6
 ```
 
-Then let's simulate a Node failure by setting the `DemoNodeHealthy` condition on the worker Node:
+Then let's simulate a Node failure by setting the `DemoNodeHealthy` condition on the worker Node.
 
+For Windows:
+```bash
+kubectl --kubeconfig cluster-one.kubeconfig patch node $(kubectl --kubeconfig cluster-one.kubeconfig get nodes -l 'node-role.kubernetes.io/control-plane notin ()' -o jsonpath='{.items[*].metadata.name}') --subresource=status --type=json -p='[{\"op\": \"add\", \"path\": \"/status/conditions/-\", \"value\": {\"type\": \"DemoNodeHealthy\", \"status\": \""False"\", \"message\": \"Node is unhealthy\"}}]'
+```
+For MacOS and Linux:
 ```bash
 kubectl --kubeconfig cluster-one.kubeconfig patch node $(kubectl --kubeconfig cluster-one.kubeconfig get nodes -l 'node-role.kubernetes.io/control-plane notin ()' -o jsonpath={'.items[*].metadata.name'}) --subresource=status --type=json -p='[{"op": "add", "path": "/status/conditions/-", "value": {"type": "DemoNodeHealthy", "status": "False", "message": "Node is unhealthy"}}]'
 ```
