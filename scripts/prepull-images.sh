@@ -31,4 +31,4 @@ docker pull registry.k8s.io/coredns/coredns:v1.8.6
 docker pull gcr.io/kakaraparthy-devel/cluster-api-visualizer:v1.0.0
 
 # Test Extension
-docker pull gcr.io/kakaraparthy-devel/test-extension:v1.0.0
+docker pull gcr.io/kakaraparthy-devel/test-extension:v1.0.1
