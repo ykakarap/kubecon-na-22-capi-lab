@@ -1,5 +1,6 @@
 # Prerequisites
 
+## Minimum Resources
 Please ensure you have at least: 4 CPU, 16 GB RAM and 32 GB free disk space.
 
 **Note**: Windows instructions are provided on a best effort basis and have been tested and verified on Windows 11 with Powershell and Docker Desktop which was using WSL 2.
@@ -480,4 +481,4 @@ $env:GITHUB_TOKEN = "<GITHUB_TOKEN>"
 
 ## Creating Your First Cluster With Cluster API
 
-Now that you've prepared your local environment, [let's build our first Kubernetes cluster using Cluster API](your-first-cluster.md)!
+Now that you've prepared your local environment, [let's build our first Kubernetes cluster using Cluster API](1-your-first-cluster.md)!

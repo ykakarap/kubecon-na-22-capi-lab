@@ -1,6 +1,6 @@
 # Use Cluster API to change the Cluster Topology
 
-[In the previous walk-through](./your-first-cluster.md) we demonstrated how to create a cluster using a standard declarative configuration. Now we will show how to leverage this declarative configuration to update cluster topology with ease.
+[In the previous walk-through](./1-your-first-cluster.md) we demonstrated how to create a cluster using a standard declarative configuration. Now we will show how to leverage this declarative configuration to update cluster topology with ease.
 
 **Table of Contents**
 
@@ -14,6 +14,100 @@
 ## What is Cluster Topology?
 
 We define a cluster topology as the set of configurations that describe your cluster: a few examples are the number of control plane and worker nodes; the type of Machine hardware that underlies various nodes; regional distribution across nodes or node pools. You may also see this described as "cluster shape" elsewhere.
+
+
+## Add a new pool of worker nodes
+
+Now we can demonstrate how easily you can leverage the flexibility of Cluster API to add and remove pools of nodes. For the purposes of this doc, we'll re-use the existing "`default-worker`" MachineDeployment class; in other words, we'll define a discrete, new node set based on a pre-existing, common worker machine recipe.
+
+For reference, this is the declarative block that defines the "`default-worker`" MachineDeployment class in [the ClusterClass spec we originally installed](./yamls/clusterclasses/clusterclass-quick-start.yaml):
+
+```yaml
+  workers:
+    machineDeployments:
+    - class: default-worker
+      template:
+        bootstrap:
+          ref:
+            apiVersion: bootstrap.cluster.x-k8s.io/v1beta1
+            kind: KubeadmConfigTemplate
+            name: quick-start-default-worker-bootstraptemplate
+        infrastructure:
+          ref:
+            apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+            kind: DockerMachineTemplate
+            name: quick-start-default-worker-machinetemplate
+```
+
+We'll reference the above "`default-worker`" class in [an updated Cluster configuration that declares a second worker pool](yamls/clusters/3-docker-cluster-one-second-worker-pool.yaml).
+
+The difference between this spec and the original spec used to create the "`docker-cluster-one`" Cluster:
+
+```bash
+diff yamls/clusters/1-docker-cluster-one.yaml yamls/clusters/3-docker-cluster-one-second-worker-pool.yaml
+```
+
+Output:
+
+```bash
+35a36,38
+>         - class: default-worker # Adding a 2nd worker pool
+>           name: md-1
+>           replicas: 1
+```
+
+The above shows that we've added a new `MachineDeployment` called `md-1` (Our existing `MachineDeployment` is named `md-0`) to our new spec. By applying this modified spec to our kind management cluster we will initiate the creation of a new node, from this new node pool:
+
+```bash
+kubectl apply -f yamls/clusters/3-docker-cluster-one-second-worker-pool.yaml
+```
+
+Output:
+
+```bash
+cluster.cluster.x-k8s.io/docker-cluster-one configured
+```
+
+Let's watch those new nodes come online:
+
+```bash
+kubectl --kubeconfig cluster-one.kubeconfig get nodes -w
+```
+
+Output:
+
+```bash
+NAME                                             STATUS   ROLES           AGE   VERSION
+docker-cluster-one-md-0-nrh7k-75ddc4778f-wwpg9   Ready    <none>          25h   v1.24.6
+docker-cluster-one-xbqb2-bcjvj                   Ready    control-plane   26h   v1.24.6
+docker-cluster-one-md-1-ksqwt-8489684d5b-fpgjs   NotReady                   <none>          0s    v1.24.6
+docker-cluster-one-md-1-ksqwt-8489684d5b-fpgjs   NotReady                   <none>          46s   v1.24.6
+docker-cluster-one-md-1-ksqwt-8489684d5b-fpgjs   NotReady                   <none>          46s   v1.24.6
+docker-cluster-one-md-1-ksqwt-8489684d5b-fpgjs   Ready                      <none>          76s   v1.24.6
+```
+
+## Remove a worker node
+
+We can now demonstrate how easy it is to "roll back" such a change, as well as show how to remove an existing node pool from your Cluster configuration. In our case it's as easy as reapplying the original Cluster spec, which only declares one "`md-0`" node pool:
+
+```bash
+kubectl apply -f yamls/clusters/1-docker-cluster-one.yaml
+```
+
+Once again, we should observe only one running worker node, in the "`md-0`" pool:
+
+```bash
+kubectl --kubeconfig cluster-one.kubeconfig get nodes
+```
+
+Output:
+
+```bash
+NAME                                            STATUS   ROLES           AGE    VERSION
+docker-cluster-one-md-0-lq4f8-b59497b9d-xchpm   Ready    <none>          99m    v1.24.6
+docker-cluster-one-mvthd-k7dwf                  Ready    control-plane   174m   v1.24.6
+```
+Note: If you're running this tutorial on Windows, or your system is running below the [minimum resource requirements](./0-prereqs.md#minimum-resources) it's highly recommended you move on to the next section: [MachineHealthChecks and Remediation.](#machinehealthchecks-and-remediation) If you run into trouble at any point please consult [the troubleshooting guide.](#troubleshooting.md)
 
 ## Scale out control plane nodes
 
@@ -37,12 +131,12 @@ docker-cluster-one-md-0-nrh7k-75ddc4778f-vlph9   Ready    <none>          24m   
 docker-cluster-one-xbqb2-tlmpb                   Ready    control-plane   24m   v1.24.6
 ```
 
-Let's use the idempotent model to submit a modified configuration of our "`docker-cluster-one`" Cluster with 3 control plane replicas instead of 1. We've provided [a reference yaml of this updated configuration in this repo](yamls/clusters/docker-cluster-one-3-control-plane-replicas.yaml).
+Let's use the idempotent model to submit a modified configuration of our "`docker-cluster-one`" Cluster with 3 control plane replicas instead of 1. We've provided [a reference yaml of this updated configuration in this repo](yamls/clusters/3-docker-cluster-one-3-control-plane-replicas.yaml).
 
 If you're on masOS or Linux you can diff this modified spec from the original spec used to create the "`docker-cluster-one`" Cluster:
 
 ```bash
-diff yamls/clusters/docker-cluster-one.yaml yamls/clusters/docker-cluster-one-3-control-plane-replicas.yaml
+diff yamls/clusters/1-docker-cluster-one.yaml yamls/clusters/3-docker-cluster-one-3-control-plane-replicas.yaml
 ```
 
 Output:
@@ -57,7 +151,7 @@ Output:
 The above shows that the `yaml` specs are almost identical, with the only change being the `replicas` value on L17. By applying that modified spec to our kind management cluster we can achieve a control plane node scale out operation:
 
 ```bash
-kubectl apply -f yamls/clusters/docker-cluster-one-3-control-plane-replicas.yaml
+kubectl apply -f yamls/clusters/3-docker-cluster-one-3-control-plane-replicas.yaml
 ```
 
 Output:
@@ -140,7 +234,7 @@ docker-cluster-one-md-0-nrh7k-75ddc4778f-vlph9   Ready    <none>          118m  
 docker-cluster-one-xbqb2-8wcbj                   Ready    control-plane   31m    v1.24.6
 ```
 
-We can do the same gesture to scale worker nodes as well. This time we want to edit the configuration at path `spec.topology.workers.machineDeployments`. We should only have one item in that array; change its `replicas` value from `1` to any other, larger value:
+We can do the same gesture to scale worker nodes as well. This time we want to edit the configuration at path `spec.topology.workers.machineDeployments`. We should only have one item in that array; change its `replicas` value from `1` to `3`:
 
 ```bash
 kubectl edit cluster/docker-cluster-one
@@ -173,101 +267,9 @@ NOTE!: Because we're executing the above topology changes using the Docker provi
 Feel free to continue experimenting with scaling. When you're done and ready to move forward, let's go back to our original topology configuration of 1 control plane node and 1 worker node. It's easy to do that by simply reapplying our original Cluster spec, which declares that configuration:
 
 ```bash
-kubectl apply -f yamls/clusters/docker-cluster-one.yaml
-```
-
-## Add a new pool of worker nodes
-
-Now we can demonstrate how easily you can leverage the flexibility of Cluster API to add and remove pools of nodes. For the purposes of this doc, we'll re-use the existing "`default-worker`" MachineDeployment class; in other words, we'll define a discrete, new node set based on a pre-existing, common worker machine recipe.
-
-For reference, this is the declarative block that defines the "`default-worker`" MachineDeployment class in [the ClusterClass spec we originally installed](./yamls/clusterclasses/clusterclass-quick-start.yaml):
-
-```yaml
-  workers:
-    machineDeployments:
-    - class: default-worker
-      template:
-        bootstrap:
-          ref:
-            apiVersion: bootstrap.cluster.x-k8s.io/v1beta1
-            kind: KubeadmConfigTemplate
-            name: quick-start-default-worker-bootstraptemplate
-        infrastructure:
-          ref:
-            apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
-            kind: DockerMachineTemplate
-            name: quick-start-default-worker-machinetemplate
-```
-
-We'll reference the above "`default-worker`" class in [an updated Cluster configuration that declares a second worker pool](yamls/clusters/docker-cluster-one-second-worker-pool.yaml).
-
-The difference between this spec and the original spec used to create the "`docker-cluster-one`" Cluster:
-
-```bash
-diff yamls/clusters/docker-cluster-one.yaml yamls/clusters/docker-cluster-one-second-worker-pool.yaml
-```
-
-Output:
-
-```bash
-35a36,38
->         - class: default-worker # Adding a 2nd worker pool
->           name: md-1
->           replicas: 1
-```
-
-The above shows that we've added a new `MachineDeployment` called `md-1` (Our existing `MachineDeployment` is named `md-0`) to our new spec. By applying this modified spec to our kind management cluster we will initiate the creation of a new node, from this new node pool:
-
-```bash
-kubectl apply -f yamls/clusters/docker-cluster-one-second-worker-pool.yaml
-```
-
-Output:
-
-```bash
-cluster.cluster.x-k8s.io/docker-cluster-one configured
-```
-
-Let's watch those new nodes come online:
-
-```bash
-kubectl --kubeconfig cluster-one.kubeconfig get nodes -w
-```
-
-Output:
-
-```bash
-NAME                                             STATUS   ROLES           AGE   VERSION
-docker-cluster-one-md-0-nrh7k-75ddc4778f-wwpg9   Ready    <none>          25h   v1.24.6
-docker-cluster-one-xbqb2-bcjvj                   Ready    control-plane   26h   v1.24.6
-docker-cluster-one-md-1-ksqwt-8489684d5b-fpgjs   NotReady                   <none>          0s    v1.24.6
-docker-cluster-one-md-1-ksqwt-8489684d5b-fpgjs   NotReady                   <none>          46s   v1.24.6
-docker-cluster-one-md-1-ksqwt-8489684d5b-fpgjs   NotReady                   <none>          46s   v1.24.6
-docker-cluster-one-md-1-ksqwt-8489684d5b-fpgjs   Ready                      <none>          76s   v1.24.6
-```
-
-## Remove a worker node
-
-We can now demonstrate how easy it is to "roll back" such a change, as well as show how to remove an existing node pool from your Cluster configuration. In our case it's as easy as reapplying the original Cluster spec, which only declares one "`md-0`" node pool:
-
-```bash
-kubectl apply -f yamls/clusters/docker-cluster-one.yaml
-```
-
-Once again, we should observe only one running worker node, in the "`md-0`" pool:
-
-```bash
-kubectl --kubeconfig cluster-one.kubeconfig get nodes
-```
-
-Output:
-
-```bash
-NAME                                            STATUS   ROLES           AGE    VERSION
-docker-cluster-one-md-0-lq4f8-b59497b9d-xchpm   Ready    <none>          99m    v1.24.6
-docker-cluster-one-mvthd-k7dwf                  Ready    control-plane   174m   v1.24.6
+kubectl apply -f yamls/clusters/1-docker-cluster-one.yaml
 ```
 
 ## MachineHealthChecks and Remediation
 
-You are now in control of your Cluster's topology configuration! [Let's next explore MachineHealthChecks and Remediation for operational self-healing](machine-health-checks.md).
+You are now in control of your Cluster's topology configuration! [Let's next explore MachineHealthChecks and Remediation for operational self-healing](4-machine-health-checks.md).

@@ -130,4 +130,4 @@ docker-cluster-one-pkkxd-66wmm                   docker-cluster-one   docker-clu
 
 ## Upgrading to another Kubernetes version
 
-Now that we explored Machine remediation. Let's take a look at how we can [upgrade to another Kubernetes version](upgrade-kubernetes-version.md).
+Now that we explored Machine remediation. Let's take a look at how we can [upgrade to another Kubernetes version](5-upgrade-kubernetes-version.md).
