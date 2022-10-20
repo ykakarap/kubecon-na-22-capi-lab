@@ -1,4 +1,5 @@
 image:
-  repository: ghcr.io/jont828
+  repository: gcr.io/kakaraparthy-devel
   name: cluster-api-visualizer
   pullPolicy: IfNotPresent
+  tag: v1.0.0

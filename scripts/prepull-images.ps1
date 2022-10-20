@@ -27,7 +27,7 @@ docker pull k8s.gcr.io/coredns/coredns:v1.8.6
 docker pull registry.k8s.io/coredns/coredns:v1.8.6
 
 # Cluster API visualizer
-docker pull ghcr.io/jont828/cluster-api-visualizer:v1.0.1
+docker pull gcr.io/kakaraparthy-devel/cluster-api-visualizer:v1.0.0
 
 # Test Extension
 docker pull gcr.io/kakaraparthy-devel/test-extension:v1.0.0
