@@ -2,6 +2,8 @@
 
 This guide covers setting up and using Cluster API using Docker infrastructure, which is the same way CAPI runs its end-to-end tests. To set up a Cluster using AWS, Azure GCP and many more see the [CAPI quick-start guide](https://cluster-api.sigs.k8s.io/user/quick-start.html)
 
+**Before starting this section ensure you've completed the [prerequisites](./0-prereqs.md).**
+
 <!-- table of contens generated via: https://github.com/thlorenz/doctoc -->
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -19,6 +21,7 @@ This guide covers setting up and using Cluster API using Docker infrastructure, 
 - Next: [Cluster API Visualizer](#cluster-api-visualizer)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 
 ## Linux
 
@@ -94,7 +97,7 @@ So what can you do with a functioning management cluster? Create more Clusters! 
 kubectl apply -f yamls/clusterclasses/clusterclass-quick-start.yaml
 ```
 
-Next we can create an actual Cluster, but first let's take a look at the Cluster object specification we've prepared (in this repo at [`yamls/clusters/docker-cluster-one.yaml`](yamls/clusters/docker-cluster-one.yaml)):
+Next we can create an actual Cluster, but first let's take a look at the Cluster object specification we've prepared (in this repo at [`yamls/clusters/docker-cluster-one.yaml`](yamls/clusters/1-docker-cluster-one.yaml)):
 
 ```yaml
 apiVersion: cluster.x-k8s.io/v1beta1
@@ -126,7 +129,7 @@ The Cluster specification above defines some of the fundamental characteristics 
 Time to create the Cluster! It's as simple as using the yaml spec we've prepared:
 
 ```bash
-kubectl apply -f yamls/clusters/docker-cluster-one.yaml
+kubectl apply -f yamls/clusters/1-docker-cluster-one.yaml
 ```
 
 Now that the Cluster has been created we can watch it come into being with:
@@ -188,7 +191,7 @@ kubectl --kubeconfig cluster-one.kubeconfig get nodes
 
 clusterctl describe cluster docker-cluster-one
 ```
-
+Next: [Cluster API Visualizer](#cluster-api-visualizer)
 ## MacOS
 
 ### The Management Cluster
@@ -263,7 +266,7 @@ So what can you do with a functioning management cluster? Create more Clusters! 
 kubectl apply -f yamls/clusterclasses/clusterclass-quick-start.yaml
 ```
 
-Next we can create an actual Cluster, but first let's take a look at the Cluster object specification we've prepared (in this repo at [`yamls/clusters/docker-cluster-one.yaml`](yamls/clusters/docker-cluster-one.yaml)):
+Next we can create an actual Cluster, but first let's take a look at the Cluster object specification we've prepared (in this repo at [`yamls/clusters/docker-cluster-one.yaml`](yamls/clusters/1-docker-cluster-one.yaml)):
 
 ```yaml
 apiVersion: cluster.x-k8s.io/v1beta1
@@ -295,7 +298,7 @@ The Cluster specification above defines some of the fundamental characteristics 
 Time to create the Cluster! It's as simple as using the yaml spec we've prepared:
 
 ```bash
-kubectl apply -f yamls/clusters/docker-cluster-one.yaml
+kubectl apply -f yamls/clusters/1-docker-cluster-one.yaml
 ```
 
 Now that the Cluster has been created we can use `clusterctl` to describe its components:
@@ -357,7 +360,7 @@ kubectl --kubeconfig cluster-one.kubeconfig get nodes
 
 clusterctl describe cluster docker-cluster-one
 ```
-
+Next: [Cluster API Visualizer](#cluster-api-visualizer)
 ## Windows
 
 **NOTE** This guide assumes users are using Powershell in a Windows environment. For other environments, e.g. WSL2, the [Linux](#Linux) guide might be a better starting place.
@@ -434,7 +437,7 @@ So what can you do with a functioning management cluster? Create more Clusters! 
 kubectl apply -f yamls/clusterclasses/clusterclass-quick-start.yaml
 ```
 
-Next we can create an actual Cluster, but first let's take a look at the Cluster object specification we've prepared (in this repo at [`yamls/clusters/docker-cluster-one.yaml`](yamls/clusters/docker-cluster-one.yaml)):
+Next we can create an actual Cluster, but first let's take a look at the Cluster object specification we've prepared (in this repo at [`yamls/clusters/docker-cluster-one.yaml`](yamls/clusters/1-docker-cluster-one.yaml)):
 
 ```yaml
 apiVersion: cluster.x-k8s.io/v1beta1
@@ -466,7 +469,7 @@ The Cluster specification above defines some of the fundamental characteristics 
 Time to create the Cluster! It's as simple as using the yaml spec we've prepared:
 
 ```bash
-kubectl apply -f yamls/clusters/docker-cluster-one.yaml
+kubectl apply -f yamls/clusters/1-docker-cluster-one.yaml
 ```
 
 Now that the Cluster has been created we can use `clusterctl` to describe its components:
@@ -528,7 +531,8 @@ kubectl --kubeconfig cluster-one.kubeconfig get nodes
 
 $env:NO_COLOR = 'true'; clusterctl describe cluster docker-cluster-one
 ```
+Next: [Cluster API Visualizer](#cluster-api-visualizer)
 
 ## Cluster API Visualizer
 
-Now you've built your first cluster, [let's install the Visualizer to better see how Cluster API will enable you to manage it](visualizer.md)!
+Now you've built your first cluster, [let's install the Visualizer to better see how Cluster API will enable you to manage it](2-visualizer.md)!

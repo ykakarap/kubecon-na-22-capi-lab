@@ -24,4 +24,4 @@ Explore your workload cluster(s)!
 
 ## Changing Cluster Topology
 
-Now we're ready to explore more of the power of Cluster API, [let's first explore cluster topology](cluster-topology.md)!
+Now we're ready to explore more of the power of Cluster API, [let's first explore cluster topology](3-cluster-topology.md)!

@@ -11,15 +11,15 @@ This tutorial focuses on showcasing Cluster API features with the Docker provide
 For more details on this talk see the [KubeCon schedule.](https://kccncna2022.sched.com/event/1BZDs) [The slides that pair with this tutorial are here.](./slides.pdf)
 
 
-**Note: Before attending the tutorial at KubeCon please run through the [prerequisites section](./prereqs.md) to ensure the best experience on the day.**
+**Note: Before attending the tutorial at KubeCon please run through the [prerequisites section](./0-prereqs.md) to ensure the best experience on the day.**
 
 Sections:
-* [Prerequisites](./prereqs.md)
-* [Creating your first cluster with Cluster API](./your-first-cluster.md)
-* [Deploying the Cluster API visualizer](./visualizer.md)
-* [Changing the Cluster Topology](./cluster-topology.md)
-* [MachineHealthChecks and Machine remediation](./machine-health-checks.md)
-* [Upgrading to another Kubernetes version](./upgrade-kubernetes-version.md)
-* [Cluster Lifecycle Hooks](./lifecycle-hooks.md)
-* [Self-hosted management cluster](./self-hosted.md)
-* [Deleting a cluster && cleaning up Cluster API](./deleting-clusters-and-cleaning-up.md)
+* [Prerequisites](./0-prereqs.md)
+* [Creating your first cluster with Cluster API](./1-your-first-cluster.md)
+* [Deploying the Cluster API visualizer](./2-visualizer.md)
+* [Changing the Cluster Topology](./3-cluster-topology.md)
+* [MachineHealthChecks and Machine remediation](./4-machine-health-checks.md)
+* [Upgrading to another Kubernetes version](./5-upgrade-kubernetes-version.md)
+* [Cluster Lifecycle Hooks](./6-lifecycle-hooks.md)
+* [Self-hosted management cluster](./7-self-hosted.md)
+* [Deleting a cluster && cleaning up Cluster API](./8-deleting-clusters-and-cleaning-up.md)

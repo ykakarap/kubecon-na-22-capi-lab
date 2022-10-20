@@ -13,6 +13,7 @@ In this section we will create a workload cluster and make it self-hosted by con
   - [Create a Cluster](#create-a-cluster)
   - [Convert Workload Cluster to Management Cluster](#convert-workload-cluster-to-management-cluster)
   - [Clean up](#clean-up)
+- Next: [Deleting clusters and cleaning up](#deleting-clusters-and-cleaning-up)
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Create a Cluster
@@ -24,7 +25,7 @@ These steps will be similar to how we created `docker-cluster-one`.
 Create the cluster:
 
 ```bash
-kubectl apply -f yamls/clusters/docker-cluster-self-hosted.yaml
+kubectl apply -f yamls/clusters/7-docker-cluster-self-hosted.yaml
 ```
 
 Retrieve the cluster's kubeconfig: (you might have to retry the command after the cluster is provisioned)
@@ -107,7 +108,7 @@ Notice that the `docker-cluster-self-hosted` is listed among the clusters that i
 
 Try scaling the MachineDeployments on the self-hosted cluster to observe how simple it is to manage a self-hosted cluster.
 
-Do you remember how to scale the MachineDeployments? (Hint: look at [scale operation](./cluster-topology.md#more-scale-operations)).
+Do you remember how to scale the MachineDeployments? (Hint: look at [scale operation](./3-cluster-topology.md#more-scale-operations)).
 
 ## Clean up
 
@@ -126,3 +127,7 @@ After successfully moving back lets delete the `docker-cluster-self-hosted` clus
 ```bash
 kubectl delete cluster docker-cluster-self-hosted
 ```
+
+
+## Deleting clusters and cleaning up
+[Next - find out how to clean up this tutorial](8-deleting-clusters-and-cleaning-up.md#cleaning-up-resources-created-by-this-tutorial)

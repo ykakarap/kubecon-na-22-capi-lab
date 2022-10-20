@@ -15,7 +15,8 @@ In this section we will create a simple `test-extension` that receives key lifec
     - [Create a new workload Cluster](#create-a-new-workload-cluster)
     - [Delete the Cluster](#delete-the-cluster)
     - [(Optional) Block Cluster deletion using Extension Server](#optional-block-cluster-deletion-using-extension-server)
-  - [Clean up](#clean-up)
+- Next: [Creating a self-hosted management cluster](#creating-a-self-hosted-management-cluster)
+  - 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Running the Extension
@@ -105,7 +106,7 @@ In this section we will create a new workload cluster and see that the extension
 
 Create a new `docker-cluster-lifecycle-hooks` workload cluster.
 ```bash
-kubectl apply -f yamls/clusters/docker-cluster-lifecycle-hooks.yaml
+kubectl apply -f yamls/clusters/6-docker-cluster-lifecycle-hooks.yaml
 ```
 
 Since we are creating a new workload cluster we should see the `BeforeClusterCreate` and the `AfterControlPlaneInitialized` events logged by the extension server.
@@ -221,3 +222,6 @@ Delete the extension server that is running on the management cluster.
 ```bash
 kubectl delete -f yamls/extension/test-extension-deployment.yaml
 ```
+
+## Creating a self-hosted management cluster
+[Next let's see how Cluster API can manage its own management cluster!](7-self-hosted.md)

@@ -14,7 +14,7 @@ spec:
     class: quick-start
     version: v1.25.2 # Upgrade to 1.25.2
     controlPlane:
-      replicas: 3 # Replicas changed from 1 to 3
+      replicas: 1
     variables:
       - name: imageRepository
         value: ""
