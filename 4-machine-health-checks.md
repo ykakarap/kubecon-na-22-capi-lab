@@ -3,8 +3,19 @@
 Now let's take a look at MachineHealthChecks and Machine remediation. A MachineHealthCheck checks the health of
 Machines and triggers a replacement (i.e. remediation) of a Machine when it is unhealthy.
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [Using MachineHealthChecks](#using-machinehealthchecks)
+- [Next: Upgrading to another Kubernetes version](#next-upgrading-to-another-kubernetes-version)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## Using MachineHealthChecks
+
 The ClusterClass we are using already has MachineHealthChecks configured for worker Nodes. For reference, this is the 
-declarative block that defines the MachineHealthCheck for the "`default-worker`" MachineDeployment class in [the 
+declarative block that defines the MachineHealthCheck for the `default-worker` MachineDeployment class in [the 
 ClusterClass spec we originally installed](./yamls/clusterclasses/clusterclass-quick-start.yaml):
 
 ```yaml
@@ -37,8 +48,8 @@ machinehealthcheck.cluster.x-k8s.io/docker-cluster-one-md-0-np68x   docker-clust
 ```
 
 As mentioned above MachineHealthChecks can be used to detect unhealthy Machines. This can be done by:
-* checking for conditions on Nodes via `unhealthyConditions` or
-* checking that new nodes come up within a certain timespan via `nodeStartupTimeout`.
+* checking for conditions on Nodes via `unhealthyConditions` (as shown above) or
+* it's also possible to check that new nodes come up within a certain timespan via `nodeStartupTimeout` (not used here).
 
 Once a Machine is detected as unhealthy it will be drained, deleted and a new Machine is created as replacement.
 
@@ -78,7 +89,7 @@ For Windows:
 ```bash
 kubectl --kubeconfig cluster-one.kubeconfig patch node $(kubectl --kubeconfig cluster-one.kubeconfig get nodes -l 'node-role.kubernetes.io/control-plane notin ()' -o jsonpath='{.items[*].metadata.name}') --subresource=status --type=json -p='[{\"op\": \"add\", \"path\": \"/status/conditions/-\", \"value\": {\"type\": \"DemoNodeHealthy\", \"status\": \""False"\", \"message\": \"Node is unhealthy\"}}]'
 ```
-For MacOS and Linux:
+For macOS and Linux:
 ```bash
 kubectl --kubeconfig cluster-one.kubeconfig patch node $(kubectl --kubeconfig cluster-one.kubeconfig get nodes -l 'node-role.kubernetes.io/control-plane notin ()' -o jsonpath={'.items[*].metadata.name'}) --subresource=status --type=json -p='[{"op": "add", "path": "/status/conditions/-", "value": {"type": "DemoNodeHealthy", "status": "False", "message": "Node is unhealthy"}}]'
 ```
@@ -133,6 +144,6 @@ docker-cluster-one-md-0-np68x-6f47ffdffb-hjrhp   docker-cluster-one   docker-clu
 docker-cluster-one-pkkxd-66wmm                   docker-cluster-one   docker-cluster-one-pkkxd-66wmm                   docker:////docker-cluster-one-pkkxd-66wmm                   Running   24m     v1.24.6
 ```
 
-## Upgrading to another Kubernetes version
+## Next: Upgrading to another Kubernetes version
 
 Now that we explored Machine remediation. Let's take a look at how we can [upgrade to another Kubernetes version](5-upgrade-kubernetes-version.md).

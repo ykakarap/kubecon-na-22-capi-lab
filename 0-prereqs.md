@@ -5,7 +5,7 @@ Please ensure you have at least: 4 CPU, 16 GB RAM and 32 GB free disk space.
 
 **Note**: Windows instructions are provided on a best effort basis and have been tested and verified on Windows 11 with Powershell and Docker Desktop which was using WSL 2.
 
-<!-- table of contens generated via: https://github.com/thlorenz/doctoc -->
+<!-- table of contents generated via: https://github.com/thlorenz/doctoc -->
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
@@ -18,15 +18,16 @@ Please ensure you have at least: 4 CPU, 16 GB RAM and 32 GB free disk space.
 - [macOS](#macos)
   - [Install Docker, kubectl, kind, clusterctl and helm](#install-docker-kubectl-kind-clusterctl-and-helm-1)
   - [Clone the tutorial repository](#clone-the-tutorial-repository-1)
-    - [Pre-download container images](#pre-download-container-images-1)
+  - [Pre-download container images](#pre-download-container-images-1)
   - [Verification](#verification-1)
 - [Windows](#windows)
-  - [Install Docker, kubectl, kind, clusterctl and helm](#install-docker-kubectl-kind-clusterctl-and-helm-2)
   - [Clone the tutorial repository](#clone-the-tutorial-repository-2)
+  - [Put the tutorial repo on the $PATH](#put-the-tutorial-repo-on-the-path)
+  - [Install Docker, kubectl, kind, clusterctl and helm](#install-docker-kubectl-kind-clusterctl-and-helm-2)
   - [Pre-download container images](#pre-download-container-images-2)
   - [Verification](#verification-2)
 - [Avoid GitHub rate-limiting when running the tutorial without the local clusterctl repository](#avoid-github-rate-limiting-when-running-the-tutorial-without-the-local-clusterctl-repository)
-- Next: [Creating Your First Cluster With Cluster API](#creating-your-first-cluster-with-cluster-api)
+- [Next: Creating Your First Cluster With Cluster API](#next-creating-your-first-cluster-with-cluster-api)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -53,7 +54,7 @@ Verify kubectl via:
 kubectl version --client -o yaml
 ```
 
-At the time of this writing the above link will guide you to download a version 1.25 of the kubectl binary. [Based on the offical Kubernetes version skew policy](https://kubernetes.io/releases/version-skew-policy/#kubectl) you will be able to use either 1.24, 1.25, or 1.26 of kubectl to follow the tutorial, which will have you create and upgrade Kubernetes clusters running versions 1.24 and 1.25.
+At the time of this writing the above link will guide you to download a version 1.25 of the kubectl binary. [Based on the official Kubernetes version skew policy](https://kubernetes.io/releases/version-skew-policy/#kubectl) you will be able to use either 1.24, 1.25, or 1.26 of kubectl to follow the tutorial, which will have you create and upgrade Kubernetes clusters running versions 1.24 and 1.25.
 
 Install kind v0.16.0 by downloading it from the [kind release page](https://github.com/kubernetes-sigs/kind/releases/tag/v0.16.0) and adding it to the path.
 
@@ -136,8 +137,8 @@ Image: "k8s.gcr.io/cluster-api/kubeadm-control-plane-controller:v1.2.4" with ID 
 Image: "quay.io/jetstack/cert-manager-cainjector:v1.9.1" with ID "sha256:11778d29f8cc283a72a84fbd68601a631fc7705fe2f12a70ea5df7ca3262dfe9" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
 Image: "quay.io/jetstack/cert-manager-controller:v1.9.1" with ID "sha256:8eaca4249b016e1e355957d357a39a0a8a837e1837054e8762fe7d1cd13051af" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
 Image: "quay.io/jetstack/cert-manager-webhook:v1.9.1" with ID "sha256:d3348bcdc1e7e39e655c3b17106fe2e2038cfd70d080a3ac89a9eaf3bd26fc3d" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
-Image: "gcr.io/kakaraparthy-devel/cluster-api-visualizer:v1.0.0" with ID "sha256:cb04341e0b33fc099a685c26256d993e79eaac1304dbeb586e283d33ca14aafb" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
-Image: "gcr.io/kakaraparthy-devel/test-extension:v1.0.1" with ID "sha256:2bed00beb6d3d5cecf83628d5cc321179b3bc06838ee6500770d932916b65be7" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
+Image: "gcr.io/kakaraparthy-devel/cluster-api-visualizer:v1.0.0" with ID "sha256:76f45f9fdeb341ab49094bc424dda68acb2c2e22f08b63c9b8855fe42b620f17" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
+Image: "gcr.io/kakaraparthy-devel/test-extension:v1.0.1" with ID "sha256:5f09148f8fbfcffea6738f07e60205b477dcec37df31e49ad8432886ec46f29d" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
 ```
 
 **Note** The following error can be ignored: `ERROR: failed to load image: command "docker exec --privileged ... already exists` as the image load works even if this error occurs.
@@ -157,6 +158,8 @@ Delete the kind cluster:
 ```bash
 kind delete cluster --name=kubecon-na-22-capi-lab
 ```
+
+Next: [Creating Your First Cluster With Cluster API](#next-creating-your-first-cluster-with-cluster-api)
 
 ## macOS
 
@@ -179,7 +182,7 @@ Verify kubectl via:
 kubectl version --client -o yaml
 ```
 
-At the time of this writing the above link will guide you to download a version 1.25 of the kubectl binary. [Based on the offical Kubernetes version skew policy](https://kubernetes.io/releases/version-skew-policy/#kubectl) you will be able to use either 1.24, 1.25, or 1.26 of kubectl to follow the tutorial, which will have you create and upgrade Kubernetes clusters running versions 1.24 and 1.25.
+At the time of this writing the above link will guide you to download a version 1.25 of the kubectl binary. [Based on the official Kubernetes version skew policy](https://kubernetes.io/releases/version-skew-policy/#kubectl) you will be able to use either 1.24, 1.25, or 1.26 of kubectl to follow the tutorial, which will have you create and upgrade Kubernetes clusters running versions 1.24 and 1.25.
 
 Install kind v0.16.0 by downloading it from the [kind release page](https://github.com/kubernetes-sigs/kind/releases/tag/v0.16.0) and adding it to the path.
 
@@ -262,7 +265,7 @@ export CLUSTERCTL_REPOSITORY_PATH=$(pwd)/clusterctl/repository
 * The `CLUSTERCTL_REPOSITORY_PATH` environment variable is required later so we're able to run the tutorial offline.
 * You can also download the repository via this link if you don't have `git` installed: [main.zip](https://github.com/ykakarap/kubecon-na-22-capi-lab/archive/refs/heads/main.zip).
 
-#### Pre-download container images
+### Pre-download container images
 
 As we don't want to rely on the conference WiFi please pre-pull the container images used in the tutorial via:
 
@@ -302,8 +305,8 @@ Image: "k8s.gcr.io/cluster-api/kubeadm-control-plane-controller:v1.2.4" with ID 
 Image: "quay.io/jetstack/cert-manager-cainjector:v1.9.1" with ID "sha256:11778d29f8cc283a72a84fbd68601a631fc7705fe2f12a70ea5df7ca3262dfe9" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
 Image: "quay.io/jetstack/cert-manager-controller:v1.9.1" with ID "sha256:8eaca4249b016e1e355957d357a39a0a8a837e1837054e8762fe7d1cd13051af" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
 Image: "quay.io/jetstack/cert-manager-webhook:v1.9.1" with ID "sha256:d3348bcdc1e7e39e655c3b17106fe2e2038cfd70d080a3ac89a9eaf3bd26fc3d" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
-Image: "gcr.io/kakaraparthy-devel/cluster-api-visualizer:v1.0.0" with ID "sha256:cb04341e0b33fc099a685c26256d993e79eaac1304dbeb586e283d33ca14aafb" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
-Image: "gcr.io/kakaraparthy-devel/test-extension:v1.0.1" with ID "sha256:2bed00beb6d3d5cecf83628d5cc321179b3bc06838ee6500770d932916b65be7" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
+Image: "gcr.io/kakaraparthy-devel/cluster-api-visualizer:v1.0.0" with ID "sha256:76f45f9fdeb341ab49094bc424dda68acb2c2e22f08b63c9b8855fe42b620f17" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
+Image: "gcr.io/kakaraparthy-devel/test-extension:v1.0.1" with ID "sha256:5f09148f8fbfcffea6738f07e60205b477dcec37df31e49ad8432886ec46f29d" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
 ```
 
 **Note** The following error can be ignored: `ERROR: failed to load image: command "docker exec --privileged ... already exists` as the image load works even if this error occurs.
@@ -323,6 +326,8 @@ Delete the kind cluster:
 ```bash
 kind delete cluster --name=kubecon-na-22-capi-lab
 ```
+
+Next: [Creating Your First Cluster With Cluster API](#next-creating-your-first-cluster-with-cluster-api)
 
 ## Windows
 
@@ -344,7 +349,7 @@ $env:CLUSTERCTL_REPOSITORY_PATH = ([System.Uri](Get-Item .).FullName).AbsoluteUr
 This tutorial uses the base of the tutorial repo to place and execute binaries. To add the current directory - which should be `kubecon-na-22-capi-lab` to the $PATH run:
 
 ```bash
-$env:path += ';.'
+$env:path = (Get-Item .).FullName + ';' + $env:path
 ```
 
 ### Install Docker, kubectl, kind, clusterctl and helm
@@ -366,15 +371,13 @@ Verify kubectl via:
 kubectl version --client -o yaml
 ```
 
-At the time of this writing the above link will guide you to download a version 1.25 of the kubectl binary. [Based on the offical Kubernetes version skew policy](https://kubernetes.io/releases/version-skew-policy/#kubectl) you will be able to use either 1.24, 1.25, or 1.26 of kubectl to follow the tutorial, which will have you create and upgrade Kubernetes clusters running versions 1.24 and 1.25.
+At the time of this writing the above link will guide you to download a version 1.25 of the kubectl binary. [Based on the official Kubernetes version skew policy](https://kubernetes.io/releases/version-skew-policy/#kubectl) you will be able to use either 1.24, 1.25, or 1.26 of kubectl to follow the tutorial, which will have you create and upgrade Kubernetes clusters running versions 1.24 and 1.25.
 
 Install kind v0.16.0 by downloading it from the [kind release page](https://github.com/kubernetes-sigs/kind/releases/tag/v0.16.0) and adding it to the path.
 
 ```bash
 curl.exe -L https://github.com/kubernetes-sigs/kind/releases/download/v0.16.0/kind-windows-amd64 -o kind.exe
 # Note: If you don't have curl installed, just download the binary manually and rename it to kind.exe.
-
-# Append or prepend the path of that directory to the PATH environment variable.
 
 kind version
 ```
@@ -384,8 +387,6 @@ Install clusterctl v1.2.4 by downloading it from the [ClusterAPI release page](h
 ```bash
 curl.exe -L https://github.com/kubernetes-sigs/cluster-api/releases/download/v1.2.4/clusterctl-windows-amd64.exe -o clusterctl.exe
 # Note: If you don't have curl installed, just download the binary manually and rename it to clusterctl.exe.
-
-# Append or prepend the path of that directory to the PATH environment variable.
 
 clusterctl version
 ```
@@ -397,7 +398,6 @@ Install helm v3.10.0 by downloading it from the [Helm release page](https://gith
 curl.exe -L https://get.helm.sh/helm-v3.10.0-windows-amd64.zip -o ./helm.zip
 Expand-Archive ./helm.zip ./helm
 mv .\helm\windows-amd64\helm.exe .
-# Append or prepend the path of that directory to the PATH environment variable.
 
 helm version
 ```
@@ -444,8 +444,8 @@ Image: "k8s.gcr.io/cluster-api/kubeadm-control-plane-controller:v1.2.4" with ID 
 Image: "quay.io/jetstack/cert-manager-cainjector:v1.9.1" with ID "sha256:11778d29f8cc283a72a84fbd68601a631fc7705fe2f12a70ea5df7ca3262dfe9" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
 Image: "quay.io/jetstack/cert-manager-controller:v1.9.1" with ID "sha256:8eaca4249b016e1e355957d357a39a0a8a837e1837054e8762fe7d1cd13051af" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
 Image: "quay.io/jetstack/cert-manager-webhook:v1.9.1" with ID "sha256:d3348bcdc1e7e39e655c3b17106fe2e2038cfd70d080a3ac89a9eaf3bd26fc3d" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
-Image: "gcr.io/kakaraparthy-devel/cluster-api-visualizer:v1.0.0" with ID "sha256:cb04341e0b33fc099a685c26256d993e79eaac1304dbeb586e283d33ca14aafb" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
-Image: "gcr.io/kakaraparthy-devel/test-extension:v1.0.1" with ID "sha256:2bed00beb6d3d5cecf83628d5cc321179b3bc06838ee6500770d932916b65be7" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
+Image: "gcr.io/kakaraparthy-devel/cluster-api-visualizer:v1.0.0" with ID "sha256:76f45f9fdeb341ab49094bc424dda68acb2c2e22f08b63c9b8855fe42b620f17" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
+Image: "gcr.io/kakaraparthy-devel/test-extension:v1.0.1" with ID "sha256:5f09148f8fbfcffea6738f07e60205b477dcec37df31e49ad8432886ec46f29d" not yet present on node "kubecon-na-22-capi-lab-control-plane", loading...
 ```
 
 **Note** The following error can be ignored: `ERROR: failed to load image: command "docker exec --privileged ... already exists` as the image load works even if this error occurs.
@@ -487,6 +487,8 @@ Windows:
 $env:GITHUB_TOKEN = "<GITHUB_TOKEN>"
 ```
 
-## Creating Your First Cluster With Cluster API
+Next: [Creating Your First Cluster With Cluster API](#next-creating-your-first-cluster-with-cluster-api)
+
+## Next: Creating Your First Cluster With Cluster API
 
 Now that you've prepared your local environment, [let's build our first Kubernetes cluster using Cluster API](1-your-first-cluster.md)!

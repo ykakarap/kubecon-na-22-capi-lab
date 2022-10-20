@@ -1,10 +1,10 @@
 # Creating your first cluster with Cluster API
 
-This guide covers setting up and using Cluster API using Docker infrastructure, which is the same way CAPI runs its end-to-end tests. To set up a Cluster using AWS, Azure GCP and many more see the [CAPI quick-start guide](https://cluster-api.sigs.k8s.io/user/quick-start.html)
+This guide covers setting up and using Cluster API using Docker infrastructure, which is the same way CAPI runs its end-to-end tests. To set up a Cluster using AWS, Azure, GCP and many more see the [CAPI quick-start guide](https://cluster-api.sigs.k8s.io/user/quick-start.html)
 
 **Before starting this section ensure you've completed the [prerequisites](./0-prereqs.md).**
 
-<!-- table of contens generated via: https://github.com/thlorenz/doctoc -->
+<!-- table of contents generated via: https://github.com/thlorenz/doctoc -->
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
@@ -18,7 +18,7 @@ This guide covers setting up and using Cluster API using Docker infrastructure, 
 - [Windows](#windows)
   - [The Management Cluster](#the-management-cluster-2)
   - [Your first workload cluster](#your-first-workload-cluster-2)
-- Next: [Cluster API Visualizer](#cluster-api-visualizer)
+- [Next: Cluster API Visualizer](#next-cluster-api-visualizer)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -70,6 +70,7 @@ kubectl get pods -A
 ```
 Output:
 ```bash
+NAMESPACE                           NAME                                                            READY    STATUS    RESTARTS   AGE
 capd-system                         capd-controller-manager-6f9c9d56b-h722b                          1/1     Running   0          84s
 capi-kubeadm-bootstrap-system       capi-kubeadm-bootstrap-controller-manager-75dcdf5f8-qdrl5        1/1     Running   0          85s
 capi-kubeadm-control-plane-system   capi-kubeadm-control-plane-controller-manager-8685fc89d4-fdp5s   1/1     Running   0          84s
@@ -191,7 +192,8 @@ kubectl --kubeconfig cluster-one.kubeconfig get nodes
 
 clusterctl describe cluster docker-cluster-one
 ```
-Next: [Cluster API Visualizer](#cluster-api-visualizer)
+Next: [Cluster API Visualizer](#next-cluster-api-visualizer)
+
 ## MacOS
 
 ### The Management Cluster
@@ -239,6 +241,7 @@ kubectl get pods -A
 ```
 Output:
 ```bash
+NAMESPACE                           NAME                                                            READY    STATUS    RESTARTS   AGE
 capd-system                         capd-controller-manager-6f9c9d56b-h722b                          1/1     Running   0          84s
 capi-kubeadm-bootstrap-system       capi-kubeadm-bootstrap-controller-manager-75dcdf5f8-qdrl5        1/1     Running   0          85s
 capi-kubeadm-control-plane-system   capi-kubeadm-control-plane-controller-manager-8685fc89d4-fdp5s   1/1     Running   0          84s
@@ -360,7 +363,8 @@ kubectl --kubeconfig cluster-one.kubeconfig get nodes
 
 clusterctl describe cluster docker-cluster-one
 ```
-Next: [Cluster API Visualizer](#cluster-api-visualizer)
+Next: [Cluster API Visualizer](#next-cluster-api-visualizer)
+
 ## Windows
 
 **NOTE** This guide assumes users are using Powershell in a Windows environment. For other environments, e.g. WSL2, the [Linux](#Linux) guide might be a better starting place.
@@ -393,6 +397,7 @@ Cluster API's CLI - `clusterctl` is used to install the CAPI Management Cluster 
 
 ```bash
 $env:CLUSTERCTL_REPOSITORY_PATH = ([System.Uri](Get-Item .).FullName).AbsoluteUri + "/clusterctl/repository"
+$env:path = (Get-Item .).FullName + ';' + $env:path
 $env:CLUSTER_TOPOLOGY = 'true'
 $env:EXP_RUNTIME_SDK = 'true'
 clusterctl init --infrastructure docker --config ./clusterctl/repository/config.yaml
@@ -410,6 +415,7 @@ kubectl get pods -A
 ```
 Output:
 ```bash
+NAMESPACE                           NAME                                                            READY    STATUS    RESTARTS   AGE
 capd-system                         capd-controller-manager-6f9c9d56b-h722b                          1/1     Running   0          84s
 capi-kubeadm-bootstrap-system       capi-kubeadm-bootstrap-controller-manager-75dcdf5f8-qdrl5        1/1     Running   0          85s
 capi-kubeadm-control-plane-system   capi-kubeadm-control-plane-controller-manager-8685fc89d4-fdp5s   1/1     Running   0          84s
@@ -531,8 +537,8 @@ kubectl --kubeconfig cluster-one.kubeconfig get nodes
 
 $env:NO_COLOR = 'true'; clusterctl describe cluster docker-cluster-one
 ```
-Next: [Cluster API Visualizer](#cluster-api-visualizer)
+Next: [Cluster API Visualizer](#next-cluster-api-visualizer)
 
-## Cluster API Visualizer
+## Next: Cluster API Visualizer
 
 Now you've built your first cluster, [let's install the Visualizer to better see how Cluster API will enable you to manage it](2-visualizer.md)!

@@ -2,10 +2,15 @@
 
 Let's walk through how easily Cluster API enables Kubernetes version upgrades.
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
 - [Upgrade Cluster](#upgrade-cluster)
-- Next: [Lifecycle Hooks](#lifecycle-hooks)
+- [Clean up Docker Cluster one](#clean-up-docker-cluster-one)
+- [Next: Cluster Lifecycle Hooks](#next-cluster-lifecycle-hooks)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Upgrade Cluster
 
@@ -23,12 +28,12 @@ docker-cluster-one-md-0-lq4f8-b59497b9d-xchpm   Ready    <none>          4d1h   
 docker-cluster-one-mvthd-k7dwf                  Ready    control-plane   4d2h   v1.24.6
 ```
 
-Now let's upgrade our cluster to the newest version of Kubernetes! Once again using the idempotent model to submit a modified configuration of our "`docker-cluster-one`" Cluster with a newer version of Kubernetes. Here's [that modified spec](yamls/clusters/5-docker-cluster-one-1.25.2.yaml).
+Now let's upgrade our cluster to the newest version of Kubernetes! Once again using the idempotent model to submit a modified configuration of our `docker-cluster-one` Cluster with a newer version of Kubernetes. Here's [that modified spec](yamls/clusters/5-docker-cluster-one-1.25.2.yaml).
 
 Here's the diff:
 
 ```bash
-diff yamls/clusters/3-docker-cluster-one-3-control-plane-replicas.yaml yamls/clusters/5-docker-cluster-one-1.25.2.yaml
+diff yamls/clusters/1-docker-cluster-one.yaml yamls/clusters/5-docker-cluster-one-1.25.2.yaml
 ```
 
 Output:
@@ -61,6 +66,7 @@ kubectl get kubeadmcontrolplanes -l cluster.x-k8s.io/cluster-name=docker-cluster
 
 Output:
 ```
+NAME                       CLUSTER              INITIALIZED   API SERVER AVAILABLE   REPLICAS   READY   UPDATED   UNAVAILABLE   AGE   VERSION
 docker-cluster-one-6sk59   docker-cluster-one   true          true                   2          1       1         1             27m   v1.25.2
 docker-cluster-one-6sk59   docker-cluster-one   true          true                   2          1       1         1             27m   v1.25.2
 docker-cluster-one-6sk59   docker-cluster-one   true          true                   2          1       1         1             27m   v1.25.2
@@ -79,6 +85,8 @@ That's a console-full! What we see above is the process of a rolling upgrade:
 3. Gracefully delete one node.
 4. Repeat until all node replicas have the updated configuration, and are Ready.
 
+**Note**: As the update will take a bit, this is a great time to take a look at the cluster via the visualizer: [http://localhost:18081](http://localhost:18081)!
+
 After all control plane replicas finish upgrading, worker nodes will begin upgrading as well using the same rolling upgrade strategy described above. After our Cluster upgrade is done we can see all nodes running the newer version of Kubernetes:
 
 ```sh
@@ -91,9 +99,9 @@ docker-cluster-one-6sk59-ptdmj                   Ready    control-plane   5m13s 
 docker-cluster-one-md-0-9vfj6-589d4c8fff-hx49z   Ready    <none>          2m5s    v1.25.2   172.19.0.7    <none>        Ubuntu 22.04.1 LTS   5.19.12-200.fc36.x86_64   containerd://1.6.8
 ```
 
-We can see evidence above that the control plane nodes were upgraded first: the worker node `docker-cluster-one-md-0-nnsb9-599977b664-2r55t` has a more recent age (`2m5s`) compared to the age of the control plane nodes `5m13s`).
+We can see evidence above that the control plane nodes were upgraded first: the worker node `docker-cluster-one-md-0-9vfj6-589d4c8fff-hx49z` has a more recent age (`2m5s`) compared to the age of the control plane nodes `5m13s`).
 
-## Clean up docker cluster one
+## Clean up Docker Cluster one
 
 It's time to say goodbye to docker-cluster-one - it's been through a lot! To delete the cluster run:
 
@@ -109,6 +117,6 @@ Output:
 ```bash
 No resources found in default namespace.
 ```
-## Lifecycle Hooks
+## Next: Cluster Lifecycle Hooks
 
-The next topic after Cluster Upgrade we'll cover is [lifecycle hooks](6-lifecycle-hooks.md).
+The next topic after Cluster upgrade we'll cover is [Cluster Lifecycle Hooks](6-lifecycle-hooks.md).
