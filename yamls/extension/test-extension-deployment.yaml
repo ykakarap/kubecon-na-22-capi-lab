@@ -84,7 +84,7 @@ spec:
       containers:
       - command:
         - /manager
-        image: gcr.io/kakaraparthy-devel/test-extension:v1.0.0
+        image: gcr.io/kakaraparthy-devel/test-extension:v1.0.1
         imagePullPolicy: IfNotPresent
         name: manager
         ports:
