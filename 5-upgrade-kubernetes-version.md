@@ -44,9 +44,13 @@ Output:
 <     version: v1.24.6
 ---
 >     version: v1.25.2 # Upgrade to 1.25.2
+24c24
+<         value: ""
+---
+>         value: "v1.9.3" # Update CoreDNS
 ```
 
-The above declares a modified spec that will result in a Kubernetes version upgrade to v1.25.2. Let's initiate that upgrade:
+The above declares a modified spec that will result in a Kubernetes version upgrade to v1.25.2. It also upgrades CoreDNS to the default version for v1.25.2. Let's initiate that upgrade:
 
 ```bash
 kubectl apply -f yamls/clusters/5-docker-cluster-one-1.25.2.yaml

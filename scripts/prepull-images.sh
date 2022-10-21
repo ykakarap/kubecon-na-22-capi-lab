@@ -11,6 +11,7 @@ docker pull gcr.io/k8s-staging-cluster-api/capd-manager:v1.2.4
 docker pull k8s.gcr.io/cluster-api/cluster-api-controller:v1.2.4
 docker pull k8s.gcr.io/cluster-api/kubeadm-bootstrap-controller:v1.2.4
 docker pull k8s.gcr.io/cluster-api/kubeadm-control-plane-controller:v1.2.4
+
 ## cert-manager
 docker pull quay.io/jetstack/cert-manager-cainjector:v1.9.1
 docker pull quay.io/jetstack/cert-manager-controller:v1.9.1
@@ -24,8 +25,6 @@ docker pull docker.io/calico/node:v3.24.1
 # For upgrade
 docker pull registry.k8s.io/pause:3.8
 docker pull k8s.gcr.io/kube-proxy:v1.24.6
-docker pull k8s.gcr.io/coredns/coredns:v1.8.6
-docker pull registry.k8s.io/coredns/coredns:v1.8.6
 
 # Cluster API visualizer
 docker pull gcr.io/kakaraparthy-devel/cluster-api-visualizer:v1.0.0
