@@ -9,6 +9,7 @@ Let's walk through how easily Cluster API enables Kubernetes version upgrades.
 - [Upgrade Cluster](#upgrade-cluster)
 - [Clean up Docker Cluster one](#clean-up-docker-cluster-one)
 - [Next: Cluster Lifecycle Hooks](#next-cluster-lifecycle-hooks)
+- [More information](#more-information)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -120,3 +121,6 @@ No resources found in default namespace.
 ## Next: Cluster Lifecycle Hooks
 
 The next topic after Cluster upgrade we'll cover is [Cluster Lifecycle Hooks](6-lifecycle-hooks.md).
+
+## More information
+- To learn more about how upgrades work with Cluster Topology see [the ClusterClass upgrades section of the CAPI book.](https://cluster-api.sigs.k8s.io/tasks/experimental-features/cluster-class/operate-cluster.html#upgrade-a-cluster)

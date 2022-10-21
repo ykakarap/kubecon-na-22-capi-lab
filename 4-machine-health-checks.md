@@ -9,6 +9,7 @@ Machines and triggers a replacement (i.e. remediation) of a Machine when it is u
 
 - [Using MachineHealthChecks](#using-machinehealthchecks)
 - [Next: Upgrading to another Kubernetes version](#next-upgrading-to-another-kubernetes-version)
+- [More information](#more-information)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -147,3 +148,6 @@ docker-cluster-one-pkkxd-66wmm                   docker-cluster-one   docker-clu
 ## Next: Upgrading to another Kubernetes version
 
 Now that we explored Machine remediation. Let's take a look at how we can [upgrade to another Kubernetes version](5-upgrade-kubernetes-version.md).
+
+## More information
+- To learn more about how to use MachineHealthChecks see [the healthchecking section of the CAPI book.](https://cluster-api.sigs.k8s.io/tasks/automated-machine-management/healthchecking.html)

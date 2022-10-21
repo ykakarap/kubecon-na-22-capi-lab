@@ -16,6 +16,8 @@ Runtime Extension. In this section we will create a simple `test-extension` that
   - [(Optional) Block Cluster deletion using Extension Server](#optional-block-cluster-deletion-using-extension-server)
 - [Cleanup](#clean-up)
 - [Next: Creating a self-hosted management cluster](#next-creating-a-self-hosted-management-cluster)
+- [More information](#more-information)
+
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Deploy the Extension
@@ -242,3 +244,6 @@ kubectl delete -f yamls/extension/test-extension-deployment.yaml
 ## Next: Creating a self-hosted management cluster
 
 [Next let's see how Cluster API can manage its own management cluster!](7-self-hosted.md)
+
+## More information
+- To learn more about Runtime SDK and Lifecycle hooks see the [Lifecycle hooks section of the CAPI book.](https://cluster-api.sigs.k8s.io/tasks/experimental-features/runtime-sdk/implement-lifecycle-hooks.html)
