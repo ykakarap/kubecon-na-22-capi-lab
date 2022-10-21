@@ -13,6 +13,8 @@ In this section we will create a workload cluster and make it self-hosted by con
 - [Convert Workload Cluster to Management Cluster](#convert-workload-cluster-to-management-cluster)
 - [Clean up](#clean-up)
 - [Next: Deleting clusters and cleaning up](#next-deleting-clusters-and-cleaning-up)
+- [More information](#more-information)
+
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Create a Cluster
@@ -141,3 +143,6 @@ kubectl delete cluster docker-cluster-self-hosted
 ## Next: Deleting clusters and cleaning up
 
 [Next - find out how to clean up this tutorial](8-deleting-clusters-and-cleaning-up.md#cleaning-up-resources-created-by-this-tutorial)
+
+## More information
+- To learn more about self-hosting a management cluster see the [`clusterctl pivot` section in the CAPI book.](https://cluster-api.sigs.k8s.io/clusterctl/commands/move.html#pivot)

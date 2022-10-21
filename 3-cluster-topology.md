@@ -13,6 +13,7 @@ In [Creating your first cluster with Cluster API](./1-your-first-cluster.md) we 
   - [Scale from 1 to 3 control plane nodes](#scale-from-1-to-3-control-plane-nodes)
 - [More scale operations](#more-scale-operations)
 - [Next: MachineHealthChecks and Remediation](#next-machinehealthchecks-and-remediation)
+- [More information](#more-information)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -299,3 +300,6 @@ kubectl apply -f yamls/clusters/1-docker-cluster-one.yaml
 ## Next: MachineHealthChecks and Remediation
 
 You are now in control of your Cluster's topology configuration! [Let's next explore MachineHealthChecks and Remediation for operational self-healing](4-machine-health-checks.md).
+
+## More information
+- To learn more about managing Kubernetes clusters using a Cluster Topology see [the topology section of the CAPI book.](https://cluster-api.sigs.k8s.io/tasks/experimental-features/cluster-class/index.html)

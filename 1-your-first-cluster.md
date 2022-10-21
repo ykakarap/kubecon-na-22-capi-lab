@@ -19,6 +19,7 @@ This guide covers setting up and using Cluster API using Docker infrastructure, 
   - [The Management Cluster](#the-management-cluster-2)
   - [Your first workload cluster](#your-first-workload-cluster-2)
 - [Next: Cluster API Visualizer](#next-cluster-api-visualizer)
+- [More information](#more-information)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -542,3 +543,7 @@ Next: [Cluster API Visualizer](#next-cluster-api-visualizer)
 ## Next: Cluster API Visualizer
 
 Now you've built your first cluster, [let's install the Visualizer to better see how Cluster API will enable you to manage it](2-visualizer.md)!
+
+## More information
+- To set up a Cluster using AWS, Azure, GCP and many more see the [CAPI quick-start guide](https://cluster-api.sigs.k8s.io/user/quick-start.html)
+
