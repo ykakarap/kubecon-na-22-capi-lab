@@ -8,6 +8,19 @@ Deploy the Cluster API visualizer via:
 helm install capi-visualizer ./yamls/visualizer/chart/cluster-api-visualizer -n observability --create-namespace --values ./yamls/visualizer/values.yaml
 ```
 
+Ensure the visualizer is up and running:
+
+```bash
+kubectl -n observability get pod
+```
+
+Output:
+
+```bash
+NAME                               READY   STATUS    RESTARTS   AGE
+capi-visualizer-5fd569b7c6-g7xx5   1/1     Running   0          49s
+```
+
 Open a port-forward to the UI:
 
 ```bash
@@ -20,8 +33,10 @@ Explore your workload cluster(s)!
 
 ![visualizer](visualizer.png)
 
-**Note**: The visualizer can be used during the next sections to get a better understanding of Cluster API and the changes we make to a Cluster.
+**Note**:
+* The visualizer can be used during the next sections to get a better understanding of Cluster API and the changes we make to a Cluster.
+* The visualizer UI loads some CSS files from the internet, so if you're entirely offline and the files are not cached already, it won't work.
 
-## Changing Cluster Topology
+## Next: Changing Cluster Topology
 
 Now we're ready to explore more of the power of Cluster API, [let's first explore cluster topology](3-cluster-topology.md)!

@@ -1,2 +1,8 @@
 .idea
 *.kubeconfig
+kubectl.exe
+kind.exe
+clusterctl.exe
+helm.exe
+helm.zip
+helm/

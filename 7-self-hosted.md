@@ -4,23 +4,20 @@ A self-hosted cluster is a cluster that acts as both the management cluster and 
 
 In this section we will create a workload cluster and make it self-hosted by converting it into its own management cluster.
 
-<!-- table of contens generated via: https://github.com/thlorenz/doctoc -->
+<!-- table of contents generated via: https://github.com/thlorenz/doctoc -->
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
-- [Creating a Self-Hosted Cluster](#creating-a-self-hosted-cluster)
-  - [Create a Cluster](#create-a-cluster)
-  - [Convert Workload Cluster to Management Cluster](#convert-workload-cluster-to-management-cluster)
-  - [Clean up](#clean-up)
-- Next: [Deleting clusters and cleaning up](#deleting-clusters-and-cleaning-up)
+- [Create a Cluster](#create-a-cluster)
+- [Convert Workload Cluster to Management Cluster](#convert-workload-cluster-to-management-cluster)
+- [Clean up](#clean-up)
+- [Next: Deleting clusters and cleaning up](#next-deleting-clusters-and-cleaning-up)
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Create a Cluster
 
-Firstly, lets create a workload cluster called `docker-cluster-self-hosted`.
-
-These steps will be similar to how we created `docker-cluster-one`.
+First, lets create a workload cluster called `docker-cluster-self-hosted`. These steps will be similar to how we created `docker-cluster-one`.
 
 Create the cluster:
 
@@ -40,20 +37,24 @@ Install Calico on the Cluster using our prepared yaml spec:
 kubectl --kubeconfig self-hosted.kubeconfig apply -f yamls/cni/calico.yaml
 ```
 
+Let's wait until all nodes are ready:
+
+```bash
+kubectl --kubeconfig self-hosted.kubeconfig get nodes -w
+```
+
 ## Convert Workload Cluster to Management Cluster
 
 Now that we have the `docker-cluster-self-hosted` workload cluster lets install Cluster API components on it to make it a management cluster.
-
-Install Cluster API components.
 
 For Windows users:
 ```bash
 $env:CLUSTERCTL_REPOSITORY_PATH = ([System.Uri](Get-Item .).FullName).AbsoluteUri + "/clusterctl/repository"
 $env:CLUSTER_TOPOLOGY = 'true'
 $env:EXP_RUNTIME_SDK = 'true'
-clusterctl init --infrastructure docker --config ./clusterctl/repository/config.yaml
+clusterctl init --kubeconfig self-hosted.kubeconfig --infrastructure docker --config ./clusterctl/repository/config.yaml
 ```
-For MacOS and Linux users:
+For macOS and Linux users:
 ```bash
 export CLUSTERCTL_REPOSITORY_PATH=$(pwd)/clusterctl/repository
 export CLUSTER_TOPOLOGY=true
@@ -137,5 +138,6 @@ kubectl delete cluster docker-cluster-self-hosted
 ```
 
 
-## Deleting clusters and cleaning up
+## Next: Deleting clusters and cleaning up
+
 [Next - find out how to clean up this tutorial](8-deleting-clusters-and-cleaning-up.md#cleaning-up-resources-created-by-this-tutorial)

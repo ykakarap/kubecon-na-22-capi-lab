@@ -1,5 +1,14 @@
 # Deleting clusters and cleaning up
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [Deleting clusters](#deleting-clusters)
+- [Cleaning up resources created by this tutorial](#cleaning-up-resources-created-by-this-tutorial)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Deleting clusters
 Clusters managed by Cluster API can be deleted in the same way as any other Kubernetes object.
 
@@ -18,7 +27,7 @@ kubectl delete clusters --all -A
 
 ## Cleaning up resources created by this tutorial
 
-All clusters created in this tutorial use the Docker infrastructure provider and can be managed using kind. To clean up every Kubernetes cluster created in the tutorial - returning your system to the state [before creating the management cluster](./1-your-first-cluster.md) run:
+All clusters created in this tutorial use the Docker infrastructure provider and can be also managed using kind. To clean up every Kubernetes cluster created in the tutorial - returning your system to the state [before creating the management cluster](./1-your-first-cluster.md) run:
 
 ```bash
 kind delete clusters --all

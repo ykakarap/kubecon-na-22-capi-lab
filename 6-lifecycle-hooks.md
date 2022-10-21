@@ -1,27 +1,26 @@
 # Using Cluster Lifecycle Hooks
 
-This guide covers how Cluster API's RuntimeSDK feature can be used to hook into key lifecycle events of the Cluster.
-In this section we will create a simple `test-extension` that receives key lifecycle events of the cluster and prints them.
+This guide covers how Cluster API's RuntimeSDK feature can be used to hook into key lifecycle events of the Cluster with a so-called
+Runtime Extension. In this section we will create a simple `test-extension` that receives key lifecycle events of the cluster and prints them.
 
-<!-- table of contens generated via: https://github.com/thlorenz/doctoc -->
+<!-- table of contents generated via: https://github.com/thlorenz/doctoc -->
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
-- [Using Cluster Lifecycle Hooks](#using-cluster-lifecycle-hooks)
-  - [Running the Extension](#running-the-extension)
-  - [Register the Extension](#register-the-extension)
-  - [Extension in Action](#extension-in-action)
-    - [Create a new workload Cluster](#create-a-new-workload-cluster)
-    - [Delete the Cluster](#delete-the-cluster)
-    - [(Optional) Block Cluster deletion using Extension Server](#optional-block-cluster-deletion-using-extension-server)
-- Next: [Creating a self-hosted management cluster](#creating-a-self-hosted-management-cluster)
-  - 
+- [Deploy the Extension](#deploy-the-extension)
+- [Register the Extension](#register-the-extension)
+- [Extension in Action](#extension-in-action)
+  - [Create a new workload Cluster](#create-a-new-workload-cluster)
+  - [Delete the Cluster](#delete-the-cluster)
+  - [(Optional) Block Cluster deletion using Extension Server](#optional-block-cluster-deletion-using-extension-server)
+- [Cleanup](#clean-up)
+- [Next: Creating a self-hosted management cluster](#next-creating-a-self-hosted-management-cluster)
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Running the Extension
+## Deploy the Extension
 
-Firstly we will need a simple extension server that needs to run and be able to receive cluster lifecycle events. For this, lets create a deployment in the management cluster that will act as our extension server.
+First, we will need a simple extension server that needs to run and be able to receive cluster lifecycle events. For this, lets create a deployment in the management cluster that will act as our extension server.
 
 ```bash
 kubectl apply -f yamls/extension/test-extension-deployment.yaml
@@ -46,7 +45,7 @@ test-extension-manager   1/1     1            1           30s
 
 Now that we have a running extension server let's register it with Cluster API. This will inform Cluster API to call the extension server during key workload cluster lifecycle events.
 
-Let's first look at how the registration looks:
+Let's first take a look at the ExtensionConfig we will use to register the extension:
 
 ```yaml
 apiVersion: runtime.cluster.x-k8s.io/v1alpha1
@@ -87,22 +86,26 @@ The output should resemble:
 ```
 
 > **Optional**  
-> If you are curious, take a look at `.status.handlers` of the `printer-extension` resource by running `kubectl get extensionconfig printer-extension -o jsonpath='{.status.handlers}'`. This lists down all the lifecycle events the extension server supports.
+> If you are curious, take a look at `.status.handlers` of the `printer-extension` ExtensionConfig by running:
+> ```bash
+> kubectl get extensionconfig printer-extension -o jsonpath='{.status.handlers}'
+> ```
+> This lists all lifecycle events the extension server supports.
 
 ## Extension in Action
 
 Now that we have the extension server running and registered with Cluster API let's see it in action. The extension server is configured to receive the following events:
 
-- `BeforeClusterCreate` - Receives event before the cluster topology is created.
-- `AfterControlPlaneInitialized` - Receives event after the control plane is reachable for the first time.
-- `BeforeClusterUpgrade` - Receives event before the cluster topology is upgraded.
-- `AfterControlPlaneUpgrade` - Receives event after the control plane is upgraded and before the upgrade is propagated to MachineDeployments.
-- `AfterClusterUpgrade` - Receives event after the cluster is fully upgraded.
-- `BeforeClusterDelete` - Receives event before cluster is deleted.
+- `BeforeClusterCreate` - Receives an event before the cluster topology is created.
+- `AfterControlPlaneInitialized` - Receives an event after the control plane is reachable for the first time.
+- `BeforeClusterUpgrade` - Receives an event before the cluster topology is upgraded.
+- `AfterControlPlaneUpgrade` - Receives an event after the control plane is upgraded and before the upgrade is propagated to MachineDeployments.
+- `AfterClusterUpgrade` - Receives an event after the cluster is fully upgraded.
+- `BeforeClusterDelete` - Receives an event before cluster is deleted.
 
 ### Create a new workload Cluster
 
-In this section we will create a new workload cluster and see that the extension server receives these events and logs them.
+In this section we will create a new workload cluster and observe that the extension server receives these events and logs them.
 
 Create a new `docker-cluster-lifecycle-hooks` workload cluster.
 ```bash
@@ -132,7 +135,7 @@ Note that the workload cluster could take a few minutes to fully come up and eac
 
 In this section we will delete the `docker-cluster-lifecycle-hooks` cluster and observe that the extension server is receiving and logging the event.
 
-> If you are feeling adventurous try the [(Optional) Block Cluster deletion using Extension Server](#optional-block-cluster-deletion-using-extension-server) to block the cluster deletion via the extension.
+> If you are feeling adventurous try [Block Cluster deletion using Extension Server](#optional-block-cluster-deletion-using-extension-server) to block the cluster deletion via the extension instead.
 
 To delete the cluster run:
 
@@ -194,6 +197,13 @@ You could list the list of clusters to see that the cluster is not deleted.
 kubectl get clusters -n ns-lifecycle-hooks
 ```
 
+Output:
+
+```bash
+NAME                             PHASE      AGE   VERSION
+docker-cluster-lifecycle-hooks   Deleting   39s   v1.24.6
+```
+
 Let's update the extension server to now send an "allow response".
 
 ```bash
@@ -205,6 +215,12 @@ Now the cluster deletion operation should go through and the `docker-cluster-lif
 Let's list the cluster to make sure that the cluster is deleted:
 ```bash
 kubectl get clusters -n ns-lifecycle-hooks
+```
+
+Output:
+
+```bash
+No resources found in ns-lifecycle-hooks namespace.
 ```
 
 You should observe that the cluster was deleted and there are no more clusters.
@@ -223,5 +239,6 @@ Delete the extension server that is running on the management cluster.
 kubectl delete -f yamls/extension/test-extension-deployment.yaml
 ```
 
-## Creating a self-hosted management cluster
+## Next: Creating a self-hosted management cluster
+
 [Next let's see how Cluster API can manage its own management cluster!](7-self-hosted.md)
