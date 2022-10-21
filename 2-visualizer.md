@@ -29,6 +29,7 @@ kubectl port-forward -n observability svc/capi-visualizer 18081:8081
 
 Access the UI via your browser under [http://localhost:18081](http://localhost:18081).
 
+If the dashboard is slow to load - it could be quicker to go directly to the [cluster view for `docker-cluster-one`](http://localhost:18081/cluster?name=docker-cluster-one&namespace=default)
 Explore your workload cluster(s)!
 
 ![visualizer](visualizer.png)
