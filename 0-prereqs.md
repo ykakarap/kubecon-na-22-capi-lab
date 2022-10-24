@@ -3,8 +3,9 @@
 ## Minimum Resources
 Please ensure you have at least: 4 CPU, 16 GB RAM and 32 GB free disk space.
 
-**Note**: Windows instructions are provided on a best effort basis and have been tested and verified on Windows 11 with Powershell and Docker Desktop which was using WSL 2.
+**Warning**: Windows instructions are best effort and this tutorial may cause instability on some systems.
 
+**
 <!-- table of contents generated via: https://github.com/thlorenz/doctoc -->
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -330,6 +331,7 @@ kind delete cluster --name=kubecon-na-22-capi-lab
 Next: [Creating Your First Cluster With Cluster API](#next-creating-your-first-cluster-with-cluster-api)
 
 ## Windows
+**Note**: Windows instructions are based on Windows 11 with Powershell and Docker Desktop 4.10.1 using WSL 2.
 
 ### Clone the tutorial repository
 
@@ -354,8 +356,8 @@ $env:path = (Get-Item .).FullName + ';' + $env:path
 
 ### Install Docker, kubectl, kind, clusterctl and helm
 
-Install Docker Desktop as documented in [Install Docker Desktop on Windows](https://docs.docker.com/desktop/install/windows-install/).
-
+[Install Docker Desktop 4.10.1 on Windows](https://docs.docker.com/desktop/release-notes/#docker-desktop-4101).
+**Note:** This tutorial works best on Docker Desktop 4.10.1. Newer versions of Docker Desktop may crash and cause system instability when running Cluster API.
 Verify the Docker installation via:
 ```bash
 docker version
