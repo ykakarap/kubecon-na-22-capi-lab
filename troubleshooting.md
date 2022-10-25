@@ -173,6 +173,7 @@ Once this change is working a Fedora system should be able to run the load balan
 
 ## Too many open files
 
+### Linux
 When getting logs from CAPI or Kubernetes components you may see log lines containing the string "too many open files".
 On Linux you can resolve this issue by setting inotify limits on your system.
 
@@ -186,9 +187,28 @@ Verify these values by running:
 ```bash
 sysctl -a | grep fs.inotify.max_user
 ```
+## macOS
+If this error occurs on macOS, you may need to update the version of Docker Desktop you're using.
 
-If this error occurs on Mac, you may need to update the version of Docker Desktop you're using.
+## Windows
+In Windows using Docker Desktop 4.10.1 with wsl 2 you may see this in the logs of containers in the Docker Desktop UI.
 
+From a powershell interface enter the Docker Desktop WSL2 environment using:
+```bash
+wsl
+```
+
+Run:
+```bash
+sysctl fs.inotify.max_user_watches=524288
+sysctl fs.inotify.max_user_instances=512
+```
+To change the values.
+
+Verify the changes  by running:
+```bash
+sysctl -a | grep fs.inotify.max_user
+```
 ## Failed to pre-load images into the DockerMachine
 
 If the capd logs contain the line: "failed to pre-load images into the DockerMachine" you should run the prepull images script to ensure you have the images stored locally.
