@@ -98,6 +98,9 @@ Once all of the pods are `Running` - to update the status run the above command 
 
 So what can you do with a functioning management cluster? Create more Clusters! The first step in doing this is to create a `ClusterClass` - this is a template that defines the shape of one or more clusters.
 
+![your first workload cluster](images/3.png)
+
+
 ```bash
 kubectl apply -f yamls/clusterclasses/clusterclass-quick-start.yaml
 ```
@@ -272,6 +275,8 @@ Once all of the pods are `Running` - to update the status run the above command 
 ### Your first workload cluster
 
 So what can you do with a functioning management cluster? Create more Clusters! The first step in doing this is to create a `ClusterClass` - this is a template that defines the shape of one or more clusters.
+
+![your first workload cluster](images/3.png)
 
 ```bash
 kubectl apply -f yamls/clusterclasses/clusterclass-quick-start.yaml
@@ -452,6 +457,7 @@ Once all of the pods are `Running` - to update the status run the above command 
 So what can you do with a functioning management cluster? Create more Clusters! The first step in doing this is to create a `ClusterClass` - this is a template that defines the shape of one or more clusters.
 
 ![your first workload cluster](images/3.png)
+
 ```bash
 kubectl apply -f yamls/clusterclasses/clusterclass-quick-start.yaml
 ```
