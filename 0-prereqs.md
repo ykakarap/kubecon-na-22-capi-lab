@@ -106,6 +106,8 @@ As we don't want to rely on the conference WiFi please pre-pull the container im
 sh ./scripts/prepull-images.sh
 ```
 
+**Note**: There will be probably issues with rate-limiting on DockerHub because of the conference Wi-Fi. To avoid them you have to log into docker with your DockerHub account.
+
 ### Verification
 
 This section describes steps to verify everything has been installed correctly.
@@ -274,6 +276,8 @@ As we don't want to rely on the conference WiFi please pre-pull the container im
 sh ./scripts/prepull-images.sh
 ```
 
+**Note**: There will be probably issues with rate-limiting on DockerHub because of the conference Wi-Fi. To avoid them you have to log into docker with your DockerHub account.
+
 ### Verification
 
 This section describes steps to verify everything has been installed correctly.
@@ -413,6 +417,8 @@ As we don't want to rely on the conference WiFi please pre-pull the container im
 ```
 
 **Note** You might have to enable running scripts by executing `Set-ExecutionPolicy Unrestricted` in a PowerShell run as Administrator.
+
+**Note**: There will be probably issues with rate-limiting on DockerHub because of the conference Wi-Fi. To avoid them you have to log into docker with your DockerHub account.
 
 ### Verification
 
