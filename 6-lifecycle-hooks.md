@@ -3,6 +3,8 @@
 This guide covers how Cluster API's RuntimeSDK feature can be used to hook into key lifecycle events of the Cluster with a so-called
 Runtime Extension. In this section we will create a simple `test-extension` that receives key lifecycle events of the cluster and prints them.
 
+![lifecycle hooks](images/8.png)
+
 <!-- table of contents generated via: https://github.com/thlorenz/doctoc -->
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->

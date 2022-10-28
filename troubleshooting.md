@@ -86,7 +86,7 @@ kubectl logs -n capi-kubeadm-control-plane-system deployments/capi-kubeadm-contr
 ```
 
 ## Resetting the tutorial
-During the course of the tutorial you might end up in an unstable state. If you can't solve an issue, and you'd like to start the tutorial over again see our [cleaning up guide](./deleting-clusters-and-cleaning-up.md#cleaning-up-resources-created-by-this-tutorial)
+During the course of the tutorial you might end up in an unstable state. If you can't solve an issue, and you'd like to start the tutorial over again see our [cleaning up guide](./8-deleting-clusters-and-cleaning-up.md#cleaning-up-resources-created-by-this-tutorial)
 
 ## Docker space issues
 Docker may run out of space for keeping volumes and images required for this tutorial. This can especially be the case if you're doing the tutorial in a pre-existing docker environment which may have hanging volumes and images.
