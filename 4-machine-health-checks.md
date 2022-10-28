@@ -7,11 +7,37 @@ Machines and triggers a replacement (i.e. remediation) of a Machine when it is u
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
+- [MachineHealthChecks Overview](#machinehealthchecks-overview)
 - [Using MachineHealthChecks](#using-machinehealthchecks)
 - [Next: Upgrading to another Kubernetes version](#next-upgrading-to-another-kubernetes-version)
 - [More information](#more-information)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## MachineHealthChecks Overview
+
+A MachineHealthCheck can use well-known node status criteria to determine that a Machine is unhealthy and needs to be replaced. For example:
+
+```yaml
+...
+      machineHealthCheck:
+        nodeStartupTimeout: 10m
+        unhealthyConditions:
+        - type: Ready
+          status: "false"
+          timeout: 300s
+        - type: Ready
+          status: Unknown
+          timeout: 300s
+```
+
+The above example declares that a Machine will be considered unhealthy if any one of the following conditions is met:
+
+1. If the node takes 10 minutes from the time of Machine creation to come online in a Ready state
+2. If the node transitions to a `NotReady` state, and remains in that state for 5 minutes or longer
+3. If the node transitions to a `Unknown` state, and remains in that state for 5 minutes or longer
+
+Below we will define a novel UnhealthyCondition so that we can easily simulate Machine remediation.
 
 ## Using MachineHealthChecks
 
@@ -50,7 +76,7 @@ machinehealthcheck.cluster.x-k8s.io/docker-cluster-one-md-0-np68x   docker-clust
 
 As mentioned above MachineHealthChecks can be used to detect unhealthy Machines. This can be done by:
 * checking for conditions on Nodes via `unhealthyConditions` (as shown above) or
-* it's also possible to check that new nodes come up within a certain timespan via `nodeStartupTimeout` (not used here).
+* it's also possible to check that new nodes come up within a certain timespan via `nodeStartupTimeout` (not used here, [see the example above](#machinehealthchecks-overview)).
 
 Once a Machine is detected as unhealthy it will be drained, deleted and a new Machine is created as replacement.
 
