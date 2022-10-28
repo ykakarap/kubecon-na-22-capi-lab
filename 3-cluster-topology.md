@@ -134,7 +134,7 @@ NAME                                            STATUS   ROLES           AGE    
 docker-cluster-one-md-0-lq4f8-b59497b9d-xchpm   Ready    <none>          99m    v1.24.6
 docker-cluster-one-mvthd-k7dwf                  Ready    control-plane   174m   v1.24.6
 ```
-Note: If you're running this tutorial on Windows, or your system is running below the [minimum resource requirements](./0-prereqs.md#minimum-resources) it's highly recommended you move on to the next section: [MachineHealthChecks and Remediation.](#machinehealthchecks-and-remediation) If you run into trouble at any point please consult [the troubleshooting guide.](#troubleshooting.md)
+Note: If you're running this tutorial on Windows, or your system is running below the [minimum resource requirements](./0-prereqs.md#minimum-resources) it's highly recommended you move on to the next section: [MachineHealthChecks and Remediation.](#next-machinehealthchecks-and-remediation) If you run into trouble at any point please consult [the troubleshooting guide.](./troubleshooting.md)
 
 ## Scale out control plane nodes
 
