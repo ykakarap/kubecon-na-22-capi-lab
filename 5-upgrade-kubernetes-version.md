@@ -2,6 +2,9 @@
 
 Let's walk through how easily Cluster API enables Kubernetes version upgrades.
 
+![Upgrading a cluster](images/7.png)
+
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**

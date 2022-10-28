@@ -6,7 +6,7 @@ In [Creating your first cluster with Cluster API](./1-your-first-cluster.md) we 
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
-- [What is a Cluster Topology?](#what-is-cluster-topology)
+- [What is a Cluster Topology?](#what-is-a-cluster-topology)
 - [Add a new pool of worker nodes](#add-a-new-pool-of-worker-nodes)
 - [Remove a worker node](#remove-a-worker-node)
 - [Scale out control plane nodes](#scale-out-control-plane-nodes)
@@ -25,6 +25,8 @@ We define a cluster topology as the set of configurations that describe your clu
 ## Add a new pool of worker nodes
 
 Now we can demonstrate how easily you can leverage the flexibility of Cluster API to add and remove pools of nodes. We'll re-use the existing `default-worker` MachineDeployment class; in other words, we'll define a discrete, new node set based on a pre-existing, common worker machine recipe.
+
+![Create new worker pool](images/4.png)
 
 For reference, this is the declarative block that defines the `default-worker` MachineDeployment class in [the ClusterClass spec we originally installed](./yamls/clusterclasses/clusterclass-quick-start.yaml):
 
@@ -143,6 +145,8 @@ A common Kubernetes cluster maintenance activity is scaling out (or in) the numb
 ### Scale from 1 to 3 control plane nodes
 
 Because we are leveraging the Kubernetes declarative model, we can simply refer to a desired configuration specification and rely upon Cluster API to evaluate what's different between the two.
+
+![Scale control plane](images/5.png)
 
 Assuming that your `docker-cluster-one` Cluster still has its original configuration, you should have one control plane node:
 

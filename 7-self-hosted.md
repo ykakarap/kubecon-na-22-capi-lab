@@ -4,6 +4,8 @@ A self-hosted cluster is a cluster that acts as both the management cluster and 
 
 In this section we will create a workload cluster and make it self-hosted by converting it into its own management cluster.
 
+![Self hosting a cluster](images/9.png)
+
 <!-- table of contents generated via: https://github.com/thlorenz/doctoc -->
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->

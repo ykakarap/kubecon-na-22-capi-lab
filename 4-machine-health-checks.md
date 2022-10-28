@@ -3,6 +3,8 @@
 Now let's take a look at MachineHealthChecks and Machine remediation. A MachineHealthCheck checks the health of
 Machines and triggers a replacement (i.e. remediation) of a Machine when it is unhealthy.
 
+![MachineHealthCheck images](images/6.png)
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**

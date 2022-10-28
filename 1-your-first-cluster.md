@@ -27,6 +27,7 @@ This guide covers setting up and using Cluster API using Docker infrastructure, 
 ## Linux
 
 ### The Management Cluster
+![Image Headliner](images/1.png)
 
 A Cluster API Management Cluster is a Kubernetes Cluster where the components that make up the CAPI control plane are installed. These components include the Custom Resources used to create and manage a cluster and the controllers that operate on them.
 
@@ -49,6 +50,7 @@ kubectl get nodes
 
 In this case we're using the Docker infrastructure provider - so we need the Docker provider (CAPD), the Core Cluster API provider (CAPI), the Kubeadm Bootstrap provider (CAPBK) and the Kubeadm Control Plane provider (KCP) to be installed on the cluster. In addition we need Cert Manager to be installed on the system.
 
+![clusterctl init](images/2.png)
 
 Cluster API's CLI - `clusterctl` is used to install the CAPI Management Cluster components - luckily it's able to handle installing all of the above as well as the Custom Resource Definitions used by the Cluster API controllers.
 
@@ -95,6 +97,9 @@ Once all of the pods are `Running` - to update the status run the above command 
 ### Your first workload cluster
 
 So what can you do with a functioning management cluster? Create more Clusters! The first step in doing this is to create a `ClusterClass` - this is a template that defines the shape of one or more clusters.
+
+![your first workload cluster](images/3.png)
+
 
 ```bash
 kubectl apply -f yamls/clusterclasses/clusterclass-quick-start.yaml
@@ -199,6 +204,7 @@ Next: [Cluster API Visualizer](#next-cluster-api-visualizer)
 ## MacOS
 
 ### The Management Cluster
+![Image Headliner](images/1.png)
 
 A Cluster API Management Cluster is a Kubernetes Cluster where the components that make up the CAPI control plane are installed. These components include the Custom Resources used to create and manage a cluster and the controllers that operate on them.
 
@@ -221,6 +227,7 @@ kubectl get nodes
 
 In this case we're using the Docker infrastructure provider - so we need the Docker provider (CAPD), the Core Cluster API provider (CAPI), the Kubeadm Bootstrap provider (CAPBK) and the Kubeadm Control Plane provider (KCP) to be installed on the cluster. In addition we need Cert Manager to be installed on the system.
 
+![clusterctl init](images/2.png)
 
 Cluster API's CLI - `clusterctl` is used to install the CAPI Management Cluster components - luckily it's able to handle installing all of the above as well as the Custom Resource Definitions used by the Cluster API controllers.
 
@@ -268,6 +275,8 @@ Once all of the pods are `Running` - to update the status run the above command 
 ### Your first workload cluster
 
 So what can you do with a functioning management cluster? Create more Clusters! The first step in doing this is to create a `ClusterClass` - this is a template that defines the shape of one or more clusters.
+
+![your first workload cluster](images/3.png)
 
 ```bash
 kubectl apply -f yamls/clusterclasses/clusterclass-quick-start.yaml
@@ -374,6 +383,7 @@ Next: [Cluster API Visualizer](#next-cluster-api-visualizer)
 **NOTE** This guide assumes users are using Powershell in a Windows environment. For other environments, e.g. WSL2, the [Linux](#Linux) guide might be a better starting place.
 
 ### The Management Cluster
+![Image Headliner](images/1.png)
 
 A Cluster API Management Cluster is a Kubernetes Cluster where the components that make up the CAPI control plane are installed. These components include the Custom Resources used to create and manage a cluster and the controllers that operate on them.
 
@@ -396,6 +406,7 @@ kubectl get nodes
 
 In this case we're using the Docker infrastructure provider - so we need the Docker provider (CAPD), the Core Cluster API provider (CAPI), the Kubeadm Bootstrap provider (CAPBK) and the Kubeadm Control Plane provider (KCP) to be installed on the cluster. In addition we need Cert Manager to be installed on the system.
 
+![clusterctl init](images/2.png)
 
 Cluster API's CLI - `clusterctl` is used to install the CAPI Management Cluster components - luckily it's able to handle installing all of the above as well as the Custom Resource Definitions used by the Cluster API controllers.
 
@@ -444,6 +455,8 @@ Once all of the pods are `Running` - to update the status run the above command 
 ### Your first workload cluster
 
 So what can you do with a functioning management cluster? Create more Clusters! The first step in doing this is to create a `ClusterClass` - this is a template that defines the shape of one or more clusters.
+
+![your first workload cluster](images/3.png)
 
 ```bash
 kubectl apply -f yamls/clusterclasses/clusterclass-quick-start.yaml
